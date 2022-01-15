@@ -7,17 +7,17 @@
 		"vscode": "^1.63.0"
 	},
 	"categories": [
-		"Other"
+		"Formatters"
 	],
 	"activationEvents": [
-		"onCommand:upper-snake-case.helloWorld"
+		"onCommand:upper-snake-case.change-to-upper-snake-case"
 	],
 	"main": "./dist/extension.js",
 	"contributes": {
 		"commands": [
 			{
-				"command": "upper-snake-case.helloWorld",
-				"title": "Hallo Welt"
+				"command": "upper-snake-case.change-to-upper-snake-case",
+				"title": "Change To Upper Snake Case"
 			}
 		]
 	},

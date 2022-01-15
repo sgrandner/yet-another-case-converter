@@ -1,0 +1,22 @@
+/([A-Za-z][a-z0-9]+|[A-Z0-9])/g
+-> \L$1-
+
+qwerAsdfYxcv
+QwerAsdfYxcv
+qwerNAsdfYxcv
+
+/([A-Za-z0-9]+)[ ._-]{0,1}/g
+-> \L$1-
+
+qwer_asdf_yxcv
+QWER_ASDF_YXCV
+
+qwer-asdf-yxcv
+QWER-ASDF-YXCV
+
+qwer asdf yxcv
+QWER ASDF YXCV
+Qwer Asdf Yxcv
+
+qwer.asdf.yxcv
+QWER.ASDF.YXCV
