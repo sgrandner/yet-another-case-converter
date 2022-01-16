@@ -10,14 +10,18 @@
 		"Formatters"
 	],
 	"activationEvents": [
-		"onCommand:yet-another-case-changer.change-to-upper-snake-case"
+		"onCommand:yet-another-case-changer.upper-snake-case"
 	],
 	"main": "./dist/extension.js",
 	"contributes": {
 		"commands": [
 			{
-				"command": "yet-another-case-changer.change-to-upper-snake-case",
+				"command": "yet-another-case-changer.upper-snake-case",
 				"title": "Yet Another Case Changer: Upper Snake Case"
+			},
+			{
+				"command": "yet-another-case-changer.upper-kebap-case",
+				"title": "Yet Another Case Changer: Upper Kebap Case"
 			}
 		]
 	},

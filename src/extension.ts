@@ -1,16 +1,29 @@
 import * as vscode from 'vscode';
 
+import { Separator } from './_domain/separator';
 import { TextSelection } from './_domain/text-selection';
-import { generateSnakeCase } from './generate-snake-case';
+import { generateSeparatedCase } from './generate-separated-case';
 import { iterateSelections } from './iterate-selections';
 
 export function activate(context: vscode.ExtensionContext) {
 
-    let disposable = vscode.commands.registerCommand('yet-another-case-changer.change-to-upper-snake-case', () => {
+    let disposable;
+
+    disposable = vscode.commands.registerCommand('yet-another-case-changer.upper-snake-case', () => {
 
         iterateSelections((editBuilder: vscode.TextEditorEdit, textSelection: TextSelection) => {
 
-            editBuilder.replace(textSelection.selection, generateSnakeCase(textSelection.text).toUpperCase());
+            editBuilder.replace(textSelection.selection, generateSeparatedCase(textSelection.text, Separator.snake).toUpperCase());
+        });
+	});
+
+	context.subscriptions.push(disposable);
+
+    disposable = vscode.commands.registerCommand('yet-another-case-changer.upper-kebap-case', () => {
+
+        iterateSelections((editBuilder: vscode.TextEditorEdit, textSelection: TextSelection) => {
+
+            editBuilder.replace(textSelection.selection, generateSeparatedCase(textSelection.text, Separator.kebap).toUpperCase());
         });
 	});
 
