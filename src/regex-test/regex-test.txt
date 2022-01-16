@@ -1,9 +1,17 @@
+// NOTE last separator must be deleted after replacement
+// NOTE \L does not work for javascript string.replace
+
+// only camel case
+
 /([A-Za-z][a-z0-9]+|[A-Z0-9])/g
 -> \L$1-
 
 qwerAsdfYxcv
 QwerAsdfYxcv
 qwerNAsdfYxcv
+
+
+// other cases without camel case
 
 /([A-Za-z0-9]+)[ ._-]{0,1}/g
 -> \L$1-
@@ -20,3 +28,38 @@ Qwer Asdf Yxcv
 
 qwer.asdf.yxcv
 QWER.ASDF.YXCV
+
+
+// all cases at once
+
+/([A-Z]{0,1}(?<![a-z0-9])[A-Za-z0-9]+)[ ._-]{1}|((?<=[ ._-]{1})[A-Za-z0-9]+)|([A-Za-z][a-z0-9]+|[A-Z0-9])/g
+-> \L$1$2$3-
+
+qwerAsdfYxcv
+QwerAsdfYxcv
+qwerNAsdfYxcv
+qwe7rAsdf7Yxcv7
+
+qwer_asdf_yxcv
+Qwer_Asdf_Yxcv
+QWER_ASDF_YXCV
+QWER_N_ASDF_YXCV
+qwe7r_asdf7_yxcv7
+
+qwer-asdf-yxcv
+Qwer-Asdf-Yxcv
+QWER-ASDF-YXCV
+QWER-N-ASDF-YXCV
+QWE7R-ASDF7-YXCV7
+
+qwer asdf yxcv
+Qwer Asdf Yxcv
+QWER ASDF YXCV
+QWER N ASDF YXCV
+QWE7R ASDF7 YXCV7
+
+qwer.asdf.yxcv
+Qwer.Asdf.Yxcv
+QWER.ASDF.YXCV
+QWER.N.ASDF.YXCV
+qwe7r.asdf7.yxcv7

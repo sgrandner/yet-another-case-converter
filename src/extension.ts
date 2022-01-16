@@ -10,7 +10,7 @@ export function activate(context: vscode.ExtensionContext) {
 
         iterateSelections((editBuilder: vscode.TextEditorEdit, textSelection: TextSelection) => {
 
-            editBuilder.replace(textSelection.selection, generateSnakeCase(textSelection.text));
+            editBuilder.replace(textSelection.selection, generateSnakeCase(textSelection.text).toUpperCase());
         });
 	});
 
