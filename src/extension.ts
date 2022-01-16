@@ -2,7 +2,7 @@ import * as vscode from 'vscode';
 
 import { Separator } from './_domain/separator';
 import { TextSelection } from './_domain/text-selection';
-import { generateSeparatedCase } from './generate-separated-case';
+import { generateCase } from './generate-case';
 import { iterateSelections } from './iterate-selections';
 
 export function activate(context: vscode.ExtensionContext) {
@@ -13,7 +13,7 @@ export function activate(context: vscode.ExtensionContext) {
 
         iterateSelections((editBuilder: vscode.TextEditorEdit, textSelection: TextSelection) => {
 
-            editBuilder.replace(textSelection.selection, generateSeparatedCase(textSelection.text, Separator.snake).toUpperCase());
+            editBuilder.replace(textSelection.selection, generateCase(textSelection.text, Separator.snake).toUpperCase());
         });
 	});
 
@@ -23,7 +23,7 @@ export function activate(context: vscode.ExtensionContext) {
 
         iterateSelections((editBuilder: vscode.TextEditorEdit, textSelection: TextSelection) => {
 
-            editBuilder.replace(textSelection.selection, generateSeparatedCase(textSelection.text, Separator.kebap).toUpperCase());
+            editBuilder.replace(textSelection.selection, generateCase(textSelection.text, Separator.kebap).toUpperCase());
         });
 	});
 

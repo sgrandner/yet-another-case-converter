@@ -1,6 +1,6 @@
 import { Separator } from './_domain/separator';
 
-export function generateSeparatedCase(text: string, separator: Separator): string {
+export function generateCase(text: string, separator: Separator): string {
 
     const regex = /([A-Z]{0,1}(?<![a-z0-9])[A-Za-z0-9]+)[ ._-]{1}|((?<=[ ._-]{1})[A-Za-z0-9]+)|([A-Za-z][a-z0-9]+|[A-Z0-9])/g;
 
