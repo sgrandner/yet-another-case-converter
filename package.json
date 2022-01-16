@@ -1,7 +1,7 @@
 {
-	"name": "upper-snake-case",
-	"displayName": "Upper Snake Case",
-	"description": "Create upper snake case of selected word(s)",
+	"name": "yet-another-case-changer",
+	"displayName": "Yet Another Case Changer",
+	"description": "Change/toggle the case of the selected word(s)",
 	"version": "0.0.1",
 	"engines": {
 		"vscode": "^1.63.0"
@@ -10,14 +10,14 @@
 		"Formatters"
 	],
 	"activationEvents": [
-		"onCommand:upper-snake-case.change-to-upper-snake-case"
+		"onCommand:yet-another-case-changer.change-to-upper-snake-case"
 	],
 	"main": "./dist/extension.js",
 	"contributes": {
 		"commands": [
 			{
-				"command": "upper-snake-case.change-to-upper-snake-case",
-				"title": "Change To Upper Snake Case"
+				"command": "yet-another-case-changer.change-to-upper-snake-case",
+				"title": "Yet Another Case Changer: Upper Snake Case"
 			}
 		]
 	},

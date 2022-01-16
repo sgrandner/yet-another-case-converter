@@ -6,7 +6,7 @@ import { iterateSelections } from './iterate-selections';
 
 export function activate(context: vscode.ExtensionContext) {
 
-    let disposable = vscode.commands.registerCommand('upper-snake-case.change-to-upper-snake-case', () => {
+    let disposable = vscode.commands.registerCommand('yet-another-case-changer.change-to-upper-snake-case', () => {
 
         iterateSelections((editBuilder: vscode.TextEditorEdit, textSelection: TextSelection) => {
 
