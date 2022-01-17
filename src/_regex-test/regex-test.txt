@@ -32,12 +32,13 @@ QWER.ASDF.YXCV
 
 // all cases at once
 
-/([A-Z]{0,1}(?<![a-z0-9])[A-Za-z0-9]+)[ ._-]{1}|((?<=[ ._-]{1})[A-Za-z0-9]+)|([A-Za-z][a-z0-9]+|[A-Z0-9])/g
--> \L$1$2$3-
+/([A-Z]{0,1}(?<![a-z0-9])[A-Za-z0-9]+)[ ._-]{1}|((?<=[ ._-]{1})[A-Za-z0-9]+)|([A-Za-z][a-z0-9]+)|([A-Z0-9]+(?![a-z]))/g
+-> \L$1$2$3$4-
 
 qwerAsdfYxcv
 QwerAsdfYxcv
 qwerNAsdfYxcv
+qwerNMOPAsdfYxcv
 qwe7rAsdf7Yxcv7
 
 qwer_asdf_yxcv
@@ -63,3 +64,9 @@ Qwer.Asdf.Yxcv
 QWER.ASDF.YXCV
 QWER.N.ASDF.YXCV
 qwe7r.asdf7.yxcv7
+
+qwer
+QWER
+Q
+QW
+QWE

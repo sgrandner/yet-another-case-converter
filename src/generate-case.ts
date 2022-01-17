@@ -29,8 +29,8 @@ export function generateCase(
     // NOTE this regex matches segments of a string by case
     // 1. alternative: segments separated by a separation character, explicitly exclude camel case in segments !
     // 2. alternative: last segment in words separated by a separation character (with last separation before segment)
-    // 3. alternative: camel case
-    // 4. alternative: upper or lower case
+    // 3. alternative: camel case and lower case
+    // 4. alternative: upper case without first letter of camel case
     const regex = /([A-Z]{0,1}(?<![a-z0-9])[A-Za-z0-9]+)[ ._-]{1}|((?<=[ ._-]{1})[A-Za-z0-9]+)|([A-Za-z][a-z0-9]+|[A-Z0-9])/g;
 
     // NOTE simple replace value would be `$1$2$3${separator}` without case conversion
