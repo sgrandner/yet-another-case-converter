@@ -14,118 +14,179 @@ import { iterateSelections } from './iterate-selections';
 
 export function activate(context: vscode.ExtensionContext) {
 
+    vscode.window.showWarningMessage(`* ${Separator.kebap} * ${Separator.snake} * ${Separator.camel} * ${Object.keys(Separator)} *`);
+
     let disposable;
 
-    // snake cases
+    [
+        {
+            commandName: 'upper-snake-case',
+            separator: Separator.snake,
+            segmentCaseConversion: upper,
+            veryFirstCaseConversion: VeryFirstCaseConversion.none,
+        },
+        {
+            commandName: 'lower-snake-case',
+            separator: Separator.snake,
+            segmentCaseConversion: lower,
+            veryFirstCaseConversion: VeryFirstCaseConversion.none,
+        },
+        {
+            commandName: 'each-first-upper-snake-case',
+            separator: Separator.snake,
+            segmentCaseConversion: firstUpper,
+            veryFirstCaseConversion: VeryFirstCaseConversion.none,
+        },
+        {
+            commandName: 'each-first-lower-snake-case',
+            separator: Separator.snake,
+            segmentCaseConversion: firstLower,
+            veryFirstCaseConversion: VeryFirstCaseConversion.none,
+        },
+        {
+            commandName: 'upper-kebap-case',
+            separator: Separator.kebap,
+            segmentCaseConversion: upper,
+            veryFirstCaseConversion: VeryFirstCaseConversion.none,
+        },
+        {
+            commandName: 'lower-kebap-case',
+            separator: Separator.kebap,
+            segmentCaseConversion: lower,
+            veryFirstCaseConversion: VeryFirstCaseConversion.none,
+        },
+        {
+            commandName: 'each-first-upper-kebap-case',
+            separator: Separator.kebap,
+            segmentCaseConversion: firstUpper,
+            veryFirstCaseConversion: VeryFirstCaseConversion.none,
+        },
+        {
+            commandName: 'each-first-lower-kebap-case',
+            separator: Separator.kebap,
+            segmentCaseConversion: firstLower,
+            veryFirstCaseConversion: VeryFirstCaseConversion.none,
+        },
+        {
+            commandName: 'upper-space-case',
+            separator: Separator.space,
+            segmentCaseConversion: upper,
+            veryFirstCaseConversion: VeryFirstCaseConversion.none,
+        },
+        {
+            commandName: 'lower-space-case',
+            separator: Separator.space,
+            segmentCaseConversion: lower,
+            veryFirstCaseConversion: VeryFirstCaseConversion.none,
+        },
+        {
+            commandName: 'each-first-upper-space-case',
+            separator: Separator.space,
+            segmentCaseConversion: firstUpper,
+            veryFirstCaseConversion: VeryFirstCaseConversion.none,
+        },
+        {
+            commandName: 'each-first-lower-space-case',
+            separator: Separator.space,
+            segmentCaseConversion: firstLower,
+            veryFirstCaseConversion: VeryFirstCaseConversion.none,
+        },
+        {
+            commandName: 'upper-dot-case',
+            separator: Separator.dot,
+            segmentCaseConversion: upper,
+            veryFirstCaseConversion: VeryFirstCaseConversion.none,
+        },
+        {
+            commandName: 'lower-dot-case',
+            separator: Separator.dot,
+            segmentCaseConversion: lower,
+            veryFirstCaseConversion: VeryFirstCaseConversion.none,
+        },
+        {
+            commandName: 'each-first-upper-dot-case',
+            separator: Separator.dot,
+            segmentCaseConversion: firstUpper,
+            veryFirstCaseConversion: VeryFirstCaseConversion.none,
+        },
+        {
+            commandName: 'each-first-lower-dot-case',
+            separator: Separator.dot,
+            segmentCaseConversion: firstLower,
+            veryFirstCaseConversion: VeryFirstCaseConversion.none,
+        },
+        // NOTE this does not work and should throw a warning ! for testing purposes !
+        {
+            commandName: 'each-upper-camel-case',
+            separator: Separator.camel,
+            segmentCaseConversion: upper,
+            veryFirstCaseConversion: VeryFirstCaseConversion.none,
+        },
+        // NOTE this does not work and should throw a warning ! for testing purposes !
+        {
+            commandName: 'each-lower-camel-case',
+            separator: Separator.camel,
+            segmentCaseConversion: lower,
+            veryFirstCaseConversion: VeryFirstCaseConversion.none,
+        },
+        {
+            commandName: 'upper-camel-case',
+            separator: Separator.camel,
+            segmentCaseConversion: firstUpper,
+            veryFirstCaseConversion: VeryFirstCaseConversion.none,
+        },
+        {
+            commandName: 'lower-camel-case',
+            separator: Separator.camel,
+            segmentCaseConversion: firstUpper,
+            veryFirstCaseConversion: VeryFirstCaseConversion.lower,
+        },
+        // NOTE strange case which is not matched ! for testing purposes !
+        {
+            commandName: 'upper-inverse-camel-case',
+            separator: Separator.camel,
+            segmentCaseConversion: firstLower,
+            veryFirstCaseConversion: VeryFirstCaseConversion.upper,
+        },
+        {
+            commandName: 'lower-inverse-camel-case',
+            separator: Separator.camel,
+            segmentCaseConversion: firstLower,
+            veryFirstCaseConversion: VeryFirstCaseConversion.none,
+        },
+    ].forEach(({ commandName, separator, segmentCaseConversion, veryFirstCaseConversion }) => {
 
-    disposable = vscode.commands.registerCommand('yet-another-case-changer.upper-snake-case', () => {
+        disposable = vscode.commands.registerCommand(`yet-another-case-changer.${commandName}`, () => {
+
+            iterateSelections((editBuilder: vscode.TextEditorEdit, textSelection: TextSelection) => {
+
+                editBuilder.replace(textSelection.selection, generateCase(
+                    textSelection.text,
+                    separator,
+                    segmentCaseConversion,
+                    veryFirstCaseConversion,
+                ));
+            });
+        });
+        context.subscriptions.push(disposable);
+    });
+
+    disposable = vscode.commands.registerCommand(`yet-another-case-changer.upper-case`, () => {
 
         iterateSelections((editBuilder: vscode.TextEditorEdit, textSelection: TextSelection) => {
 
-            editBuilder.replace(textSelection.selection, generateCase(textSelection.text, Separator.snake, upper));
+            editBuilder.replace(textSelection.selection, textSelection.text.toUpperCase());
         });
-	});
-	context.subscriptions.push(disposable);
-
-    disposable = vscode.commands.registerCommand('yet-another-case-changer.lower-snake-case', () => {
-
-        iterateSelections((editBuilder: vscode.TextEditorEdit, textSelection: TextSelection) => {
-
-            editBuilder.replace(textSelection.selection, generateCase(textSelection.text, Separator.snake, lower));
-        });
-	});
-	context.subscriptions.push(disposable);
-
-    disposable = vscode.commands.registerCommand('yet-another-case-changer.each-first-upper-snake-case', () => {
-
-        iterateSelections((editBuilder: vscode.TextEditorEdit, textSelection: TextSelection) => {
-
-            editBuilder.replace(textSelection.selection, generateCase(textSelection.text, Separator.snake, firstUpper));
-        });
-	});
-	context.subscriptions.push(disposable);
-
-    disposable = vscode.commands.registerCommand('yet-another-case-changer.each-first-lower-snake-case', () => {
-
-        iterateSelections((editBuilder: vscode.TextEditorEdit, textSelection: TextSelection) => {
-
-            editBuilder.replace(textSelection.selection, generateCase(textSelection.text, Separator.snake, firstLower));
-        });
-	});
-	context.subscriptions.push(disposable);
-
-    // TODO other separated cases
-
-    // kebap cases
-
-    disposable = vscode.commands.registerCommand('yet-another-case-changer.upper-kebap-case', () => {
-
-        iterateSelections((editBuilder: vscode.TextEditorEdit, textSelection: TextSelection) => {
-
-            editBuilder.replace(textSelection.selection, generateCase(textSelection.text, Separator.kebap, upper));
-        });
-	});
+    });
     context.subscriptions.push(disposable);
 
-
-
-
-    // camel cases
-
-    // NOTE this does not work and should throw a warning ! for testing purposes !
-    disposable = vscode.commands.registerCommand('yet-another-case-changer.each-upper-camel-case', () => {
+    disposable = vscode.commands.registerCommand(`yet-another-case-changer.lower-case`, () => {
 
         iterateSelections((editBuilder: vscode.TextEditorEdit, textSelection: TextSelection) => {
 
-            editBuilder.replace(textSelection.selection, generateCase(textSelection.text, Separator.camel, upper));
+            editBuilder.replace(textSelection.selection, textSelection.text.toLowerCase());
         });
-	});
-    context.subscriptions.push(disposable);
-
-    // NOTE this does not work and should throw a warning ! for testing purposes !
-    disposable = vscode.commands.registerCommand('yet-another-case-changer.each-lower-camel-case', () => {
-
-        iterateSelections((editBuilder: vscode.TextEditorEdit, textSelection: TextSelection) => {
-
-            editBuilder.replace(textSelection.selection, generateCase(textSelection.text, Separator.camel, lower));
-        });
-	});
-    context.subscriptions.push(disposable);
-
-    disposable = vscode.commands.registerCommand('yet-another-case-changer.upper-camel-case', () => {
-
-        iterateSelections((editBuilder: vscode.TextEditorEdit, textSelection: TextSelection) => {
-
-            editBuilder.replace(textSelection.selection, generateCase(textSelection.text, Separator.camel, firstUpper));
-        });
-	});
-    context.subscriptions.push(disposable);
-
-    disposable = vscode.commands.registerCommand('yet-another-case-changer.lower-camel-case', () => {
-
-        iterateSelections((editBuilder: vscode.TextEditorEdit, textSelection: TextSelection) => {
-
-            editBuilder.replace(textSelection.selection, generateCase(textSelection.text, Separator.camel, firstUpper, VeryFirstCaseConversion.lower));
-        });
-	});
-    context.subscriptions.push(disposable);
-
-    disposable = vscode.commands.registerCommand('yet-another-case-changer.upper-inverse-camel-case', () => {
-
-        iterateSelections((editBuilder: vscode.TextEditorEdit, textSelection: TextSelection) => {
-
-            editBuilder.replace(textSelection.selection, generateCase(textSelection.text, Separator.camel, firstLower, VeryFirstCaseConversion.upper));
-        });
-	});
-    context.subscriptions.push(disposable);
-
-    disposable = vscode.commands.registerCommand('yet-another-case-changer.lower-inverse-camel-case', () => {
-
-        iterateSelections((editBuilder: vscode.TextEditorEdit, textSelection: TextSelection) => {
-
-            editBuilder.replace(textSelection.selection, generateCase(textSelection.text, Separator.camel, firstLower));
-        });
-	});
+    });
     context.subscriptions.push(disposable);
 }
 

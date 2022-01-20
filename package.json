@@ -2,7 +2,7 @@
 	"name": "yet-another-case-changer",
 	"displayName": "Yet Another Case Changer",
 	"description": "Change/toggle the case of the selected word(s)",
-	"version": "0.0.1",
+	"version": "0.0.2",
 	"engines": {
 		"vscode": "^1.63.0"
 	},
@@ -15,59 +15,124 @@
 		"onCommand:yet-another-case-changer.each-first-upper-snake-case",
 		"onCommand:yet-another-case-changer.each-first-lower-snake-case",
 		"onCommand:yet-another-case-changer.upper-kebap-case",
+		"onCommand:yet-another-case-changer.lower-kebap-case",
+		"onCommand:yet-another-case-changer.each-first-upper-kebap-case",
+		"onCommand:yet-another-case-changer.each-first-lower-kebap-case",
+		"onCommand:yet-another-case-changer.upper-space-case",
+		"onCommand:yet-another-case-changer.lower-space-case",
+		"onCommand:yet-another-case-changer.each-first-upper-space-case",
+		"onCommand:yet-another-case-changer.each-first-lower-space-case",
+		"onCommand:yet-another-case-changer.upper-dot-case",
+		"onCommand:yet-another-case-changer.lower-dot-case",
+		"onCommand:yet-another-case-changer.each-first-upper-dot-case",
+		"onCommand:yet-another-case-changer.each-first-lower-dot-case",
 		"onCommand:yet-another-case-changer.each-upper-camel-case",
 		"onCommand:yet-another-case-changer.each-lower-camel-case",
 		"onCommand:yet-another-case-changer.upper-camel-case",
 		"onCommand:yet-another-case-changer.lower-camel-case",
 		"onCommand:yet-another-case-changer.upper-inverse-camel-case",
-		"onCommand:yet-another-case-changer.lower-inverse-camel-case"
+		"onCommand:yet-another-case-changer.lower-inverse-camel-case",
+		"onCommand:yet-another-case-changer.upper-case",
+		"onCommand:yet-another-case-changer.lower-case"
 	],
 	"main": "./dist/extension.js",
 	"contributes": {
 		"commands": [
 			{
 				"command": "yet-another-case-changer.upper-snake-case",
-				"title": "Yet Another Case Changer: Upper Snake Case"
+				"title": "Yet Another Case Changer: upper-snake-case"
 			},
 			{
 				"command": "yet-another-case-changer.lower-snake-case",
-				"title": "Yet Another Case Changer: Lower Snake Case"
+				"title": "Yet Another Case Changer: lower-snake-case"
 			},
 			{
 				"command": "yet-another-case-changer.each-first-upper-snake-case",
-				"title": "Yet Another Case Changer: Each First Upper Snake Case"
+				"title": "Yet Another Case Changer: each-first-upper-snake-case"
 			},
 			{
 				"command": "yet-another-case-changer.each-first-lower-snake-case",
-				"title": "Yet Another Case Changer: Each First Lower Snake Case"
+				"title": "Yet Another Case Changer: each-first-lower-snake-case"
 			},
 			{
 				"command": "yet-another-case-changer.upper-kebap-case",
-				"title": "Yet Another Case Changer: Upper Kebap Case"
+				"title": "Yet Another Case Changer: upper-kebap-case"
+			},
+			{
+				"command": "yet-another-case-changer.lower-kebap-case",
+				"title": "Yet Another Case Changer: lower-kebap-case"
+			},
+			{
+				"command": "yet-another-case-changer.each-first-upper-kebap-case",
+				"title": "Yet Another Case Changer: each-first-upper-kebap-case"
+			},
+			{
+				"command": "yet-another-case-changer.each-first-lower-kebap-case",
+				"title": "Yet Another Case Changer: each-first-lower-kebap-case"
+			},
+			{
+				"command": "yet-another-case-changer.upper-space-case",
+				"title": "Yet Another Case Changer: upper-space-case"
+			},
+			{
+				"command": "yet-another-case-changer.lower-space-case",
+				"title": "Yet Another Case Changer: lower-space-case"
+			},
+			{
+				"command": "yet-another-case-changer.each-first-upper-space-case",
+				"title": "Yet Another Case Changer: each-first-upper-space-case"
+			},
+			{
+				"command": "yet-another-case-changer.each-first-lower-space-case",
+				"title": "Yet Another Case Changer: each-first-lower-space-case"
+			},
+			{
+				"command": "yet-another-case-changer.upper-dot-case",
+				"title": "Yet Another Case Changer: upper-dot-case"
+			},
+			{
+				"command": "yet-another-case-changer.lower-dot-case",
+				"title": "Yet Another Case Changer: lower-dot-case"
+			},
+			{
+				"command": "yet-another-case-changer.each-first-upper-dot-case",
+				"title": "Yet Another Case Changer: each-first-upper-dot-case"
+			},
+			{
+				"command": "yet-another-case-changer.each-first-lower-dot-case",
+				"title": "Yet Another Case Changer: each-first-lower-dot-case"
 			},
 			{
 				"command": "yet-another-case-changer.each-upper-camel-case",
-				"title": "Yet Another Case Changer: Each Upper Camel Case"
+				"title": "Yet Another Case Changer: each-upper-camel-case"
 			},
 			{
 				"command": "yet-another-case-changer.each-lower-camel-case",
-				"title": "Yet Another Case Changer: Each Lower Camel Case"
+				"title": "Yet Another Case Changer: each-lower-camel-case"
 			},
 			{
 				"command": "yet-another-case-changer.upper-camel-case",
-				"title": "Yet Another Case Changer: Upper Camel Case"
+				"title": "Yet Another Case Changer: upper-camel-case"
 			},
-            {
-                "command": "yet-another-case-changer.lower-camel-case",
-                "title": "Yet Another Case Changer: Lower Camel Case"
-            },
-            {
-                "command": "yet-another-case-changer.upper-inverse-camel-case",
-                "title": "Yet Another Case Changer: Upper Inverse Camel Case"
-            },
+			{
+				"command": "yet-another-case-changer.lower-camel-case",
+				"title": "Yet Another Case Changer: lower-camel-case"
+			},
+			{
+				"command": "yet-another-case-changer.upper-inverse-camel-case",
+				"title": "Yet Another Case Changer: upper-inverse-camel-case"
+			},
 			{
 				"command": "yet-another-case-changer.lower-inverse-camel-case",
-				"title": "Yet Another Case Changer: Lower Inverse Camel Case"
+				"title": "Yet Another Case Changer: lower-inverse-camel-case"
+			},
+			{
+				"command": "yet-another-case-changer.upper-case",
+				"title": "Yet Another Case Changer: upper-case"
+			},
+			{
+				"command": "yet-another-case-changer.lower-case",
+				"title": "Yet Another Case Changer: lower-case"
 			}
 		]
 	},

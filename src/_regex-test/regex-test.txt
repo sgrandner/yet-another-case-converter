@@ -32,7 +32,7 @@ QWER.ASDF.YXCV
 
 // all cases at once
 
-/([A-Z]{0,1}(?<![a-z0-9])[A-Za-z0-9]+)[ ._-]{1}|((?<=[ ._-]{1})[A-Za-z0-9]+)|([A-Za-z][a-z0-9]+)|([A-Z0-9]+(?![a-z]))/g
+/([A-Z]{0,1}(?:[a-z0-9]+|[A-Z0-9]+))[ ._-]{1}|([A-Za-z][a-z0-9]+)|([A-Z0-9]+(?![a-z]))|([A-Za-z][A-Z0-9]+)[ ._-]{0,1}/g
 -> \L$1$2$3$4-
 
 qwerAsdfYxcv
@@ -40,6 +40,12 @@ QwerAsdfYxcv
 qwerNAsdfYxcv
 qwerNMOPAsdfYxcv
 qwe7rAsdf7Yxcv7
+
+qWERaSDFyXCV
+QWERaSDFyXCV            -> does not work properly but is really strange anyway  ->  no upper inverse case !
+qWERnaSDFyXCV           -> does not work properly but is really strange anyway
+qWERnmopaSDFyXCV        -> does not work properly but is really strange anyway
+qWE7RaSDF7yXCV7
 
 qwer_asdf_yxcv
 Qwer_Asdf_Yxcv
@@ -70,3 +76,11 @@ QWER
 Q
 QW
 QWE
+
+qwerAsdf_yxcv
+QwerAsdf_yxcv
+qwer_asdfYxcv
+qwer_AsdfYxcv
+qwer_asdfNYxcv
+qwer_AsdfNYxcv
+qwer_AsdfNMOPYxcv
