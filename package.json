@@ -14,24 +14,34 @@
 		"onCommand:yet-another-case-changer.lower-snake-case",
 		"onCommand:yet-another-case-changer.each-first-upper-snake-case",
 		"onCommand:yet-another-case-changer.each-first-lower-snake-case",
+
+		"onCommand:yet-another-case-changer.upper-double-snake-case",
+		"onCommand:yet-another-case-changer.lower-double-snake-case",
+		"onCommand:yet-another-case-changer.each-first-upper-double-snake-case",
+		"onCommand:yet-another-case-changer.each-first-lower-double-snake-case",
+
 		"onCommand:yet-another-case-changer.upper-kebap-case",
 		"onCommand:yet-another-case-changer.lower-kebap-case",
 		"onCommand:yet-another-case-changer.each-first-upper-kebap-case",
 		"onCommand:yet-another-case-changer.each-first-lower-kebap-case",
+
 		"onCommand:yet-another-case-changer.upper-space-case",
 		"onCommand:yet-another-case-changer.lower-space-case",
 		"onCommand:yet-another-case-changer.each-first-upper-space-case",
 		"onCommand:yet-another-case-changer.each-first-lower-space-case",
+
 		"onCommand:yet-another-case-changer.upper-dot-case",
 		"onCommand:yet-another-case-changer.lower-dot-case",
 		"onCommand:yet-another-case-changer.each-first-upper-dot-case",
 		"onCommand:yet-another-case-changer.each-first-lower-dot-case",
+
 		"onCommand:yet-another-case-changer.each-upper-camel-case",
 		"onCommand:yet-another-case-changer.each-lower-camel-case",
 		"onCommand:yet-another-case-changer.upper-camel-case",
 		"onCommand:yet-another-case-changer.lower-camel-case",
 		"onCommand:yet-another-case-changer.upper-inverse-camel-case",
 		"onCommand:yet-another-case-changer.lower-inverse-camel-case",
+
 		"onCommand:yet-another-case-changer.upper-case",
 		"onCommand:yet-another-case-changer.lower-case"
 	],
@@ -54,6 +64,24 @@
 				"command": "yet-another-case-changer.each-first-lower-snake-case",
 				"title": "Yet Another Case Changer: eACH_fIRST_lOWER_sNAKE_cASE"
 			},
+
+			{
+				"command": "yet-another-case-changer.upper-double-snake-case",
+				"title": "Yet Another Case Changer: upper-double-snake-case"
+			},
+			{
+				"command": "yet-another-case-changer.lower-double-snake-case",
+				"title": "Yet Another Case Changer: lower-double-snake-case"
+			},
+			{
+				"command": "yet-another-case-changer.each-first-upper-double-snake-case",
+				"title": "Yet Another Case Changer: each-first-upper-double-snake-case"
+			},
+			{
+				"command": "yet-another-case-changer.each-first-lower-double-snake-case",
+				"title": "Yet Another Case Changer: each-first-lower-double-snake-case"
+			},
+
 			{
 				"command": "yet-another-case-changer.upper-kebap-case",
 				"title": "Yet Another Case Changer: UPPER-KEBAP-CASE"
@@ -70,6 +98,7 @@
 				"command": "yet-another-case-changer.each-first-lower-kebap-case",
 				"title": "Yet Another Case Changer: eACH-fIRST-lOWER-kEBAP-cASE"
 			},
+
 			{
 				"command": "yet-another-case-changer.upper-space-case",
 				"title": "Yet Another Case Changer: UPPER SPACE CASE"
@@ -86,6 +115,7 @@
 				"command": "yet-another-case-changer.each-first-lower-space-case",
 				"title": "Yet Another Case Changer: eACH fIRST lOWER sPACE cASE"
 			},
+
 			{
 				"command": "yet-another-case-changer.upper-dot-case",
 				"title": "Yet Another Case Changer: UPPER.DOT.CASE"
@@ -102,6 +132,7 @@
 				"command": "yet-another-case-changer.each-first-lower-dot-case",
 				"title": "Yet Another Case Changer: eACH.fIRST.lOWER.dOT.cASE"
 			},
+
 			{
 				"command": "yet-another-case-changer.each-upper-camel-case",
 				"title": "Yet Another Case Changer: EACHUPPERCAMELCASE (forbidden, for testing purposes only)"
@@ -126,6 +157,7 @@
 				"command": "yet-another-case-changer.lower-inverse-camel-case",
 				"title": "Yet Another Case Changer: lOWERiNVERSEcAMELcASE"
 			},
+
 			{
 				"command": "yet-another-case-changer.upper-case",
 				"title": "Yet Another Case Changer: UPPERCASE"

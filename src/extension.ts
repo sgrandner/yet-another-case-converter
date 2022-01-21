@@ -14,8 +14,6 @@ import { iterateSelections } from './iterate-selections';
 
 export function activate(context: vscode.ExtensionContext) {
 
-    vscode.window.showWarningMessage(`* ${Separator.kebap} * ${Separator.snake} * ${Separator.camel} * ${Object.keys(Separator)} *`);
-
     let disposable;
 
     [
@@ -43,6 +41,32 @@ export function activate(context: vscode.ExtensionContext) {
             segmentCaseConversion: firstLower,
             veryFirstCaseConversion: VeryFirstCaseConversion.none,
         },
+
+        {
+            commandName: 'upper-double-snake-case',
+            separator: Separator.doubleSnake,
+            segmentCaseConversion: upper,
+            veryFirstCaseConversion: VeryFirstCaseConversion.none,
+        },
+        {
+            commandName: 'lower-double-snake-case',
+            separator: Separator.doubleSnake,
+            segmentCaseConversion: lower,
+            veryFirstCaseConversion: VeryFirstCaseConversion.none,
+        },
+        {
+            commandName: 'each-first-upper-double-snake-case',
+            separator: Separator.doubleSnake,
+            segmentCaseConversion: firstUpper,
+            veryFirstCaseConversion: VeryFirstCaseConversion.none,
+        },
+        {
+            commandName: 'each-first-lower-double-snake-case',
+            separator: Separator.doubleSnake,
+            segmentCaseConversion: firstLower,
+            veryFirstCaseConversion: VeryFirstCaseConversion.none,
+        },
+
         {
             commandName: 'upper-kebap-case',
             separator: Separator.kebap,
@@ -67,6 +91,7 @@ export function activate(context: vscode.ExtensionContext) {
             segmentCaseConversion: firstLower,
             veryFirstCaseConversion: VeryFirstCaseConversion.none,
         },
+
         {
             commandName: 'upper-space-case',
             separator: Separator.space,
@@ -91,6 +116,7 @@ export function activate(context: vscode.ExtensionContext) {
             segmentCaseConversion: firstLower,
             veryFirstCaseConversion: VeryFirstCaseConversion.none,
         },
+
         {
             commandName: 'upper-dot-case',
             separator: Separator.dot,
@@ -115,6 +141,7 @@ export function activate(context: vscode.ExtensionContext) {
             segmentCaseConversion: firstLower,
             veryFirstCaseConversion: VeryFirstCaseConversion.none,
         },
+
         // NOTE this does not work and should throw a warning ! for testing purposes !
         {
             commandName: 'each-upper-camel-case',

@@ -35,11 +35,11 @@ export function generateCase(
     }
 
     // NOTE this regex matches segments of a string by case
-    // 1. alternative: segments separated by a separation character but also match camel case within separated segments
+    // 1. alternative: segments separated by one or more separation characters but also match camel case within separated segments
     // 2. alternative: camel case and lower case
     // 3. alternative: upper case without following first letter of camel case
     // 4. alternative: match inverse camel case but only "normal" invserse camel case (no upper very first letter or group of lower letters)
-    const regex = /([A-Z]{0,1}(?:[a-z0-9]+|[A-Z0-9]+))[ ._-]{1}|([A-Za-z][a-z0-9]+)|([A-Z0-9]+(?![a-z]))|([A-Za-z][A-Z0-9]+)[ ._-]{0,1}/g;
+    const regex = /([A-Z]{0,1}(?:[a-z0-9]+|[A-Z0-9]+))[ ._-]+|([A-Za-z][a-z0-9]+)|([A-Z0-9]+(?![a-z]))|([A-Za-z][A-Z0-9]+)[ ._-]*/g;
 
     let replacedString = text.replace(regex, (matched: string, captured1: string, captured2: string, captured3: string, captured4: string): string => {
 
@@ -58,7 +58,7 @@ export function generateCase(
     }
 
     if (separator !== Separator.camel) {
-        replacedString = replacedString.slice(0, replacedString.length - 1);
+        replacedString = replacedString.slice(0, replacedString.length - separator.length);
     }
 
     return replacedString;
