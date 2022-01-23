@@ -15,7 +15,7 @@ import {
 
 export function generateCase(
     text: string,
-    separator: Separator,
+    separator: Separator | string,
     caseConversionFunction: CaseConversion,
     veryFirst?: VeryFirstCaseConversion
 ): string {

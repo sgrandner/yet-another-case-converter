@@ -14,6 +14,8 @@ import { iterateSelections } from './iterate-selections';
 
 export function activate(context: vscode.ExtensionContext) {
 
+    const customSeparator1 = (String)(vscode.workspace.getConfiguration('yet-another-case-changer').get('custom1-separator'));
+
     let disposable;
 
     [
@@ -178,6 +180,31 @@ export function activate(context: vscode.ExtensionContext) {
         {
             commandName: 'lower-inverse-camel-case',
             separator: Separator.camel,
+            segmentCaseConversion: firstLower,
+            veryFirstCaseConversion: VeryFirstCaseConversion.none,
+        },
+
+        {
+            commandName: 'upper-custom1-case',
+            separator: customSeparator1,
+            segmentCaseConversion: upper,
+            veryFirstCaseConversion: VeryFirstCaseConversion.none,
+        },
+        {
+            commandName: 'lower-custom1-case',
+            separator: customSeparator1,
+            segmentCaseConversion: lower,
+            veryFirstCaseConversion: VeryFirstCaseConversion.none,
+        },
+        {
+            commandName: 'each-first-upper-custom1-case',
+            separator: customSeparator1,
+            segmentCaseConversion: firstUpper,
+            veryFirstCaseConversion: VeryFirstCaseConversion.none,
+        },
+        {
+            commandName: 'each-first-lower-custom1-case',
+            separator: customSeparator1,
             segmentCaseConversion: firstLower,
             veryFirstCaseConversion: VeryFirstCaseConversion.none,
         },

@@ -43,7 +43,12 @@
 		"onCommand:yet-another-case-changer.lower-inverse-camel-case",
 
 		"onCommand:yet-another-case-changer.upper-case",
-		"onCommand:yet-another-case-changer.lower-case"
+		"onCommand:yet-another-case-changer.lower-case",
+
+        "onCommand:yet-another-case-changer.upper-custom1-case",
+        "onCommand:yet-another-case-changer.lower-custom1-case",
+        "onCommand:yet-another-case-changer.each-first-upper-custom1-case",
+        "onCommand:yet-another-case-changer.each-first-lower-custom1-case"
 	],
 	"main": "./dist/extension.js",
 	"contributes": {
@@ -193,6 +198,27 @@
 				"command": "yet-another-case-changer.lower-case",
 				"title": "Yet Another Case Changer: Lower Case (qwer)",
                 "enablement": "config.yet-another-case-changer.activate.lower-case != 'false' && editorHasSelection"
+			},
+
+			{
+				"command": "yet-another-case-changer.upper-custom1-case",
+				"title": "Yet Another Case Changer: Upper Custom1 Case",
+                "enablement": "config.yet-another-case-changer.custom1-separator && config.yet-another-case-changer.activate.upper-dot-case != 'false' && editorHasSelection"
+			},
+			{
+				"command": "yet-another-case-changer.lower-custom1-case",
+				"title": "Yet Another Case Changer: Lower Custom1 Case",
+                "enablement": "config.yet-another-case-changer.custom1-separator && config.yet-another-case-changer.activate.lower-dot-case != 'false' && editorHasSelection"
+			},
+			{
+				"command": "yet-another-case-changer.each-first-upper-custom1-case",
+				"title": "Yet Another Case Changer: Each First Upper Custom1 Case",
+                "enablement": "config.yet-another-case-changer.custom1-separator && config.yet-another-case-changer.activate.each-first-upper-dot-case != 'false' && editorHasSelection"
+			},
+			{
+				"command": "yet-another-case-changer.each-first-lower-custom1-case",
+				"title": "Yet Another Case Changer: Each First Lower Custom1 Case",
+                "enablement": "config.yet-another-case-changer.custom1-separator && config.yet-another-case-changer.activate.each-first-lower-dot-case != 'false' && editorHasSelection"
 			}
 		]
 	},
