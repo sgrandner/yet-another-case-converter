@@ -15,8 +15,6 @@ export function iterateSelections(selectionEditor: SelectionEditor) {
 
             editSelections(activeTextEditor, validTextSelections, selectionEditor);
 
-        } else {
-            vscode.window.showWarningMessage('nothing selected !');
         }
     }
 }
@@ -61,10 +59,8 @@ function editSelections(
             .map((textSelection: TextSelection): string => `"${textSelection.text}"`)
             .join(', ');
 
-        if (!!editDone) {
-            vscode.window.showInformationMessage(`edit done for ${selectionsString}`);
-        } else {
-            vscode.window.showWarningMessage(`edit not done for ${selectionsString}`);
+        if (!editDone) {
+            vscode.window.showWarningMessage(`failed to change case for ${selectionsString}`);
         }
     });
 }

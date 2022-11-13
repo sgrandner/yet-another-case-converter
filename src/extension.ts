@@ -144,20 +144,6 @@ export function activate(context: vscode.ExtensionContext) {
             veryFirstCaseConversion: VeryFirstCaseConversion.none,
         },
 
-        // NOTE this does not work and should throw a warning ! for testing purposes !
-        {
-            commandName: 'each-upper-camel-case',
-            separator: Separator.camel,
-            segmentCaseConversion: upper,
-            veryFirstCaseConversion: VeryFirstCaseConversion.none,
-        },
-        // NOTE this does not work and should throw a warning ! for testing purposes !
-        {
-            commandName: 'each-lower-camel-case',
-            separator: Separator.camel,
-            segmentCaseConversion: lower,
-            veryFirstCaseConversion: VeryFirstCaseConversion.none,
-        },
         {
             commandName: 'upper-camel-case',
             separator: Separator.camel,
@@ -169,13 +155,6 @@ export function activate(context: vscode.ExtensionContext) {
             separator: Separator.camel,
             segmentCaseConversion: firstUpper,
             veryFirstCaseConversion: VeryFirstCaseConversion.lower,
-        },
-        // NOTE strange case which is not matched ! for testing purposes !
-        {
-            commandName: 'upper-inverse-camel-case',
-            separator: Separator.camel,
-            segmentCaseConversion: firstLower,
-            veryFirstCaseConversion: VeryFirstCaseConversion.upper,
         },
         {
             commandName: 'lower-inverse-camel-case',
@@ -225,7 +204,7 @@ export function activate(context: vscode.ExtensionContext) {
         context.subscriptions.push(disposable);
     });
 
-    disposable = vscode.commands.registerCommand(`yet-another-case-changer.upper-case`, () => {
+    disposable = vscode.commands.registerCommand('yet-another-case-changer.upper-case', () => {
 
         iterateSelections((editBuilder: vscode.TextEditorEdit, textSelection: TextSelection) => {
 
@@ -234,7 +213,7 @@ export function activate(context: vscode.ExtensionContext) {
     });
     context.subscriptions.push(disposable);
 
-    disposable = vscode.commands.registerCommand(`yet-another-case-changer.lower-case`, () => {
+    disposable = vscode.commands.registerCommand('yet-another-case-changer.lower-case', () => {
 
         iterateSelections((editBuilder: vscode.TextEditorEdit, textSelection: TextSelection) => {
 
