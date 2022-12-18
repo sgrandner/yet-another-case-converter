@@ -1,13 +1,24 @@
 import * as assert from 'assert';
 import * as vscode from 'vscode';
+import * as sinon from 'sinon';
 
 suite('Extension Test Suite', () => {
 
 	vscode.window.showInformationMessage('Start all tests.');
     let doc: vscode.TextDocument;
     let active: vscode.TextEditor | undefined;
+    let configStub: sinon.SinonStub;
+
+    setup(() => {
+        const getStub = {
+            get: () => '+',
+        };
+        configStub = sinon.stub(vscode.workspace, 'getConfiguration');
+        configStub.returns(getStub as unknown as vscode.WorkspaceConfiguration);
+    });
 
     teardown(async () => {
+        configStub.restore();
         await vscode.commands.executeCommand('workbench.action.closeAllEditors');
     });
 
@@ -137,22 +148,26 @@ suite('Extension Test Suite', () => {
             given: 'Qwer Asdf Yxcv',
             expected: 'qwer asdf yxcv',
         },
-        // {
-        //     commandName: 'upper-custom1-case',
-        //     expected: 'qwer asdf yxcv',
-        // },
-        // {
-        //     commandName: 'lower-custom1-case',
-        //     expected: 'qwer asdf yxcv',
-        // },
-        // {
-        //     commandName: 'each-first-upper-custom1-case',
-        //     expected: 'qwer asdf yxcv',
-        // },
-        // {
-        //     commandName: 'each-first-lower-custom1-case',
-        //     expected: 'qwer asdf yxcv',
-        // },
+        {
+            commandName: 'upper-custom1-case',
+            given: 'qwer asdf yxcv',
+            expected: 'QWER+ASDF+YXCV',
+        },
+        {
+            commandName: 'lower-custom1-case',
+            given: 'qwer asdf yxcv',
+            expected: 'qwer+asdf+yxcv',
+        },
+        {
+            commandName: 'each-first-upper-custom1-case',
+            given: 'qwer asdf yxcv',
+            expected: 'Qwer+Asdf+Yxcv',
+        },
+        {
+            commandName: 'each-first-lower-custom1-case',
+            given: 'qwer asdf yxcv',
+            expected: 'qWER+aSDF+yXCV',
+        },
     ].forEach((testArgs: { commandName: string, given: string, expected: string }) => {
 
         suite(`with given text and calling command ${testArgs.commandName}`, () => {
@@ -309,22 +324,26 @@ suite('Extension Test Suite', () => {
             commandName: 'each-first-upper-space-case',
             expected: 'Qwer Asdf Yxcv',
         },
-        // {
-        //     commandName: 'upper-custom1-case',
-        //     expected: 'qwer asdf yxcv',
-        // },
-        // {
-        //     commandName: 'lower-custom1-case',
-        //     expected: 'qwer asdf yxcv',
-        // },
-        // {
-        //     commandName: 'each-first-upper-custom1-case',
-        //     expected: 'qwer asdf yxcv',
-        // },
-        // {
-        //     commandName: 'each-first-lower-custom1-case',
-        //     expected: 'qwer asdf yxcv',
-        // },
+        {
+            given: 'QWER+ASDF+YXCV',
+            commandName: 'lower-space-case',
+            expected: 'qwer asdf yxcv',
+        },
+        {
+            given: 'qwer+asdf+yxcv',
+            commandName: 'lower-space-case',
+            expected: 'qwer asdf yxcv',
+        },
+        {
+            given: 'Qwer+Asdf+Yxcv',
+            commandName: 'lower-space-case',
+            expected: 'qwer asdf yxcv',
+        },
+        {
+            given: 'qWER+aSDF+yXCV',
+            commandName: 'lower-space-case',
+            expected: 'qwer asdf yxcv',
+        },
     ].forEach((testArgs: { given: string, commandName: string, expected: string }) => {
 
         suite(`with given case and calling command ${testArgs.commandName}`, () => {
