@@ -29,14 +29,21 @@ function gatherValidSelections(activeTextEditor: vscode.TextEditor): TextSelecti
 
             const range = new vscode.Range(selection.start, selection.end);
             const selectedText = activeTextEditor.document.getText(range);
+            const selectedTextLines = selectedText.split('\n');
 
-            if (!range.isEmpty && selectedText.length > 0) {
+            selectedTextLines.forEach((lineText: string, lineIndex: number) => {
 
-                validTextSelections.push({
-                    selection,
-                    text: selectedText,
-                });
-            }
+                if (lineText.length > 0) {
+    
+                    const selection = new vscode.Selection(range.start.line + lineIndex, 0, range.start.line + lineIndex, lineText.length);
+
+                    validTextSelections.push({
+                        selection,
+                        text: lineText,
+                    });
+                }
+            });
+
         }
     });
 
