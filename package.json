@@ -9,37 +9,6 @@
     "categories": [
         "Formatters"
     ],
-    "activationEvents": [
-        "onCommand:yet-another-case-changer.upper-snake-case",
-        "onCommand:yet-another-case-changer.lower-snake-case",
-        "onCommand:yet-another-case-changer.each-first-upper-snake-case",
-        "onCommand:yet-another-case-changer.each-first-lower-snake-case",
-        "onCommand:yet-another-case-changer.upper-double-snake-case",
-        "onCommand:yet-another-case-changer.lower-double-snake-case",
-        "onCommand:yet-another-case-changer.each-first-upper-double-snake-case",
-        "onCommand:yet-another-case-changer.each-first-lower-double-snake-case",
-        "onCommand:yet-another-case-changer.upper-kebap-case",
-        "onCommand:yet-another-case-changer.lower-kebap-case",
-        "onCommand:yet-another-case-changer.each-first-upper-kebap-case",
-        "onCommand:yet-another-case-changer.each-first-lower-kebap-case",
-        "onCommand:yet-another-case-changer.upper-space-case",
-        "onCommand:yet-another-case-changer.lower-space-case",
-        "onCommand:yet-another-case-changer.each-first-upper-space-case",
-        "onCommand:yet-another-case-changer.each-first-lower-space-case",
-        "onCommand:yet-another-case-changer.upper-dot-case",
-        "onCommand:yet-another-case-changer.lower-dot-case",
-        "onCommand:yet-another-case-changer.each-first-upper-dot-case",
-        "onCommand:yet-another-case-changer.each-first-lower-dot-case",
-        "onCommand:yet-another-case-changer.upper-camel-case",
-        "onCommand:yet-another-case-changer.lower-camel-case",
-        "onCommand:yet-another-case-changer.lower-inverse-camel-case",
-        "onCommand:yet-another-case-changer.upper-case",
-        "onCommand:yet-another-case-changer.lower-case",
-        "onCommand:yet-another-case-changer.upper-custom1-case",
-        "onCommand:yet-another-case-changer.lower-custom1-case",
-        "onCommand:yet-another-case-changer.each-first-upper-custom1-case",
-        "onCommand:yet-another-case-changer.each-first-lower-custom1-case"
-    ],
     "main": "./dist/extension.js",
     "contributes": {
         "commands": [
