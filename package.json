@@ -2,6 +2,7 @@
     "name": "yet-another-case-converter",
     "displayName": "Yet Another Case Converter",
     "description": "Change/toggle the case of the selected word(s)",
+    "publisher": "sgrandner",
     "version": "0.1.0",
     "engines": {
         "vscode": "^1.63.0"
