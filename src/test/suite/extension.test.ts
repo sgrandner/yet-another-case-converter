@@ -1,6 +1,6 @@
 import * as assert from 'assert';
-import * as vscode from 'vscode';
 import * as sinon from 'sinon';
+import * as vscode from 'vscode';
 
 suite('Extension Test Suite', () => {
 
@@ -9,6 +9,8 @@ suite('Extension Test Suite', () => {
     let active: vscode.TextEditor | undefined;
     let configStub: sinon.SinonStub;
 
+    // NOTE It is necessary to wait for commands to be executed in these tests.
+    //      Otherwise tests will fail. However, certain tests failed sometimes.
     const waitForCommand = 100;
 
     setup(() => {
@@ -376,92 +378,102 @@ suite('Extension Test Suite', () => {
         });
     });
 
-    suite('with multiple lines selected (multi-cursor selection)', () => {
+    [
+        {
+            lineBreak: '\n',
+        },
+        {
+            lineBreak: '\r\n',
+        },
+    ].forEach((testArgs: { lineBreak: string }) => {
 
-        setup(async () => {
-            doc = await vscode.workspace.openTextDocument({
-                content: 'qwer asdf yxcv\nasdf qwer yxcv yxcv',
+        suite('with multiple lines selected (multi-cursor selection)', () => {
+    
+            setup(async () => {
+                doc = await vscode.workspace.openTextDocument({
+                    content: `qwer asdf yxcv${testArgs.lineBreak}asdf qwer yxcv yxcv`,
+                });
+    
+                await vscode.window.showTextDocument(doc);
+    
+                active = vscode.window.activeTextEditor;
+                if (!!active) {
+                    const range1 = getRangeOfLines(active, 0, 0);
+                    const range2 = getRangeOfLines(active, 1, 1);
+                    active.selections = [ 
+                        new vscode.Selection(range1.start, range1.end),
+                        new vscode.Selection(range2.start, range2.end),
+                    ];
+                }
             });
-
-            await vscode.window.showTextDocument(doc);
-
-            active = vscode.window.activeTextEditor;
-            if (!!active) {
-                const range1 = getRangeOfLines(active, 0, 0);
-                const range2 = getRangeOfLines(active, 1, 1);
-                active.selections = [ 
-                    new vscode.Selection(range1.start, range1.end),
-                    new vscode.Selection(range2.start, range2.end),
-                ];
-            }
-        });
-
-        test(`it should convert multiple selections`, async () => {
-
-            await vscode.commands.executeCommand('yet-another-case-changer.upper-snake-case');
-            await sleep(waitForCommand);
-
-            const range = getRangeOfLines(active, 0, 1);
-            const result = active?.document.getText(range);
-            assert(result === 'QWER_ASDF_YXCV\nASDF_QWER_YXCV_YXCV', `failed to convert case to upper-snake-case, result was ${result}`);
-        });
-    });
-
-    suite('with multiple lines selected (single selection)', () => {
-
-        setup(async () => {
-            doc = await vscode.workspace.openTextDocument({
-                content: 'qwer asdf yxcv\nasdf qwer yxcv yxcv',
-            });
-
-            await vscode.window.showTextDocument(doc);
-
-            active = vscode.window.activeTextEditor;
-            if (!!active) {
+    
+            test(`it should convert multiple selections`, async () => {
+    
+                await vscode.commands.executeCommand('yet-another-case-changer.upper-snake-case');
+                await sleep(waitForCommand);
+    
                 const range = getRangeOfLines(active, 0, 1);
-                active.selection = new vscode.Selection(range.start, range.end);
-            }
-        });
-
-        test(`it should convert multiple selections line by line`, async () => {
-
-            await vscode.commands.executeCommand('yet-another-case-changer.upper-snake-case');
-            await sleep(waitForCommand);
-
-            const range = getRangeOfLines(active, 0, 1);
-            const result = active?.document.getText(range);
-            assert(result === 'QWER_ASDF_YXCV\nASDF_QWER_YXCV_YXCV', `failed to convert case to upper-snake-case, result was ${result}`);
-        });
-    });
-
-    suite('with multiple lines selected (multi-cursor multiline selections)', () => {
-
-        setup(async () => {
-            doc = await vscode.workspace.openTextDocument({
-                content: 'qwer asdf yxcv\nasdf qwer yxcv yxcv\nyxcv asdf qwer\nqwer yxcv asdf',
+                const result = active?.document.getText(range);
+                assert(result === `QWER_ASDF_YXCV${testArgs.lineBreak}ASDF_QWER_YXCV_YXCV`, `failed to convert case to upper-snake-case, result was ${result}`);
             });
-
-            await vscode.window.showTextDocument(doc);
-
-            active = vscode.window.activeTextEditor;
-            if (!!active) {
-                const range1 = getRangeOfLines(active, 0, 1);
-                const range2 = getRangeOfLines(active, 2, 3);
-                active.selections = [ 
-                    new vscode.Selection(range1.start, range1.end),
-                    new vscode.Selection(range2.start, range2.end),
-                ];
-            }
         });
-
-        test(`it should convert multiple multiline selections`, async () => {
-
-            await vscode.commands.executeCommand('yet-another-case-changer.upper-snake-case');
-            await sleep(waitForCommand);
-
-            const range = getRangeOfLines(active, 0, 3);
-            const result = active?.document.getText(range);
-            assert(result === 'QWER_ASDF_YXCV\nASDF_QWER_YXCV_YXCV\nYXCV_ASDF_QWER\nQWER_YXCV_ASDF', `failed to convert case to upper-snake-case, result was ${result}`);
+    
+        suite('with multiple lines selected (single selection)', () => {
+    
+            setup(async () => {
+                doc = await vscode.workspace.openTextDocument({
+                    content: `qwer asdf yxcv${testArgs.lineBreak}asdf qwer yxcv yxcv`,
+                });
+    
+                await vscode.window.showTextDocument(doc);
+    
+                active = vscode.window.activeTextEditor;
+                if (!!active) {
+                    const range = getRangeOfLines(active, 0, 1);
+                    active.selection = new vscode.Selection(range.start, range.end);
+                }
+            });
+    
+            test(`it should convert multiple selections line by line`, async () => {
+    
+                await vscode.commands.executeCommand('yet-another-case-changer.upper-snake-case');
+                await sleep(waitForCommand);
+    
+                const range = getRangeOfLines(active, 0, 1);
+                const result = active?.document.getText(range);
+                assert(result === `QWER_ASDF_YXCV${testArgs.lineBreak}ASDF_QWER_YXCV_YXCV`, `failed to convert case to upper-snake-case, result was ${result}`);
+            });
+        });
+    
+        suite('with multiple lines selected (multi-cursor multiline selections)', () => {
+    
+            setup(async () => {
+                doc = await vscode.workspace.openTextDocument({
+                    content: `qwer asdf yxcv${testArgs.lineBreak}asdf qwer yxcv yxcv${testArgs.lineBreak}yxcv asdf qwer${testArgs.lineBreak}qwer yxcv asdf`,
+                });
+    
+                await vscode.window.showTextDocument(doc);
+    
+                active = vscode.window.activeTextEditor;
+                if (!!active) {
+                    const range1 = getRangeOfLines(active, 0, 1);
+                    const range2 = getRangeOfLines(active, 2, 3);
+                    active.selections = [ 
+                        new vscode.Selection(range1.start, range1.end),
+                        new vscode.Selection(range2.start, range2.end),
+                    ];
+                }
+            });
+    
+            test(`it should convert multiple multiline selections`, async () => {
+    
+                await vscode.commands.executeCommand('yet-another-case-changer.upper-snake-case');
+                await sleep(waitForCommand);
+    
+                const range = getRangeOfLines(active, 0, 3);
+                const result = active?.document.getText(range);
+                assert(result === `QWER_ASDF_YXCV${testArgs.lineBreak}ASDF_QWER_YXCV_YXCV${testArgs.lineBreak}YXCV_ASDF_QWER${testArgs.lineBreak}QWER_YXCV_ASDF`, `failed to convert case to upper-snake-case, result was ${result}`);
+            });
         });
     });
 });

@@ -29,7 +29,7 @@ function gatherValidSelections(activeTextEditor: vscode.TextEditor): TextSelecti
 
             const range = new vscode.Range(selection.start, selection.end);
             const selectedText = activeTextEditor.document.getText(range);
-            const selectedTextLines = selectedText.split('\n');
+            const selectedTextLines = selectedText.split(/\r\n|\n/);
 
             selectedTextLines.forEach((lineText: string, lineIndex: number) => {
 

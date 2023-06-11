@@ -9,6 +9,10 @@ Supported cases:
 
 - supports **snake**, **double snake**, **kebap**, **space**, **dot** and **camel** in different upper and lower variants
 
+- supports multiline selection converting lines separately
+
+- supports multicursor selection
+
 - matches **acronyms** in camel case, e.g., *qwerNMOPAsdfYxcv* -> *qwer-nmop-asdf-yxcv*
 
 - supports a **custom** case, e.g. *asdf+qwer+yxcv*, which can be defined in the settings (yet-another-case-changer.custom1-separator)
