@@ -14,7 +14,7 @@ import { iterateSelections } from './iterate-selections';
 
 export function activate(context: vscode.ExtensionContext) {
 
-    const customSeparator1 = (String)(vscode.workspace.getConfiguration('yet-another-case-changer').get('custom1-separator'));
+    const customSeparator1 = (String)(vscode.workspace.getConfiguration('yet-another-case-converter').get('custom1-separator'));
 
     let disposable;
 
@@ -189,7 +189,7 @@ export function activate(context: vscode.ExtensionContext) {
         },
     ].forEach(({ commandName, separator, segmentCaseConversion, veryFirstCaseConversion }) => {
 
-        disposable = vscode.commands.registerCommand(`yet-another-case-changer.${commandName}`, () => {
+        disposable = vscode.commands.registerCommand(`yet-another-case-converter.${commandName}`, () => {
 
             iterateSelections((editBuilder: vscode.TextEditorEdit, textSelection: TextSelection) => {
 
@@ -204,7 +204,7 @@ export function activate(context: vscode.ExtensionContext) {
         context.subscriptions.push(disposable);
     });
 
-    disposable = vscode.commands.registerCommand('yet-another-case-changer.upper-case', () => {
+    disposable = vscode.commands.registerCommand('yet-another-case-converter.upper-case', () => {
 
         iterateSelections((editBuilder: vscode.TextEditorEdit, textSelection: TextSelection) => {
 
@@ -213,7 +213,7 @@ export function activate(context: vscode.ExtensionContext) {
     });
     context.subscriptions.push(disposable);
 
-    disposable = vscode.commands.registerCommand('yet-another-case-changer.lower-case', () => {
+    disposable = vscode.commands.registerCommand('yet-another-case-converter.lower-case', () => {
 
         iterateSelections((editBuilder: vscode.TextEditorEdit, textSelection: TextSelection) => {
 

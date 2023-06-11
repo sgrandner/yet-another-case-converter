@@ -43,7 +43,7 @@ export function generateCase(
     // static regex for space, dot, camel and kebap case
     // /([A-Z]{0,1}(?:[a-z0-9]+|[A-Z0-9]+))[ ._-]+|([A-Za-z][a-z0-9]+)|([A-Z0-9]+(?![a-z]))|([A-Za-z][A-Z0-9]+)[ ._-]*/g;
 
-    const customSeparator1 = (String)(vscode.workspace.getConfiguration('yet-another-case-changer').get('custom1-separator'));
+    const customSeparator1 = (String)(vscode.workspace.getConfiguration('yet-another-case-converter').get('custom1-separator'));
     const regex = new RegExp(`([A-Z]{0,1}(?:[a-z0-9]+|[A-Z0-9]+))[ ${customSeparator1}._-]+|([A-Za-z][a-z0-9]+)|([A-Z0-9]+(?![a-z]))|([A-Za-z][A-Z0-9]+)[ ${customSeparator1}._-]*`, 'g');
 
     let replacedString = text.replace(regex, (matched: string, captured1: string, captured2: string, captured3: string, captured4: string): string => {

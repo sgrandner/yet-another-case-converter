@@ -10,8 +10,9 @@ suite('Extension Test Suite', () => {
     let configStub: sinon.SinonStub;
 
     // NOTE It is necessary to wait for commands to be executed in these tests.
-    //      Otherwise tests will fail. However, certain tests failed sometimes.
-    const waitForCommand = 100;
+    //      Otherwise tests will fail. However, certain tests may fail sometimes.
+    //      Maybe there is a way to get rid of it.
+    const waitForCommand = 200;
 
     setup(() => {
         const getStub = {
@@ -192,7 +193,7 @@ suite('Extension Test Suite', () => {
 
             test(`it should convert selection to case`, async () => {
 
-                await vscode.commands.executeCommand(`yet-another-case-changer.${testArgs.commandName}`);
+                await vscode.commands.executeCommand(`yet-another-case-converter.${testArgs.commandName}`);
                 await sleep(waitForCommand);
 
                 const range = getRangeOfLines(active);
@@ -368,7 +369,7 @@ suite('Extension Test Suite', () => {
 
             test(`it should convert selection from given case to another`, async () => {
 
-                await vscode.commands.executeCommand(`yet-another-case-changer.${testArgs.commandName}`);
+                await vscode.commands.executeCommand(`yet-another-case-converter.${testArgs.commandName}`);
                 await sleep(waitForCommand);
 
                 const range = getRangeOfLines(active);
@@ -409,7 +410,7 @@ suite('Extension Test Suite', () => {
     
             test(`it should convert multiple selections`, async () => {
     
-                await vscode.commands.executeCommand('yet-another-case-changer.upper-snake-case');
+                await vscode.commands.executeCommand('yet-another-case-converter.upper-snake-case');
                 await sleep(waitForCommand);
     
                 const range = getRangeOfLines(active, 0, 1);
@@ -436,7 +437,7 @@ suite('Extension Test Suite', () => {
     
             test(`it should convert multiple selections line by line`, async () => {
     
-                await vscode.commands.executeCommand('yet-another-case-changer.upper-snake-case');
+                await vscode.commands.executeCommand('yet-another-case-converter.upper-snake-case');
                 await sleep(waitForCommand);
     
                 const range = getRangeOfLines(active, 0, 1);
@@ -467,7 +468,7 @@ suite('Extension Test Suite', () => {
     
             test(`it should convert multiple multiline selections`, async () => {
     
-                await vscode.commands.executeCommand('yet-another-case-changer.upper-snake-case');
+                await vscode.commands.executeCommand('yet-another-case-converter.upper-snake-case');
                 await sleep(waitForCommand);
     
                 const range = getRangeOfLines(active, 0, 3);

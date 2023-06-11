@@ -1,4 +1,4 @@
-# Yet Another Case Changer README
+# Yet Another Case Converter (VS Code Extension)
 
 ## Features
 
@@ -15,7 +15,7 @@ Supported cases:
 
 - matches **acronyms** in camel case, e.g., *qwerNMOPAsdfYxcv* -> *qwer-nmop-asdf-yxcv*
 
-- supports a **custom** case, e.g. *asdf+qwer+yxcv*, which can be defined in the settings (yet-another-case-changer.custom1-separator)
+- supports a **custom** case, e.g. *asdf+qwer+yxcv*, which can be defined in the settings (yet-another-case-converter.custom1-separator)
 
 - does not support some strange and unnecessary cases as, e.g.,  "upper inverse camel case" (*QWERaSDFyXCV*) and lower case acronyms in camel case (*qWERnmopaSDFyXCV*)
 
@@ -25,7 +25,7 @@ Supported cases:
 
 By default all commands are activated. Each of them can be deactivated in the settings. Editing the settings.json directly would be, e.g.,
 
-    "yet-another-case-changer.activate.upper-snake-case": false
+    "yet-another-case-converter.activate.upper-snake-case": false
 
 ## Known Issues
 

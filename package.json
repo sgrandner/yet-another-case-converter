@@ -1,6 +1,6 @@
 {
-    "name": "yet-another-case-changer",
-    "displayName": "Yet Another Case Changer",
+    "name": "yet-another-case-converter",
+    "displayName": "Yet Another Case Converter",
     "description": "Change/toggle the case of the selected word(s)",
     "version": "0.1.0",
     "engines": {
@@ -13,300 +13,300 @@
     "contributes": {
         "commands": [
             {
-                "command": "yet-another-case-changer.upper-snake-case",
-                "title": "Yet Another Case Changer: Upper Snake Case / Constant Case     (QWER_ASDF_YXCV)",
-                "enablement": "config.yet-another-case-changer.activate.upper-snake-case == true && editorHasSelection"
+                "command": "yet-another-case-converter.upper-snake-case",
+                "title": "Yet Another Case Converter: Upper Snake Case / Constant Case     (QWER_ASDF_YXCV)",
+                "enablement": "config.yet-another-case-converter.activate.upper-snake-case == true && editorHasSelection"
             },
             {
-                "command": "yet-another-case-changer.lower-snake-case",
-                "title": "Yet Another Case Changer: Lower Snake Case     (qwer_asdf_yxcv)",
-                "enablement": "config.yet-another-case-changer.activate.lower-snake-case == true && editorHasSelection"
+                "command": "yet-another-case-converter.lower-snake-case",
+                "title": "Yet Another Case Converter: Lower Snake Case     (qwer_asdf_yxcv)",
+                "enablement": "config.yet-another-case-converter.activate.lower-snake-case == true && editorHasSelection"
             },
             {
-                "command": "yet-another-case-changer.each-first-upper-snake-case",
-                "title": "Yet Another Case Changer: Each First Upper Snake Case     (Qwer_Asdf_Yxcv)",
-                "enablement": "config.yet-another-case-changer.activate.each-first-upper-snake-case == true && editorHasSelection"
+                "command": "yet-another-case-converter.each-first-upper-snake-case",
+                "title": "Yet Another Case Converter: Each First Upper Snake Case     (Qwer_Asdf_Yxcv)",
+                "enablement": "config.yet-another-case-converter.activate.each-first-upper-snake-case == true && editorHasSelection"
             },
             {
-                "command": "yet-another-case-changer.each-first-lower-snake-case",
-                "title": "Yet Another Case Changer: Each First Lower Snake Case     (qWER_aSDF_yXCV)",
-                "enablement": "config.yet-another-case-changer.activate.each-first-lower-snake-case == true && editorHasSelection"
+                "command": "yet-another-case-converter.each-first-lower-snake-case",
+                "title": "Yet Another Case Converter: Each First Lower Snake Case     (qWER_aSDF_yXCV)",
+                "enablement": "config.yet-another-case-converter.activate.each-first-lower-snake-case == true && editorHasSelection"
             },
             {
-                "command": "yet-another-case-changer.upper-double-snake-case",
-                "title": "Yet Another Case Changer: Upper Double Snake Case     (QWER__ASDF__YXCV)",
-                "enablement": "config.yet-another-case-changer.activate.upper-double-snake-case == true && editorHasSelection"
+                "command": "yet-another-case-converter.upper-double-snake-case",
+                "title": "Yet Another Case Converter: Upper Double Snake Case     (QWER__ASDF__YXCV)",
+                "enablement": "config.yet-another-case-converter.activate.upper-double-snake-case == true && editorHasSelection"
             },
             {
-                "command": "yet-another-case-changer.lower-double-snake-case",
-                "title": "Yet Another Case Changer: Lower Double Snake Case     (qwer__asdf__yxcv)",
-                "enablement": "config.yet-another-case-changer.activate.lower-double-snake-case == true && editorHasSelection"
+                "command": "yet-another-case-converter.lower-double-snake-case",
+                "title": "Yet Another Case Converter: Lower Double Snake Case     (qwer__asdf__yxcv)",
+                "enablement": "config.yet-another-case-converter.activate.lower-double-snake-case == true && editorHasSelection"
             },
             {
-                "command": "yet-another-case-changer.each-first-upper-double-snake-case",
-                "title": "Yet Another Case Changer: Each First Upper Double Snake Case     (Qwer__Asdf__Yxcv)",
-                "enablement": "config.yet-another-case-changer.activate.each-first-upper-double-snake-case == true && editorHasSelection"
+                "command": "yet-another-case-converter.each-first-upper-double-snake-case",
+                "title": "Yet Another Case Converter: Each First Upper Double Snake Case     (Qwer__Asdf__Yxcv)",
+                "enablement": "config.yet-another-case-converter.activate.each-first-upper-double-snake-case == true && editorHasSelection"
             },
             {
-                "command": "yet-another-case-changer.each-first-lower-double-snake-case",
-                "title": "Yet Another Case Changer: Each First Lower Double Snake Case     (qWER__aSDF__yXCV)",
-                "enablement": "config.yet-another-case-changer.activate.each-first-lower-double-snake-case == true && editorHasSelection"
+                "command": "yet-another-case-converter.each-first-lower-double-snake-case",
+                "title": "Yet Another Case Converter: Each First Lower Double Snake Case     (qWER__aSDF__yXCV)",
+                "enablement": "config.yet-another-case-converter.activate.each-first-lower-double-snake-case == true && editorHasSelection"
             },
             {
-                "command": "yet-another-case-changer.upper-kebap-case",
-                "title": "Yet Another Case Changer: Upper Kebap Case     (QWER-ASDF-YXCV)",
-                "enablement": "config.yet-another-case-changer.activate.upper-kebap-case == true && editorHasSelection"
+                "command": "yet-another-case-converter.upper-kebap-case",
+                "title": "Yet Another Case Converter: Upper Kebap Case     (QWER-ASDF-YXCV)",
+                "enablement": "config.yet-another-case-converter.activate.upper-kebap-case == true && editorHasSelection"
             },
             {
-                "command": "yet-another-case-changer.lower-kebap-case",
-                "title": "Yet Another Case Changer: Lower Kebap Case     (qwer-asdf-yxcv)",
-                "enablement": "config.yet-another-case-changer.activate.lower-kebap-case == true && editorHasSelection"
+                "command": "yet-another-case-converter.lower-kebap-case",
+                "title": "Yet Another Case Converter: Lower Kebap Case     (qwer-asdf-yxcv)",
+                "enablement": "config.yet-another-case-converter.activate.lower-kebap-case == true && editorHasSelection"
             },
             {
-                "command": "yet-another-case-changer.each-first-upper-kebap-case",
-                "title": "Yet Another Case Changer: Each First Upper Kebap Case     (Qwer-Asdf-Yxcv)",
-                "enablement": "config.yet-another-case-changer.activate.each-first-upper-kebap-case == true && editorHasSelection"
+                "command": "yet-another-case-converter.each-first-upper-kebap-case",
+                "title": "Yet Another Case Converter: Each First Upper Kebap Case     (Qwer-Asdf-Yxcv)",
+                "enablement": "config.yet-another-case-converter.activate.each-first-upper-kebap-case == true && editorHasSelection"
             },
             {
-                "command": "yet-another-case-changer.each-first-lower-kebap-case",
-                "title": "Yet Another Case Changer: Each First Lower Kebap Case     (qWER-aSDF-yXCV)",
-                "enablement": "config.yet-another-case-changer.activate.each-first-lower-kebap-case == true && editorHasSelection"
+                "command": "yet-another-case-converter.each-first-lower-kebap-case",
+                "title": "Yet Another Case Converter: Each First Lower Kebap Case     (qWER-aSDF-yXCV)",
+                "enablement": "config.yet-another-case-converter.activate.each-first-lower-kebap-case == true && editorHasSelection"
             },
             {
-                "command": "yet-another-case-changer.upper-space-case",
-                "title": "Yet Another Case Changer: Upper Space Case     (QWER ASDF YXCV)",
-                "enablement": "config.yet-another-case-changer.activate.upper-space-case == true && editorHasSelection"
+                "command": "yet-another-case-converter.upper-space-case",
+                "title": "Yet Another Case Converter: Upper Space Case     (QWER ASDF YXCV)",
+                "enablement": "config.yet-another-case-converter.activate.upper-space-case == true && editorHasSelection"
             },
             {
-                "command": "yet-another-case-changer.lower-space-case",
-                "title": "Yet Another Case Changer: Lower Space Case     (qwer asdf yxcv)",
-                "enablement": "config.yet-another-case-changer.activate.lower-space-case == true && editorHasSelection"
+                "command": "yet-another-case-converter.lower-space-case",
+                "title": "Yet Another Case Converter: Lower Space Case     (qwer asdf yxcv)",
+                "enablement": "config.yet-another-case-converter.activate.lower-space-case == true && editorHasSelection"
             },
             {
-                "command": "yet-another-case-changer.each-first-upper-space-case",
-                "title": "Yet Another Case Changer: Each First Upper Space Case / Title Case     (Qwer Asdf Yxcv)",
-                "enablement": "config.yet-another-case-changer.activate.each-first-upper-space-case == true && editorHasSelection"
+                "command": "yet-another-case-converter.each-first-upper-space-case",
+                "title": "Yet Another Case Converter: Each First Upper Space Case / Title Case     (Qwer Asdf Yxcv)",
+                "enablement": "config.yet-another-case-converter.activate.each-first-upper-space-case == true && editorHasSelection"
             },
             {
-                "command": "yet-another-case-changer.each-first-lower-space-case",
-                "title": "Yet Another Case Changer: Each First Lower Space Case     (qWER aSDF yXCV)",
-                "enablement": "config.yet-another-case-changer.activate.each-first-lower-space-case == true && editorHasSelection"
+                "command": "yet-another-case-converter.each-first-lower-space-case",
+                "title": "Yet Another Case Converter: Each First Lower Space Case     (qWER aSDF yXCV)",
+                "enablement": "config.yet-another-case-converter.activate.each-first-lower-space-case == true && editorHasSelection"
             },
             {
-                "command": "yet-another-case-changer.upper-dot-case",
-                "title": "Yet Another Case Changer: Upper Dot Case     (QWER.ASDF.YXCV)",
-                "enablement": "config.yet-another-case-changer.activate.upper-dot-case == true && editorHasSelection"
+                "command": "yet-another-case-converter.upper-dot-case",
+                "title": "Yet Another Case Converter: Upper Dot Case     (QWER.ASDF.YXCV)",
+                "enablement": "config.yet-another-case-converter.activate.upper-dot-case == true && editorHasSelection"
             },
             {
-                "command": "yet-another-case-changer.lower-dot-case",
-                "title": "Yet Another Case Changer: Lower Dot Case     (qwer.asdf.yxcv)",
-                "enablement": "config.yet-another-case-changer.activate.lower-dot-case == true && editorHasSelection"
+                "command": "yet-another-case-converter.lower-dot-case",
+                "title": "Yet Another Case Converter: Lower Dot Case     (qwer.asdf.yxcv)",
+                "enablement": "config.yet-another-case-converter.activate.lower-dot-case == true && editorHasSelection"
             },
             {
-                "command": "yet-another-case-changer.each-first-upper-dot-case",
-                "title": "Yet Another Case Changer: Each First Upper Dot Case     (Qwer.Asdf.Yxcv)",
-                "enablement": "config.yet-another-case-changer.activate.each-first-upper-dot-case == true && editorHasSelection"
+                "command": "yet-another-case-converter.each-first-upper-dot-case",
+                "title": "Yet Another Case Converter: Each First Upper Dot Case     (Qwer.Asdf.Yxcv)",
+                "enablement": "config.yet-another-case-converter.activate.each-first-upper-dot-case == true && editorHasSelection"
             },
             {
-                "command": "yet-another-case-changer.each-first-lower-dot-case",
-                "title": "Yet Another Case Changer: Each First Lower Dot Case     (qWER.aSDF.yXCV)",
-                "enablement": "config.yet-another-case-changer.activate.each-first-lower-dot-case == true && editorHasSelection"
+                "command": "yet-another-case-converter.each-first-lower-dot-case",
+                "title": "Yet Another Case Converter: Each First Lower Dot Case     (qWER.aSDF.yXCV)",
+                "enablement": "config.yet-another-case-converter.activate.each-first-lower-dot-case == true && editorHasSelection"
             },
             {
-                "command": "yet-another-case-changer.upper-camel-case",
-                "title": "Yet Another Case Changer: Upper Camel Case / Pascal Case     (QwerAsdfYxcv)",
-                "enablement": "config.yet-another-case-changer.activate.upper-camel-case == true && editorHasSelection"
+                "command": "yet-another-case-converter.upper-camel-case",
+                "title": "Yet Another Case Converter: Upper Camel Case / Pascal Case     (QwerAsdfYxcv)",
+                "enablement": "config.yet-another-case-converter.activate.upper-camel-case == true && editorHasSelection"
             },
             {
-                "command": "yet-another-case-changer.lower-camel-case",
-                "title": "Yet Another Case Changer: Lower Camel Case     (qwerAsdfYxcv)",
-                "enablement": "config.yet-another-case-changer.activate.lower-camel-case == true && editorHasSelection"
+                "command": "yet-another-case-converter.lower-camel-case",
+                "title": "Yet Another Case Converter: Lower Camel Case     (qwerAsdfYxcv)",
+                "enablement": "config.yet-another-case-converter.activate.lower-camel-case == true && editorHasSelection"
             },
             {
-                "command": "yet-another-case-changer.lower-inverse-camel-case",
-                "title": "Yet Another Case Changer: Lower Inverse Camel Case     (qWERaSDFyXCV)",
-                "enablement": "config.yet-another-case-changer.activate.lower-inverse-camel-case == true && editorHasSelection"
+                "command": "yet-another-case-converter.lower-inverse-camel-case",
+                "title": "Yet Another Case Converter: Lower Inverse Camel Case     (qWERaSDFyXCV)",
+                "enablement": "config.yet-another-case-converter.activate.lower-inverse-camel-case == true && editorHasSelection"
             },
             {
-                "command": "yet-another-case-changer.upper-case",
-                "title": "Yet Another Case Changer: Upper Case     (QWER)",
-                "enablement": "config.yet-another-case-changer.activate.upper-case == true && editorHasSelection"
+                "command": "yet-another-case-converter.upper-case",
+                "title": "Yet Another Case Converter: Upper Case     (QWER)",
+                "enablement": "config.yet-another-case-converter.activate.upper-case == true && editorHasSelection"
             },
             {
-                "command": "yet-another-case-changer.lower-case",
-                "title": "Yet Another Case Changer: Lower Case     (qwer)",
-                "enablement": "config.yet-another-case-changer.activate.lower-case == true && editorHasSelection"
+                "command": "yet-another-case-converter.lower-case",
+                "title": "Yet Another Case Converter: Lower Case     (qwer)",
+                "enablement": "config.yet-another-case-converter.activate.lower-case == true && editorHasSelection"
             },
             {
-                "command": "yet-another-case-changer.upper-custom1-case",
-                "title": "Yet Another Case Changer: Upper Custom1 Case",
-                "enablement": "config.yet-another-case-changer.custom1-separator && config.yet-another-case-changer.activate.upper-custom1-case == true && editorHasSelection"
+                "command": "yet-another-case-converter.upper-custom1-case",
+                "title": "Yet Another Case Converter: Upper Custom1 Case",
+                "enablement": "config.yet-another-case-converter.custom1-separator && config.yet-another-case-converter.activate.upper-custom1-case == true && editorHasSelection"
             },
             {
-                "command": "yet-another-case-changer.lower-custom1-case",
-                "title": "Yet Another Case Changer: Lower Custom1 Case",
-                "enablement": "config.yet-another-case-changer.custom1-separator && config.yet-another-case-changer.activate.lower-custom1-case == true && editorHasSelection"
+                "command": "yet-another-case-converter.lower-custom1-case",
+                "title": "Yet Another Case Converter: Lower Custom1 Case",
+                "enablement": "config.yet-another-case-converter.custom1-separator && config.yet-another-case-converter.activate.lower-custom1-case == true && editorHasSelection"
             },
             {
-                "command": "yet-another-case-changer.each-first-upper-custom1-case",
-                "title": "Yet Another Case Changer: Each First Upper Custom1 Case",
-                "enablement": "config.yet-another-case-changer.custom1-separator && config.yet-another-case-changer.activate.each-first-upper-custom1-case == true && editorHasSelection"
+                "command": "yet-another-case-converter.each-first-upper-custom1-case",
+                "title": "Yet Another Case Converter: Each First Upper Custom1 Case",
+                "enablement": "config.yet-another-case-converter.custom1-separator && config.yet-another-case-converter.activate.each-first-upper-custom1-case == true && editorHasSelection"
             },
             {
-                "command": "yet-another-case-changer.each-first-lower-custom1-case",
-                "title": "Yet Another Case Changer: Each First Lower Custom1 Case",
-                "enablement": "config.yet-another-case-changer.custom1-separator && config.yet-another-case-changer.activate.each-first-lower-custom1-case == true && editorHasSelection"
+                "command": "yet-another-case-converter.each-first-lower-custom1-case",
+                "title": "Yet Another Case Converter: Each First Lower Custom1 Case",
+                "enablement": "config.yet-another-case-converter.custom1-separator && config.yet-another-case-converter.activate.each-first-lower-custom1-case == true && editorHasSelection"
             }
         ],
         "configuration": {
-            "title": "Yet Another Case Changer",
+            "title": "Yet Another Case Converter",
             "properties": {
-                "yet-another-case-changer.activate.upper-snake-case": {
+                "yet-another-case-converter.activate.upper-snake-case": {
                     "type": "boolean",
                     "default": true,
                     "description": "Activate upper-snake-case command"
                 },
-                "yet-another-case-changer.activate.lower-snake-case": {
+                "yet-another-case-converter.activate.lower-snake-case": {
                     "type": "boolean",
                     "default": true,
                     "description": "Activate lower-snake-case command"
                 },
-                "yet-another-case-changer.activate.each-first-upper-snake-case": {
+                "yet-another-case-converter.activate.each-first-upper-snake-case": {
                     "type": "boolean",
                     "default": true,
                     "description": "Activate each-first-upper-snake-case command"
                 },
-                "yet-another-case-changer.activate.each-first-lower-snake-case": {
+                "yet-another-case-converter.activate.each-first-lower-snake-case": {
                     "type": "boolean",
                     "default": true,
                     "description": "Activate each-first-lower-snake-case command"
                 },
-                "yet-another-case-changer.activate.upper-double-snake-case": {
+                "yet-another-case-converter.activate.upper-double-snake-case": {
                     "type": "boolean",
                     "default": true,
                     "description": "Activate upper-double-snake-case command"
                 },
-                "yet-another-case-changer.activate.lower-double-snake-case": {
+                "yet-another-case-converter.activate.lower-double-snake-case": {
                     "type": "boolean",
                     "default": true,
                     "description": "Activate lower-double-snake-case command"
                 },
-                "yet-another-case-changer.activate.each-first-upper-double-snake-case": {
+                "yet-another-case-converter.activate.each-first-upper-double-snake-case": {
                     "type": "boolean",
                     "default": true,
                     "description": "Activate each-first-upper-double-snake-case command"
                 },
-                "yet-another-case-changer.activate.each-first-lower-double-snake-case": {
+                "yet-another-case-converter.activate.each-first-lower-double-snake-case": {
                     "type": "boolean",
                     "default": true,
                     "description": "Activate each-first-lower-double-snake-case command"
                 },
-                "yet-another-case-changer.activate.upper-kebap-case": {
+                "yet-another-case-converter.activate.upper-kebap-case": {
                     "type": "boolean",
                     "default": true,
                     "description": "Activate upper-kebap-case command"
                 },
-                "yet-another-case-changer.activate.lower-kebap-case": {
+                "yet-another-case-converter.activate.lower-kebap-case": {
                     "type": "boolean",
                     "default": true,
                     "description": "Activate lower-kebap-case command"
                 },
-                "yet-another-case-changer.activate.each-first-upper-kebap-case": {
+                "yet-another-case-converter.activate.each-first-upper-kebap-case": {
                     "type": "boolean",
                     "default": true,
                     "description": "Activate each-first-upper-kebap-case command"
                 },
-                "yet-another-case-changer.activate.each-first-lower-kebap-case": {
+                "yet-another-case-converter.activate.each-first-lower-kebap-case": {
                     "type": "boolean",
                     "default": true,
                     "description": "Activate each-first-lower-kebap-case command"
                 },
-                "yet-another-case-changer.activate.upper-space-case": {
+                "yet-another-case-converter.activate.upper-space-case": {
                     "type": "boolean",
                     "default": true,
                     "description": "Activate upper-space-case command"
                 },
-                "yet-another-case-changer.activate.lower-space-case": {
+                "yet-another-case-converter.activate.lower-space-case": {
                     "type": "boolean",
                     "default": true,
                     "description": "Activate lower-space-case command"
                 },
-                "yet-another-case-changer.activate.each-first-upper-space-case": {
+                "yet-another-case-converter.activate.each-first-upper-space-case": {
                     "type": "boolean",
                     "default": true,
                     "description": "Activate each-first-upper-space-case command"
                 },
-                "yet-another-case-changer.activate.each-first-lower-space-case": {
+                "yet-another-case-converter.activate.each-first-lower-space-case": {
                     "type": "boolean",
                     "default": true,
                     "description": "Activate each-first-lower-space-case command"
                 },
-                "yet-another-case-changer.activate.upper-dot-case": {
+                "yet-another-case-converter.activate.upper-dot-case": {
                     "type": "boolean",
                     "default": true,
                     "description": "Activate upper-dot-case command"
                 },
-                "yet-another-case-changer.activate.lower-dot-case": {
+                "yet-another-case-converter.activate.lower-dot-case": {
                     "type": "boolean",
                     "default": true,
                     "description": "Activate lower-dot-case command"
                 },
-                "yet-another-case-changer.activate.each-first-upper-dot-case": {
+                "yet-another-case-converter.activate.each-first-upper-dot-case": {
                     "type": "boolean",
                     "default": true,
                     "description": "Activate each-first-upper-dot-case command"
                 },
-                "yet-another-case-changer.activate.each-first-lower-dot-case": {
+                "yet-another-case-converter.activate.each-first-lower-dot-case": {
                     "type": "boolean",
                     "default": true,
                     "description": "Activate each-first-lower-dot-case command"
                 },
-                "yet-another-case-changer.activate.upper-camel-case": {
+                "yet-another-case-converter.activate.upper-camel-case": {
                     "type": "boolean",
                     "default": true,
                     "description": "Activate upper-camel-case command"
                 },
-                "yet-another-case-changer.activate.lower-camel-case": {
+                "yet-another-case-converter.activate.lower-camel-case": {
                     "type": "boolean",
                     "default": true,
                     "description": "Activate lower-camel-case command"
                 },
-                "yet-another-case-changer.activate.lower-inverse-camel-case": {
+                "yet-another-case-converter.activate.lower-inverse-camel-case": {
                     "type": "boolean",
                     "default": true,
                     "description": "Activate lower-inverse-camel-case command"
                 },
-                "yet-another-case-changer.activate.upper-case": {
+                "yet-another-case-converter.activate.upper-case": {
                     "type": "boolean",
                     "default": true,
                     "description": "Activate upper-case command"
                 },
-                "yet-another-case-changer.activate.lower-case": {
+                "yet-another-case-converter.activate.lower-case": {
                     "type": "boolean",
                     "default": true,
                     "description": "Activate lower-case command"
                 },
-                "yet-another-case-changer.custom1-separator": {
+                "yet-another-case-converter.custom1-separator": {
                     "type": "string",
                     "default": "",
                     "description": "Define custom1-separator"
                 },
-                "yet-another-case-changer.activate.upper-custom1-case": {
+                "yet-another-case-converter.activate.upper-custom1-case": {
                     "type": "boolean",
                     "default": true,
                     "description": "Activate upper-custom1-case command"
                 },
-                "yet-another-case-changer.activate.lower-custom1-case": {
+                "yet-another-case-converter.activate.lower-custom1-case": {
                     "type": "boolean",
                     "default": true,
                     "description": "Activate lower-custom1-case command"
                 },
-                "yet-another-case-changer.activate.each-first-upper-custom1-case": {
+                "yet-another-case-converter.activate.each-first-upper-custom1-case": {
                     "type": "boolean",
                     "default": true,
                     "description": "Activate each-first-upper-custom1-case command"
                 },
-                "yet-another-case-changer.activate.each-first-lower-custom1-case": {
+                "yet-another-case-converter.activate.each-first-lower-custom1-case": {
                     "type": "boolean",
                     "default": true,
                     "description": "Activate each-first-lower-custom1-case command"
@@ -345,6 +345,6 @@
     },
     "repository": {
         "type": "git",
-        "url": "https://github.com/sgrandner/yet-another-case-changer.git"
+        "url": "https://github.com/sgrandner/yet-another-case-converter.git"
     }
 }
