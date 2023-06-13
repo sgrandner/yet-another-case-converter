@@ -12,7 +12,7 @@ suite('Extension Test Suite', () => {
     // NOTE It is necessary to wait for commands to be executed in these tests.
     //      Otherwise tests will fail. However, certain tests may fail sometimes.
     //      Maybe there is a way to get rid of it.
-    const waitForCommand = 200;
+    const waitForCommand = 2000;
 
     setup(() => {
         const getStub = {
@@ -475,6 +475,145 @@ suite('Extension Test Suite', () => {
                 const result = active?.document.getText(range);
                 assert(result === `QWER_ASDF_YXCV${testArgs.lineBreak}ASDF_QWER_YXCV_YXCV${testArgs.lineBreak}YXCV_ASDF_QWER${testArgs.lineBreak}QWER_YXCV_ASDF`, `failed to convert case to upper-snake-case, result was ${result}`);
             });
+        });
+    });
+
+    suite.only('with selection not at start of line', () => {
+
+        setup(async () => {
+            doc = await vscode.workspace.openTextDocument({
+                content: 'qwer asdf yxcv dfgh',
+            });
+
+            await vscode.window.showTextDocument(doc);
+
+            active = vscode.window.activeTextEditor;
+            if (!!active) {
+                const range = new vscode.Range(0, 5, 0, 19);
+                active.selection = new vscode.Selection(range.start, range.end);
+            }
+        });
+
+        test('it should convert selection at same position', async () => {
+
+            await vscode.commands.executeCommand('yet-another-case-converter.upper-snake-case');
+            await sleep(waitForCommand);
+
+            const range = getRangeOfLines(active);
+            const result = active?.document.getText(range);
+            assert(result === 'qwer ASDF_YXCV_DFGH', `failed to convert case to ASDF_YXCV_DFGH, result was ${result}`);
+        });
+    });
+
+    suite.only('with selection not at start of line and ends before end of line', () => {
+
+        setup(async () => {
+            doc = await vscode.workspace.openTextDocument({
+                content: 'qwer asdf yxcv dfgh cvbn',
+            });
+
+            await vscode.window.showTextDocument(doc);
+
+            active = vscode.window.activeTextEditor;
+            if (!!active) {
+                const range = new vscode.Range(0, 5, 0, 19);
+                active.selection = new vscode.Selection(range.start, range.end);
+            }
+        });
+
+        test('it should convert selection at same position', async () => {
+
+            await vscode.commands.executeCommand('yet-another-case-converter.upper-snake-case');
+            await sleep(waitForCommand);
+
+            const range = getRangeOfLines(active);
+            const result = active?.document.getText(range);
+            assert(result === 'qwer ASDF_YXCV_DFGH cvbn', `failed to convert case to ASDF_YXCV_DFGH, result was ${result}`);
+        });
+    });
+
+    suite.only('with multiple lines selected (multi-cursor selection) and selections not at start of line and end before end of lines', () => {
+    
+        setup(async () => {
+            doc = await vscode.workspace.openTextDocument({
+                content: `qwer asdf yxcv dfgh cvbn\nqwer asdf yxcv dfgh cvbn rtzu`,
+            });
+
+            await vscode.window.showTextDocument(doc);
+
+            active = vscode.window.activeTextEditor;
+            if (!!active) {
+                const range1 = new vscode.Range(0, 5, 0, 19);
+                const range2 = new vscode.Range(1, 10, 1, 24);
+                active.selections = [ 
+                    new vscode.Selection(range1.start, range1.end),
+                    new vscode.Selection(range2.start, range2.end),
+                ];
+            }
+        });
+
+        test(`it should convert multiple selections`, async () => {
+
+            await vscode.commands.executeCommand('yet-another-case-converter.upper-snake-case');
+            await sleep(waitForCommand);
+
+            const range = getRangeOfLines(active, 0, 1);
+            const result = active?.document.getText(range);
+            assert(result === 'qwer ASDF_YXCV_DFGH cvbn\nqwer asdf YXCV_DFGH_CVBN rtzu', `failed to convert case to upper-snake-case, result was ${result}`);
+        });
+    });
+
+    suite.only('with multiple lines selected (multi-line selection) and selection not at start of first line', () => {
+    
+        setup(async () => {
+            doc = await vscode.workspace.openTextDocument({
+                content: `qwer asdf yxcv dfgh cvbn\nqwer asdf yxcv dfgh cvbn rtzu`,
+            });
+
+            await vscode.window.showTextDocument(doc);
+
+            active = vscode.window.activeTextEditor;
+            if (!!active) {
+                const range = new vscode.Range(0, 5, 1, 19);
+                active.selection = new vscode.Selection(range.start, range.end);
+            }
+        });
+
+        test(`it should convert multiple selections`, async () => {
+
+            await vscode.commands.executeCommand('yet-another-case-converter.upper-snake-case');
+            await sleep(waitForCommand);
+
+            const range = getRangeOfLines(active, 0, 1);
+            const result = active?.document.getText(range);
+            assert(result === 'qwer ASDF_YXCV_DFGH_CVBN\nQWER_ASDF_YXCV_DFGH cvbn rtzu', `failed to convert case to upper-snake-case, result was ${result}`);
+        });
+    });
+
+    suite.only('with multiple lines selected (multi-line selection) and selection not at start of first line and end of selection at start of last line', () => {
+    
+        setup(async () => {
+            doc = await vscode.workspace.openTextDocument({
+                content: `qwer asdf yxcv dfgh cvbn\nqwer asdf yxcv dfgh cvbn rtzu\nsdfg dfgh fghj`,
+            });
+
+            await vscode.window.showTextDocument(doc);
+
+            active = vscode.window.activeTextEditor;
+            if (!!active) {
+                const range = new vscode.Range(0, 5, 2, 0);
+                active.selection = new vscode.Selection(range.start, range.end);
+            }
+        });
+
+        test(`it should convert multiple selections`, async () => {
+
+            await vscode.commands.executeCommand('yet-another-case-converter.upper-snake-case');
+            await sleep(waitForCommand);
+
+            const range = getRangeOfLines(active, 0, 1);
+            const result = active?.document.getText(range);
+            assert(result === 'qwer ASDF_YXCV_DFGH_CVBN\nQWER_ASDF_YXCV_DFGH_CVBN_RTZU\nsdfg dfgh fghj', `failed to convert case to upper-snake-case, result was ${result}`);
         });
     });
 });

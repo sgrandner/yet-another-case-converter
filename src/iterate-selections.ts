@@ -23,19 +23,28 @@ function gatherValidSelections(activeTextEditor: vscode.TextEditor): TextSelecti
 
     const validTextSelections: TextSelection[] = [];
 
+    // NOTE iterate one or more selection (multi-cursor)
     activeTextEditor.selections?.forEach((selection: vscode.Selection) => {
 
         if (!!selection) {
 
             const range = new vscode.Range(selection.start, selection.end);
             const selectedText = activeTextEditor.document.getText(range);
+
+            // NOTE split multiline selection and iterate
             const selectedTextLines = selectedText.split(/\r\n|\n/);
 
             selectedTextLines.forEach((lineText: string, lineIndex: number) => {
 
                 if (lineText.length > 0) {
     
-                    const selection = new vscode.Selection(range.start.line + lineIndex, 0, range.start.line + lineIndex, lineText.length);
+                    // NOTE store each selection
+                    const selection = new vscode.Selection(
+                        range.start.line + lineIndex,
+                        range.start.character,
+                        range.start.line + lineIndex,
+                        lineText.length + range.start.character
+                    );
 
                     validTextSelections.push({
                         selection,
@@ -62,11 +71,11 @@ function editSelections(
 
     }).then((editDone: boolean) => {
 
-        const selectionsString = validTextSelections
-            .map((textSelection: TextSelection): string => `"${textSelection.text}"`)
-            .join(', ');
-
         if (!editDone) {
+            const selectionsString = validTextSelections
+                .map((textSelection: TextSelection): string => `"${textSelection.text}"`)
+                .join(', ');
+            
             vscode.window.showWarningMessage(`failed to change case for ${selectionsString}`);
         }
     });
