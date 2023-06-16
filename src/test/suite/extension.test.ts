@@ -198,7 +198,7 @@ suite('Extension Test Suite', () => {
 
                 const range = getRangeOfLines(active);
                 const result = active?.document.getText(range);
-                assert(result === testArgs.expected, failedMsg(testArgs.commandName, result));
+                assert(result === testArgs.expected, failedMsg(testArgs.given, testArgs.commandName, result));
             });
         });
     });
@@ -374,8 +374,89 @@ suite('Extension Test Suite', () => {
 
                 const range = getRangeOfLines(active);
                 const result = active?.document.getText(range);
-                assert(result === testArgs.expected, failedMsg(testArgs.commandName, result));
+                assert(result === testArgs.expected, failedMsg(testArgs.given, testArgs.commandName, result));
             });
+        });
+    });
+
+    suite.only('with single character selected', () => {
+
+        setup(async () => {
+            doc = await vscode.workspace.openTextDocument({
+                content: 'q',
+            });
+
+            await vscode.window.showTextDocument(doc);
+
+            active = vscode.window.activeTextEditor;
+            if (!!active) {
+                const range = new vscode.Range(0, 0, 0, 1);
+                active.selection = new vscode.Selection(range.start, range.end);
+            }
+        });
+
+        test('it should convert selection at same position', async () => {
+
+            await vscode.commands.executeCommand('yet-another-case-converter.upper-snake-case');
+            await sleep(waitForCommand);
+
+            const range = getRangeOfLines(active);
+            const result = active?.document.getText(range);
+            assert(result === 'Q', failedMsg('q', 'upper-snake-case', result));
+        });
+    });
+
+    suite.only('with one of two characters selected', () => {
+
+        setup(async () => {
+            doc = await vscode.workspace.openTextDocument({
+                content: 'qw',
+            });
+
+            await vscode.window.showTextDocument(doc);
+
+            active = vscode.window.activeTextEditor;
+            if (!!active) {
+                const range = new vscode.Range(0, 0, 0, 1);
+                active.selection = new vscode.Selection(range.start, range.end);
+            }
+        });
+
+        test('it should convert selection at same position', async () => {
+
+            await vscode.commands.executeCommand('yet-another-case-converter.upper-snake-case');
+            await sleep(waitForCommand);
+
+            const range = getRangeOfLines(active);
+            const result = active?.document.getText(range);
+            assert(result === 'Qw', failedMsg('qw', 'upper-snake-case', result));
+        });
+    });
+
+    suite.only('with two characters selected', () => {
+
+        setup(async () => {
+            doc = await vscode.workspace.openTextDocument({
+                content: 'qw',
+            });
+
+            await vscode.window.showTextDocument(doc);
+
+            active = vscode.window.activeTextEditor;
+            if (!!active) {
+                const range = new vscode.Range(0, 0, 0, 2);
+                active.selection = new vscode.Selection(range.start, range.end);
+            }
+        });
+
+        test('it should convert selection at same position', async () => {
+
+            await vscode.commands.executeCommand('yet-another-case-converter.upper-snake-case');
+            await sleep(waitForCommand);
+
+            const range = getRangeOfLines(active);
+            const result = active?.document.getText(range);
+            assert(result === 'QW', failedMsg('qw', 'upper-snake-case', result));
         });
     });
 
@@ -415,7 +496,7 @@ suite('Extension Test Suite', () => {
     
                 const range = getRangeOfLines(active, 0, 1);
                 const result = active?.document.getText(range);
-                assert(result === `QWER_ASDF_YXCV${testArgs.lineBreak}ASDF_QWER_YXCV_YXCV`, failedMsg('upper-snake-case', result));
+                assert(result === `QWER_ASDF_YXCV${testArgs.lineBreak}ASDF_QWER_YXCV_YXCV`, failedMsg(`qwer asdf yxcv${testArgs.lineBreak}asdf qwer yxcv yxcv`, 'upper-snake-case', result));
             });
         });
     
@@ -442,7 +523,7 @@ suite('Extension Test Suite', () => {
     
                 const range = getRangeOfLines(active, 0, 1);
                 const result = active?.document.getText(range);
-                assert(result === `QWER_ASDF_YXCV${testArgs.lineBreak}ASDF_QWER_YXCV_YXCV`, failedMsg('upper-snake-case', result));
+                assert(result === `QWER_ASDF_YXCV${testArgs.lineBreak}ASDF_QWER_YXCV_YXCV`, failedMsg(`qwer asdf yxcv${testArgs.lineBreak}asdf qwer yxcv yxcv`, 'upper-snake-case', result));
             });
         });
     
@@ -473,7 +554,7 @@ suite('Extension Test Suite', () => {
     
                 const range = getRangeOfLines(active, 0, 3);
                 const result = active?.document.getText(range);
-                assert(result === `QWER_ASDF_YXCV${testArgs.lineBreak}ASDF_QWER_YXCV_YXCV${testArgs.lineBreak}YXCV_ASDF_QWER${testArgs.lineBreak}QWER_YXCV_ASDF`, failedMsg('upper-snake-case', result));
+                assert(result === `QWER_ASDF_YXCV${testArgs.lineBreak}ASDF_QWER_YXCV_YXCV${testArgs.lineBreak}YXCV_ASDF_QWER${testArgs.lineBreak}QWER_YXCV_ASDF`, failedMsg(`qwer asdf yxcv${testArgs.lineBreak}asdf qwer yxcv yxcv${testArgs.lineBreak}yxcv asdf qwer${testArgs.lineBreak}qwer yxcv asdf`, 'upper-snake-case', result));
             });
         });
     });
@@ -501,7 +582,7 @@ suite('Extension Test Suite', () => {
 
             const range = getRangeOfLines(active);
             const result = active?.document.getText(range);
-            assert(result === 'qwer ASDF_YXCV_DFGH', failedMsg('ASDF_YXCV_DFGH', result));
+            assert(result === 'qwer ASDF_YXCV_DFGH', failedMsg('qwer asdf yxcv dfgh', 'upper-snake-case', result));
         });
     });
 
@@ -528,7 +609,7 @@ suite('Extension Test Suite', () => {
 
             const range = getRangeOfLines(active);
             const result = active?.document.getText(range);
-            assert(result === 'qwer ASDF_YXCV_DFGH cvbn', failedMsg('ASDF_YXCV_DFGH', result));
+            assert(result === 'qwer ASDF_YXCV_DFGH cvbn', failedMsg('qwer asdf yxcv dfgh cvbn', 'upper-snake-case', result));
         });
     });
 
@@ -559,7 +640,7 @@ suite('Extension Test Suite', () => {
 
             const range = getRangeOfLines(active, 0, 1);
             const result = active?.document.getText(range);
-            assert(result === 'qwer ASDF_YXCV_DFGH cvbn\nqwer asdf YXCV_DFGH_CVBN rtzu', failedMsg('upper-snake-case', result));
+            assert(result === 'qwer ASDF_YXCV_DFGH cvbn\nqwer asdf YXCV_DFGH_CVBN rtzu', failedMsg('qwer asdf yxcv dfgh cvbn\nqwer asdf yxcv dfgh cvbn rtzu', 'upper-snake-case', result));
         });
     });
 
@@ -567,7 +648,7 @@ suite('Extension Test Suite', () => {
     
         setup(async () => {
             doc = await vscode.workspace.openTextDocument({
-                content: `qwer asdf yxcv dfgh cvbn\nqwer asdf yxcv dfgh cvbn rtzu`,
+                content: 'qwer asdf yxcv dfgh cvbn\nqwer asdf yxcv dfgh cvbn rtzu',
             });
 
             await vscode.window.showTextDocument(doc);
@@ -586,7 +667,7 @@ suite('Extension Test Suite', () => {
 
             const range = getRangeOfLines(active, 0, 1);
             const result = active?.document.getText(range);
-            assert(result === 'qwer ASDF_YXCV_DFGH_CVBN\nQWER_ASDF_YXCV_DFGH cvbn rtzu', failedMsg('upper-snake-case', result));
+            assert(result === 'qwer ASDF_YXCV_DFGH_CVBN\nQWER_ASDF_YXCV_DFGH cvbn rtzu', failedMsg('qwer asdf yxcv dfgh cvbn\nqwer asdf yxcv dfgh cvbn rtzu', 'upper-snake-case', result));
         });
     });
 
@@ -594,7 +675,7 @@ suite('Extension Test Suite', () => {
     
         setup(async () => {
             doc = await vscode.workspace.openTextDocument({
-                content: `qwer asdf yxcv dfgh cvbn\nwert sdfg fghj ertz\nwert dfgh tzui hjkl dfgh sdfg`,
+                content: 'qwer asdf yxcv dfgh cvbn\nwert sdfg fghj ertz\nwert dfgh tzui hjkl dfgh sdfg',
             });
 
             await vscode.window.showTextDocument(doc);
@@ -613,7 +694,7 @@ suite('Extension Test Suite', () => {
 
             const range = getRangeOfLines(active, 0, 2);
             const result = active?.document.getText(range);
-            assert(result === 'qwer ASDF_YXCV_DFGH_CVBN\nWERT_SDFG_FGHJ_ERTZ\nWERT_DFGH_TZUI hjkl dfgh sdfg', failedMsg('upper-snake-case', result));
+            assert(result === 'qwer ASDF_YXCV_DFGH_CVBN\nWERT_SDFG_FGHJ_ERTZ\nWERT_DFGH_TZUI hjkl dfgh sdfg', failedMsg('qwer asdf yxcv dfgh cvbn\nwert sdfg fghj ertz\nwert dfgh tzui hjkl dfgh sdfg', 'upper-snake-case', result));
         });
     });
 
@@ -621,7 +702,7 @@ suite('Extension Test Suite', () => {
     
         setup(async () => {
             doc = await vscode.workspace.openTextDocument({
-                content: `qwer asdf yxcv dfgh cvbn\nqwer asdf yxcv dfgh cvbn rtzu\nsdfg dfgh fghj`,
+                content: 'qwer asdf yxcv dfgh cvbn\nqwer asdf yxcv dfgh cvbn rtzu\nsdfg dfgh fghj',
             });
 
             await vscode.window.showTextDocument(doc);
@@ -640,7 +721,7 @@ suite('Extension Test Suite', () => {
 
             const range = getRangeOfLines(active, 0, 2);
             const result = active?.document.getText(range);
-            assert(result === 'qwer ASDF_YXCV_DFGH_CVBN\nQWER_ASDF_YXCV_DFGH_CVBN_RTZU\nsdfg dfgh fghj', failedMsg('upper-snake-case', result));
+            assert(result === 'qwer ASDF_YXCV_DFGH_CVBN\nQWER_ASDF_YXCV_DFGH_CVBN_RTZU\nsdfg dfgh fghj', failedMsg('qwer asdf yxcv dfgh cvbn\nqwer asdf yxcv dfgh cvbn rtzu\nsdfg dfgh fghj', 'upper-snake-case', result));
         });
     });
 });
@@ -659,7 +740,7 @@ function sleep(time: number): Promise<void> {
     });
 }
 
-function failedMsg(commandName: string, result = ''): string {
+function failedMsg(given: string, commandName: string, result = ''): string {
 
-    return `failed to convert case to "${commandName}", result was "${result}"`;
+    return `Failed to convert "${given}" to "${commandName}". Result was "${result}" !`;
 }
