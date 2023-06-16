@@ -38,12 +38,15 @@ function gatherValidSelections(activeTextEditor: vscode.TextEditor): TextSelecti
 
                 if (lineText.length > 0) {
     
-                    // NOTE store each selection
+                    const currentLineIndex = range.start.line + lineIndex;
+                    const startCharacterIndex = lineIndex === 0 ? range.start.character : 0;
+
+                    // NOTE store each selection line by line
                     const selection = new vscode.Selection(
-                        range.start.line + lineIndex,
-                        range.start.character,
-                        range.start.line + lineIndex,
-                        lineText.length + range.start.character
+                        currentLineIndex,
+                        startCharacterIndex,
+                        currentLineIndex,
+                        startCharacterIndex + lineText.length
                     );
 
                     validTextSelections.push({
