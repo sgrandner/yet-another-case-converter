@@ -20,6 +20,10 @@ export function generateCase(
     veryFirst?: VeryFirstCaseConversion
 ): string {
 
+    if (text.length === 0) {
+        return text;
+    }
+
     if (separator === Separator.camel) {
 
         if (caseConversionFunction === upper || caseConversionFunction === lower) {
@@ -39,16 +43,23 @@ export function generateCase(
     // 2. alternative: camel case and lower case
     // 3. alternative: upper case without following first letter of camel case
     // 4. alternative: match inverse camel case but only "normal" invserse camel case (no upper very first letter or group of lower letters)
-
+    
     // static regex for space, dot, camel and kebap case
     // /([A-Z]{0,1}(?:[a-z0-9]+|[A-Z0-9]+))[ ._-]+|([A-Za-z][a-z0-9]+)|([A-Z0-9]+(?![a-z]))|([A-Za-z][A-Z0-9]+)[ ._-]*/g;
-
+    
     const customSeparator1 = (String)(vscode.workspace.getConfiguration('yet-another-case-converter').get('custom1-separator'));
-    const regex = new RegExp(`([A-Z]{0,1}(?:[a-z0-9]+|[A-Z0-9]+))[ ${customSeparator1}._-]+|([A-Za-z][a-z0-9]+)|([A-Z0-9]+(?![a-z]))|([A-Za-z][A-Z0-9]+)[ ${customSeparator1}._-]*`, 'g');
+    const separatorRegexString = ` ${customSeparator1}._-`;
 
-    let replacedString = text.replace(regex, (matched: string, captured1: string, captured2: string, captured3: string, captured4: string): string => {
+    if (text.match(`^[${separatorRegexString}]+$`)) {
+        vscode.window.showWarningMessage(`Selections only containing separators are not converted !`);
+        return text;
+    }
 
-        const replacedSegment = `${captured1 ?? ''}${captured2 ?? ''}${captured3 ?? ''}${captured4 ?? ''}${separator}`;
+    const regex = new RegExp(`([A-Z]{0,1}(?:[a-z0-9]+|[A-Z0-9]+))[${separatorRegexString}]+|([A-Za-z][a-z0-9]+)|([A-Z0-9]+(?![a-z]))|([A-Za-z][A-Z0-9]+)[${separatorRegexString}]*|([a-z0-9])`, 'g');
+
+    let replacedString = text.replace(regex, (matched: string, captured1: string, captured2: string, captured3: string, captured4: string, captured5: string): string => {
+
+        const replacedSegment = `${captured1 ?? ''}${captured2 ?? ''}${captured3 ?? ''}${captured4 ?? ''}${captured5 ?? ''}${separator}`;
 
         return caseConversionFunction(replacedSegment);
     });
