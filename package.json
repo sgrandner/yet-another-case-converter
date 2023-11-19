@@ -74,6 +74,26 @@
                 "enablement": "config.yet-another-case-converter.activate.each-first-lower-kebab-case == true && editorHasSelection"
             },
             {
+                "command": "yet-another-case-converter.upper-double-kebab-case",
+                "title": "Yet Another Case Converter: Upper Double Kebab Case     (QWER--ASDF--YXCV)",
+                "enablement": "config.yet-another-case-converter.activate.upper-double-kebab-case == true && editorHasSelection"
+            },
+            {
+                "command": "yet-another-case-converter.lower-double-kebab-case",
+                "title": "Yet Another Case Converter: Lower Double Kebab Case     (qwer--asdf--yxcv)",
+                "enablement": "config.yet-another-case-converter.activate.lower-double-kebab-case == true && editorHasSelection"
+            },
+            {
+                "command": "yet-another-case-converter.each-first-upper-double-kebab-case",
+                "title": "Yet Another Case Converter: Each First Upper Double Kebab Case     (Qwer--Asdf--Yxcv)",
+                "enablement": "config.yet-another-case-converter.activate.each-first-upper-double-kebab-case == true && editorHasSelection"
+            },
+            {
+                "command": "yet-another-case-converter.each-first-lower-double-kebab-case",
+                "title": "Yet Another Case Converter: Each First Lower Double Kebab Case     (qWER--aSDF--yXCV)",
+                "enablement": "config.yet-another-case-converter.activate.each-first-lower-double-kebab-case == true && editorHasSelection"
+            },
+            {
                 "command": "yet-another-case-converter.upper-space-case",
                 "title": "Yet Another Case Converter: Upper Space Case     (QWER ASDF YXCV)",
                 "enablement": "config.yet-another-case-converter.activate.upper-space-case == true && editorHasSelection"

@@ -89,6 +89,26 @@ suite('Extension Test Suite', () => {
             expected: 'qWER-aSDF-yXCV',
         },
         {
+            commandName: 'upper-double-kebab-case',
+            given: 'qwer asdf yxcv',
+            expected: 'QWER--ASDF--YXCV',
+        },
+        {
+            commandName: 'lower-double-kebab-case',
+            given: 'qwer asdf yxcv',
+            expected: 'qwer--asdf--yxcv',
+        },
+        {
+            commandName: 'each-first-upper-double-kebab-case',
+            given: 'qwer asdf yxcv',
+            expected: 'Qwer--Asdf--Yxcv',
+        },
+        {
+            commandName: 'each-first-lower-double-kebab-case',
+            given: 'qwer asdf yxcv',
+            expected: 'qWER--aSDF--yXCV',
+        },
+        {
             commandName: 'upper-space-case',
             given: 'qwer asdf yxcv',
             expected: 'QWER ASDF YXCV',
@@ -261,6 +281,26 @@ suite('Extension Test Suite', () => {
         },
         {
             given: 'qWER-aSDF-yXCV',
+            commandName: 'lower-space-case',
+            expected: 'qwer asdf yxcv',
+        },
+        {
+            given: 'QWER--ASDF--YXCV',
+            commandName: 'lower-space-case',
+            expected: 'qwer asdf yxcv',
+        },
+        {
+            given: 'qwer--asdf--yxcv',
+            commandName: 'lower-space-case',
+            expected: 'qwer asdf yxcv',
+        },
+        {
+            given: 'Qwer--Asdf--Yxcv',
+            commandName: 'lower-space-case',
+            expected: 'qwer asdf yxcv',
+        },
+        {
+            given: 'qWER--aSDF--yXCV',
             commandName: 'lower-space-case',
             expected: 'qwer asdf yxcv',
         },

@@ -95,6 +95,31 @@ export function activate(context: vscode.ExtensionContext) {
         },
 
         {
+            commandName: 'upper-double-kebab-case',
+            separator: Separator.doubleKebab,
+            segmentCaseConversion: upper,
+            veryFirstCaseConversion: VeryFirstCaseConversion.none,
+        },
+        {
+            commandName: 'lower-double-kebab-case',
+            separator: Separator.doubleKebab,
+            segmentCaseConversion: lower,
+            veryFirstCaseConversion: VeryFirstCaseConversion.none,
+        },
+        {
+            commandName: 'each-first-upper-double-kebab-case',
+            separator: Separator.doubleKebab,
+            segmentCaseConversion: firstUpper,
+            veryFirstCaseConversion: VeryFirstCaseConversion.none,
+        },
+        {
+            commandName: 'each-first-lower-double-kebab-case',
+            separator: Separator.doubleKebab,
+            segmentCaseConversion: firstLower,
+            veryFirstCaseConversion: VeryFirstCaseConversion.none,
+        },
+
+        {
             commandName: 'upper-space-case',
             separator: Separator.space,
             segmentCaseConversion: upper,
