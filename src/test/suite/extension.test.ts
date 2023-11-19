@@ -724,7 +724,7 @@ suite('Extension Test Suite', () => {
         });
     });
 
-    suite.only('special cases with separators', () => {
+    suite('special cases with separators', () => {
 
         [
             {

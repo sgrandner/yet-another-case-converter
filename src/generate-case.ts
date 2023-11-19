@@ -38,14 +38,13 @@ export function generateCase(
         }
     }
 
-    // NOTE this regex matches segments of a string by case
-    // 1. alternative: segments separated by one or more separation characters but also match camel case within separated segments
-    // 2. alternative: camel case and lower case
-    // 3. alternative: upper case without following first letter of camel case
-    // 4. alternative: match inverse camel case but only "normal" invserse camel case (no upper very first letter or group of lower letters)
-    
-    // static regex for space, dot, camel and kebap case
-    // /([A-Z]{0,1}(?:[a-z0-9]+|[A-Z0-9]+))[ ._-]+|([A-Za-z][a-z0-9]+)|([A-Z0-9]+(?![a-z]))|([A-Za-z][A-Z0-9]+)[ ._-]*/g;
+    // NOTE the following regex matches segments of a string (selection) by case
+    // 1. matching group: segments separated by one or more separation characters but also match camel case within separated segments
+    // 2. matching group: camel case and lower case
+    // 3. matching group: upper case without following first letter of camel case
+    // 4. matching group: match inverse camel case but only "normal" invserse camel case (no upper very first letter or group of lower letters)
+    // 5. matching group: single lower letters or numbers
+    // 6. matching group: leading separators
     
     const customSeparator1 = (String)(vscode.workspace.getConfiguration('yet-another-case-converter').get('custom1-separator'));
     const separatorRegexString = ` ${customSeparator1}._-`;
@@ -55,7 +54,7 @@ export function generateCase(
         return text;
     }
 
-    const regex = new RegExp(`([A-Z]{0,1}(?:[a-z0-9]+|[A-Z0-9]+))[${separatorRegexString}]+|([A-Za-z][a-z0-9]+)|([A-Z0-9]+(?![a-z]))|([A-Za-z][A-Z0-9]+)[${separatorRegexString}]*|([a-z0-9])`, 'g');
+    const regex = new RegExp(`([A-Z]{0,1}(?:[a-z0-9]+|[A-Z0-9]+))[${separatorRegexString}]+|([A-Za-z][a-z0-9]+)|([A-Z0-9]+(?![a-z]))|([A-Za-z][A-Z0-9]+)[${separatorRegexString}]*|([a-z0-9])|[ ._-]+`, 'g');
 
     let replacedString = text.replace(regex, (matched: string, captured1: string, captured2: string, captured3: string, captured4: string, captured5: string): string => {
 
