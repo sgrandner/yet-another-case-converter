@@ -5,20 +5,66 @@
         "ecmaVersion": 6,
         "sourceType": "module"
     },
-    "plugins": [
-        "@typescript-eslint"
-    ],
-    "rules": {
-        "@typescript-eslint/naming-convention": "warn",
-        "@typescript-eslint/semi": "warn",
-        "curly": "warn",
-        "eqeqeq": "warn",
-        "no-throw-literal": "warn",
-        "semi": "off"
+    "env": {
+        "es6": true
     },
     "ignorePatterns": [
         "out",
         "dist",
         "**/*.d.ts"
+    ],
+    "overrides": [
+        {
+            "files": [
+                "*.ts"
+            ],
+            "parserOptions": {
+                "project": [
+                    "tsconfig.json"
+                ],
+                "createDefaultProgram": true
+            },
+            "plugins": [
+                "import-newlines",
+                "unused-imports",
+                "simple-import-sort"
+            ],
+            "rules": {
+                "curly": "warn",
+                "eqeqeq": "warn",
+                "no-throw-literal": "warn",
+                "semi": "warn",
+                "comma-dangle": [
+                    "warn",
+                    {
+                        "arrays": "always-multiline",
+                        "objects": "always-multiline",
+                        "imports": "always-multiline",
+                        "exports": "always-multiline",
+                        "functions": "only-multiline"
+                    }
+                ],
+                "import-newlines/enforce": [
+                    "warn",
+                    {
+                        "items": 1,
+                        "max-len": 144,
+                        "semi": true
+                    }
+                ],
+                "indent": [
+                    "warn",
+                    4,
+                    {
+                        "SwitchCase": 1
+                    }
+                ],
+                "simple-import-sort/exports": "warn",
+                "simple-import-sort/imports": "warn",
+                "no-unused-vars": "off",
+                "unused-imports/no-unused-imports": "warn",
+                "unused-imports/no-unused-vars": "off"
+            }
+        }
     ]
 }
