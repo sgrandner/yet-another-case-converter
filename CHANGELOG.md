@@ -13,6 +13,6 @@
 - match usual cases of selections
 - convert matched cases to chosen case from commands
     - supports simple upper and lower case
-    - supports snake, double snake, kebap, space, dot and camel in different upper and lower variants
+    - supports snake, double snake, kebab, space, dot and camel in different upper and lower variants
     - allows upper case abbreviations in camel case, e.g., qwerNMOPAsdfYxcv -> qwer-nmop-asdf-yxcv
     - does not support some strange and unnecessary cases as, e.g.,  "upper inverse camel case" (QWERaSDFyXCV) and lower case abbreviations in camel case (qWERnmopaSDFyXCV)

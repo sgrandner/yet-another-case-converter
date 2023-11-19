@@ -1,7 +1,7 @@
 export enum Separator {
     snake = '_',
     doubleSnake = '__',
-    kebap = '-',
+    kebab = '-',
     space = ' ',
     dot = '.',
     camel = '',

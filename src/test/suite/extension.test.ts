@@ -69,22 +69,22 @@ suite('Extension Test Suite', () => {
             expected: 'qWER__aSDF__yXCV',
         },
         {
-            commandName: 'upper-kebap-case',
+            commandName: 'upper-kebab-case',
             given: 'qwer asdf yxcv',
             expected: 'QWER-ASDF-YXCV',
         },
         {
-            commandName: 'lower-kebap-case',
+            commandName: 'lower-kebab-case',
             given: 'qwer asdf yxcv',
             expected: 'qwer-asdf-yxcv',
         },
         {
-            commandName: 'each-first-upper-kebap-case',
+            commandName: 'each-first-upper-kebab-case',
             given: 'qwer asdf yxcv',
             expected: 'Qwer-Asdf-Yxcv',
         },
         {
-            commandName: 'each-first-lower-kebap-case',
+            commandName: 'each-first-lower-kebab-case',
             given: 'qwer asdf yxcv',
             expected: 'qWER-aSDF-yXCV',
         },

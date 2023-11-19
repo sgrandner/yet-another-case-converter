@@ -54,24 +54,24 @@
                 "enablement": "config.yet-another-case-converter.activate.each-first-lower-double-snake-case == true && editorHasSelection"
             },
             {
-                "command": "yet-another-case-converter.upper-kebap-case",
-                "title": "Yet Another Case Converter: Upper Kebap Case     (QWER-ASDF-YXCV)",
-                "enablement": "config.yet-another-case-converter.activate.upper-kebap-case == true && editorHasSelection"
+                "command": "yet-another-case-converter.upper-kebab-case",
+                "title": "Yet Another Case Converter: Upper Kebab Case     (QWER-ASDF-YXCV)",
+                "enablement": "config.yet-another-case-converter.activate.upper-kebab-case == true && editorHasSelection"
             },
             {
-                "command": "yet-another-case-converter.lower-kebap-case",
-                "title": "Yet Another Case Converter: Lower Kebap Case     (qwer-asdf-yxcv)",
-                "enablement": "config.yet-another-case-converter.activate.lower-kebap-case == true && editorHasSelection"
+                "command": "yet-another-case-converter.lower-kebab-case",
+                "title": "Yet Another Case Converter: Lower Kebab Case     (qwer-asdf-yxcv)",
+                "enablement": "config.yet-another-case-converter.activate.lower-kebab-case == true && editorHasSelection"
             },
             {
-                "command": "yet-another-case-converter.each-first-upper-kebap-case",
-                "title": "Yet Another Case Converter: Each First Upper Kebap Case     (Qwer-Asdf-Yxcv)",
-                "enablement": "config.yet-another-case-converter.activate.each-first-upper-kebap-case == true && editorHasSelection"
+                "command": "yet-another-case-converter.each-first-upper-kebab-case",
+                "title": "Yet Another Case Converter: Each First Upper Kebab Case     (Qwer-Asdf-Yxcv)",
+                "enablement": "config.yet-another-case-converter.activate.each-first-upper-kebab-case == true && editorHasSelection"
             },
             {
-                "command": "yet-another-case-converter.each-first-lower-kebap-case",
-                "title": "Yet Another Case Converter: Each First Lower Kebap Case     (qWER-aSDF-yXCV)",
-                "enablement": "config.yet-another-case-converter.activate.each-first-lower-kebap-case == true && editorHasSelection"
+                "command": "yet-another-case-converter.each-first-lower-kebab-case",
+                "title": "Yet Another Case Converter: Each First Lower Kebab Case     (qWER-aSDF-yXCV)",
+                "enablement": "config.yet-another-case-converter.activate.each-first-lower-kebab-case == true && editorHasSelection"
             },
             {
                 "command": "yet-another-case-converter.upper-space-case",
@@ -202,25 +202,25 @@
                     "default": true,
                     "description": "Activate each-first-lower-double-snake-case command"
                 },
-                "yet-another-case-converter.activate.upper-kebap-case": {
+                "yet-another-case-converter.activate.upper-kebab-case": {
                     "type": "boolean",
                     "default": true,
-                    "description": "Activate upper-kebap-case command"
+                    "description": "Activate upper-kebab-case command"
                 },
-                "yet-another-case-converter.activate.lower-kebap-case": {
+                "yet-another-case-converter.activate.lower-kebab-case": {
                     "type": "boolean",
                     "default": true,
-                    "description": "Activate lower-kebap-case command"
+                    "description": "Activate lower-kebab-case command"
                 },
-                "yet-another-case-converter.activate.each-first-upper-kebap-case": {
+                "yet-another-case-converter.activate.each-first-upper-kebab-case": {
                     "type": "boolean",
                     "default": true,
-                    "description": "Activate each-first-upper-kebap-case command"
+                    "description": "Activate each-first-upper-kebab-case command"
                 },
-                "yet-another-case-converter.activate.each-first-lower-kebap-case": {
+                "yet-another-case-converter.activate.each-first-lower-kebab-case": {
                     "type": "boolean",
                     "default": true,
-                    "description": "Activate each-first-lower-kebap-case command"
+                    "description": "Activate each-first-lower-kebab-case command"
                 },
                 "yet-another-case-converter.activate.upper-space-case": {
                     "type": "boolean",
