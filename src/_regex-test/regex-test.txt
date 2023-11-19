@@ -98,3 +98,12 @@ qwer_AsdfNMOPYxcv
 qwerAsdf__yxcv
 qWER__aSDFyXCV
 qwer__asdf--yxcv
+
+-q
+-qq
+--q
+--qq
+q-
+qq-
+q--
+qq--

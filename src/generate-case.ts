@@ -73,7 +73,10 @@ export function generateCase(
         replacedString = veryFirstLower(replacedString);
     }
 
-    if (separator !== Separator.camel) {
+    // NOTE Segments are captured without separators by regex and combined using the new separator (except camel case)
+    //      at the end of each segment. Thus, the last segment also ends with a separator which must be deleted.
+    //      Exception: The selection does end with a separator. In this special case the last separator must not be deleted !
+    if (separator !== Separator.camel && !text.match(`[${separatorRegexString}]+$`)) {
         replacedString = replacedString.slice(0, replacedString.length - separator.length);
     }
 
