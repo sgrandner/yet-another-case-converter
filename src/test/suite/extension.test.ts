@@ -4,7 +4,7 @@ import * as vscode from 'vscode';
 
 suite('Extension Test Suite', () => {
 
-	vscode.window.showInformationMessage('Start all tests.');
+    vscode.window.showInformationMessage('Start all tests.');
     let doc: vscode.TextDocument;
     let active: vscode.TextEditor | undefined;
     let configStub: sinon.SinonStub;
@@ -467,26 +467,26 @@ suite('Extension Test Suite', () => {
     ].forEach((testArgs: { given: string, expected: string }) => {
 
         suite(`with selection containing numbers: ${testArgs.given}`, () => {
-    
+
             setup(async () => {
                 doc = await vscode.workspace.openTextDocument({
                     content: testArgs.given,
                 });
-    
+
                 await vscode.window.showTextDocument(doc);
-    
+
                 active = vscode.window.activeTextEditor;
                 if (!!active) {
                     const range = new vscode.Range(0, 0, 0, testArgs.given.length);
                     active.selection = new vscode.Selection(range.start, range.end);
                 }
             });
-    
+
             test('it should convert selection', async () => {
-    
+
                 await vscode.commands.executeCommand('yet-another-case-converter.upper-snake-case');
                 await sleep(waitForCommand);
-    
+
                 const range = getRangeOfLines(active);
                 const result = active?.document.getText(range);
                 assert(result === testArgs.expected, failedMsg(testArgs.given, 'upper-snake-case', testArgs.expected, result));
@@ -792,271 +792,271 @@ suite('Extension Test Suite', () => {
                 separator: '--',
             },
         ].forEach((testArgs: { separator: string }) => {
-            
+
             suite(`with one "${testArgs.separator}" separator selected`, () => {
-        
+
                 const given = `${testArgs.separator}`;
                 const expected = `${testArgs.separator}`;
-        
+
                 setup(async () => {
                     doc = await vscode.workspace.openTextDocument({
                         content: given,
                     });
-        
+
                     await vscode.window.showTextDocument(doc);
-        
+
                     active = vscode.window.activeTextEditor;
                     if (!!active) {
                         const range = new vscode.Range(0, 0, 0, testArgs.separator.length);
                         active.selection = new vscode.Selection(range.start, range.end);
                     }
                 });
-        
+
                 test('it should not convert separator', async () => {
-        
+
                     await vscode.commands.executeCommand('yet-another-case-converter.upper-snake-case');
                     await sleep(waitForCommand);
-        
+
                     const range = getRangeOfLines(active);
                     const result = active?.document.getText(range);
                     assert(result === expected, failedMsg(given, 'upper-snake-case', expected, result));
                 });
             });
-        
+
             suite(`with one "${testArgs.separator}" separator in word selected`, () => {
-        
+
                 const given = `q${testArgs.separator}w`;
                 const expected = `q${testArgs.separator}w`;
-        
+
                 setup(async () => {
                     doc = await vscode.workspace.openTextDocument({
                         content: given,
                     });
-        
+
                     await vscode.window.showTextDocument(doc);
-        
+
                     active = vscode.window.activeTextEditor;
                     if (!!active) {
                         const range = new vscode.Range(0, 1, 0, 1 + testArgs.separator.length);
                         active.selection = new vscode.Selection(range.start, range.end);
                     }
                 });
-        
+
                 test('it should not convert separator', async () => {
-        
+
                     await vscode.commands.executeCommand('yet-another-case-converter.upper-snake-case');
                     await sleep(waitForCommand);
-        
+
                     const range = getRangeOfLines(active);
                     const result = active?.document.getText(range);
                     assert(result === expected, failedMsg(given, 'upper-snake-case', expected, result));
                 });
             });
-        
+
             suite(`with one "${testArgs.separator}" separator at end of word selected`, () => {
-        
+
                 const given = `qw${testArgs.separator}`;
                 const expected = `qw${testArgs.separator}`;
-        
+
                 setup(async () => {
                     doc = await vscode.workspace.openTextDocument({
                         content: given,
                     });
-        
+
                     await vscode.window.showTextDocument(doc);
-        
+
                     active = vscode.window.activeTextEditor;
                     if (!!active) {
                         const range = new vscode.Range(0, 2, 0, 2 + testArgs.separator.length);
                         active.selection = new vscode.Selection(range.start, range.end);
                     }
                 });
-        
+
                 test('it should not convert separator', async () => {
-        
+
                     await vscode.commands.executeCommand('yet-another-case-converter.upper-snake-case');
                     await sleep(waitForCommand);
-        
+
                     const range = getRangeOfLines(active);
                     const result = active?.document.getText(range);
                     assert(result === expected, failedMsg(given, 'upper-snake-case', expected, result));
                 });
             });
-        
+
             suite(`with one "${testArgs.separator}" separator at start of word selected`, () => {
-        
+
                 const given = `${testArgs.separator}qw`;
                 const expected = `${testArgs.separator}qw`;
-        
+
                 setup(async () => {
                     doc = await vscode.workspace.openTextDocument({
                         content: given,
                     });
-        
+
                     await vscode.window.showTextDocument(doc);
-        
+
                     active = vscode.window.activeTextEditor;
                     if (!!active) {
                         const range = new vscode.Range(0, 0, 0, testArgs.separator.length);
                         active.selection = new vscode.Selection(range.start, range.end);
                     }
                 });
-        
+
                 test('it should not convert separator', async () => {
-        
+
                     await vscode.commands.executeCommand('yet-another-case-converter.upper-snake-case');
                     await sleep(waitForCommand);
-        
+
                     const range = getRangeOfLines(active);
                     const result = active?.document.getText(range);
                     assert(result === expected, failedMsg(given, 'upper-snake-case', expected, result));
                 });
             });
-        
+
             suite(`with one "${testArgs.separator}" separator at end of word selected`, () => {
-        
+
                 const given = `qw${testArgs.separator}`;
                 const expected = `qw${testArgs.separator}`;
-        
+
                 setup(async () => {
                     doc = await vscode.workspace.openTextDocument({
                         content: given,
                     });
-        
+
                     await vscode.window.showTextDocument(doc);
-        
+
                     active = vscode.window.activeTextEditor;
                     if (!!active) {
                         const range = new vscode.Range(0, 2, 0, 2 + testArgs.separator.length);
                         active.selection = new vscode.Selection(range.start, range.end);
                     }
                 });
-        
+
                 test('it should not convert separator', async () => {
-        
+
                     await vscode.commands.executeCommand('yet-another-case-converter.upper-snake-case');
                     await sleep(waitForCommand);
-        
+
                     const range = getRangeOfLines(active);
                     const result = active?.document.getText(range);
                     assert(result === expected, failedMsg(given, 'upper-snake-case', expected, result));
                 });
             });
-        
+
             suite(`with word selected starting with "${testArgs.separator}" separator (one letter)`, () => {
-        
+
                 const given = `${testArgs.separator}q`;
                 const expected = `_Q`;
-        
+
                 setup(async () => {
                     doc = await vscode.workspace.openTextDocument({
                         content: given,
                     });
-        
+
                     await vscode.window.showTextDocument(doc);
-        
+
                     active = vscode.window.activeTextEditor;
                     if (!!active) {
                         const range = new vscode.Range(0, 0, 0, 1 + testArgs.separator.length);
                         active.selection = new vscode.Selection(range.start, range.end);
                     }
                 });
-        
+
                 test('it should convert selection', async () => {
-        
+
                     await vscode.commands.executeCommand('yet-another-case-converter.upper-snake-case');
                     await sleep(waitForCommand);
-        
+
                     const range = getRangeOfLines(active);
                     const result = active?.document.getText(range);
                     assert(result === expected, failedMsg(given, 'upper-snake-case', expected, result));
                 });
             });
-        
+
             suite(`with word selected starting with "${testArgs.separator}" separator (two letters)`, () => {
-        
+
                 const given = `${testArgs.separator}qw`;
                 const expected = `_QW`;
-        
+
                 setup(async () => {
                     doc = await vscode.workspace.openTextDocument({
                         content: given,
                     });
-        
+
                     await vscode.window.showTextDocument(doc);
-        
+
                     active = vscode.window.activeTextEditor;
                     if (!!active) {
                         const range = new vscode.Range(0, 0, 0, 2 + testArgs.separator.length);
                         active.selection = new vscode.Selection(range.start, range.end);
                     }
                 });
-        
+
                 test('it should convert selection', async () => {
-        
+
                     await vscode.commands.executeCommand('yet-another-case-converter.upper-snake-case');
                     await sleep(waitForCommand);
-        
+
                     const range = getRangeOfLines(active);
                     const result = active?.document.getText(range);
                     assert(result === expected, failedMsg(given, 'upper-snake-case', expected, result));
                 });
             });
-        
+
             suite(`with word selected ending with "${testArgs.separator}" separator (one letter)`, () => {
-        
+
                 const given = `q${testArgs.separator}`;
                 const expected = `Q_`;
-        
+
                 setup(async () => {
                     doc = await vscode.workspace.openTextDocument({
                         content: given,
                     });
-        
+
                     await vscode.window.showTextDocument(doc);
-        
+
                     active = vscode.window.activeTextEditor;
                     if (!!active) {
                         const range = new vscode.Range(0, 0, 0, 1 + testArgs.separator.length);
                         active.selection = new vscode.Selection(range.start, range.end);
                     }
                 });
-        
+
                 test('it should convert selection', async () => {
-        
+
                     await vscode.commands.executeCommand('yet-another-case-converter.upper-snake-case');
                     await sleep(waitForCommand);
-        
+
                     const range = getRangeOfLines(active);
                     const result = active?.document.getText(range);
                     assert(result === expected, failedMsg(given, 'upper-snake-case', expected, result));
                 });
             });
-        
+
             suite(`with word selected ending with "${testArgs.separator}" separator (two letters)`, () => {
-        
+
                 const given = `qw${testArgs.separator}`;
                 const expected = `QW_`;
-        
+
                 setup(async () => {
                     doc = await vscode.workspace.openTextDocument({
                         content: given,
                     });
-        
+
                     await vscode.window.showTextDocument(doc);
-        
+
                     active = vscode.window.activeTextEditor;
                     if (!!active) {
                         const range = new vscode.Range(0, 0, 0, 2 + testArgs.separator.length);
                         active.selection = new vscode.Selection(range.start, range.end);
                     }
                 });
-        
+
                 test('it should convert selection', async () => {
-        
+
                     await vscode.commands.executeCommand('yet-another-case-converter.upper-snake-case');
                     await sleep(waitForCommand);
-        
+
                     const range = getRangeOfLines(active);
                     const result = active?.document.getText(range);
                     assert(result === expected, failedMsg(given, 'upper-snake-case', expected, result));
@@ -1105,7 +1105,7 @@ suite('Extension Test Suite', () => {
     ].forEach((testArgs: { lineBreak: string }) => {
 
         suite('with multiple lines selected (multi-cursor selection)', () => {
-    
+
             const given = `qwer asdf yxcv${testArgs.lineBreak}asdf qwer yxcv yxcv`;
             const expected = `QWER_ASDF_YXCV${testArgs.lineBreak}ASDF_QWER_YXCV_YXCV`;
 
@@ -1113,33 +1113,33 @@ suite('Extension Test Suite', () => {
                 doc = await vscode.workspace.openTextDocument({
                     content: given,
                 });
-    
+
                 await vscode.window.showTextDocument(doc);
-    
+
                 active = vscode.window.activeTextEditor;
                 if (!!active) {
                     const range1 = getRangeOfLines(active, 0, 0);
                     const range2 = getRangeOfLines(active, 1, 1);
-                    active.selections = [ 
+                    active.selections = [
                         new vscode.Selection(range1.start, range1.end),
                         new vscode.Selection(range2.start, range2.end),
                     ];
                 }
             });
-    
+
             test(`it should convert multiple selections`, async () => {
-    
+
                 await vscode.commands.executeCommand('yet-another-case-converter.upper-snake-case');
                 await sleep(waitForCommand);
-    
+
                 const range = getRangeOfLines(active, 0, 1);
                 const result = active?.document.getText(range);
                 assert(result === expected, failedMsg(given, 'upper-snake-case', expected, result));
             });
         });
-    
+
         suite('with multiple lines selected (single selection)', () => {
-    
+
             const given = `qwer asdf yxcv${testArgs.lineBreak}asdf qwer yxcv yxcv`;
             const expected = `QWER_ASDF_YXCV${testArgs.lineBreak}ASDF_QWER_YXCV_YXCV`;
 
@@ -1147,29 +1147,29 @@ suite('Extension Test Suite', () => {
                 doc = await vscode.workspace.openTextDocument({
                     content: given,
                 });
-    
+
                 await vscode.window.showTextDocument(doc);
-    
+
                 active = vscode.window.activeTextEditor;
                 if (!!active) {
                     const range = getRangeOfLines(active, 0, 1);
                     active.selection = new vscode.Selection(range.start, range.end);
                 }
             });
-    
+
             test(`it should convert multiple selections line by line`, async () => {
-    
+
                 await vscode.commands.executeCommand('yet-another-case-converter.upper-snake-case');
                 await sleep(waitForCommand);
-    
+
                 const range = getRangeOfLines(active, 0, 1);
                 const result = active?.document.getText(range);
                 assert(result === expected, failedMsg(given, 'upper-snake-case', expected, result));
             });
         });
-    
+
         suite('with multiple lines selected (multi-cursor multiline selections)', () => {
-    
+
             const given = `qwer asdf yxcv${testArgs.lineBreak}asdf qwer yxcv yxcv${testArgs.lineBreak}yxcv asdf qwer${testArgs.lineBreak}qwer yxcv asdf`;
             const expected = `QWER_ASDF_YXCV${testArgs.lineBreak}ASDF_QWER_YXCV_YXCV${testArgs.lineBreak}YXCV_ASDF_QWER${testArgs.lineBreak}QWER_YXCV_ASDF`;
 
@@ -1177,25 +1177,25 @@ suite('Extension Test Suite', () => {
                 doc = await vscode.workspace.openTextDocument({
                     content: given,
                 });
-    
+
                 await vscode.window.showTextDocument(doc);
-    
+
                 active = vscode.window.activeTextEditor;
                 if (!!active) {
                     const range1 = getRangeOfLines(active, 0, 1);
                     const range2 = getRangeOfLines(active, 2, 3);
-                    active.selections = [ 
+                    active.selections = [
                         new vscode.Selection(range1.start, range1.end),
                         new vscode.Selection(range2.start, range2.end),
                     ];
                 }
             });
-    
+
             test(`it should convert multiple multiline selections`, async () => {
-    
+
                 await vscode.commands.executeCommand('yet-another-case-converter.upper-snake-case');
                 await sleep(waitForCommand);
-    
+
                 const range = getRangeOfLines(active, 0, 3);
                 const result = active?.document.getText(range);
                 assert(result === expected, failedMsg(given, 'upper-snake-case', expected, result));
@@ -1264,7 +1264,7 @@ suite('Extension Test Suite', () => {
     });
 
     suite('with multiple lines selected (multi-cursor selection) and selections not at start of line and end before end of lines', () => {
-    
+
         const given = `qwer asdf yxcv dfgh cvbn\nqwer asdf yxcv dfgh cvbn rtzu`;
         const expected = 'qwer ASDF_YXCV_DFGH cvbn\nqwer asdf YXCV_DFGH_CVBN rtzu';
 
@@ -1279,7 +1279,7 @@ suite('Extension Test Suite', () => {
             if (!!active) {
                 const range1 = new vscode.Range(0, 5, 0, 19);
                 const range2 = new vscode.Range(1, 10, 1, 24);
-                active.selections = [ 
+                active.selections = [
                     new vscode.Selection(range1.start, range1.end),
                     new vscode.Selection(range2.start, range2.end),
                 ];
@@ -1298,7 +1298,7 @@ suite('Extension Test Suite', () => {
     });
 
     suite('with multiple lines selected (multi-line selection) and selection not at start of first line', () => {
-    
+
         const given = 'qwer asdf yxcv dfgh cvbn\nqwer asdf yxcv dfgh cvbn rtzu';
         const expected = 'qwer ASDF_YXCV_DFGH_CVBN\nQWER_ASDF_YXCV_DFGH cvbn rtzu';
 
@@ -1328,7 +1328,7 @@ suite('Extension Test Suite', () => {
     });
 
     suite('with multiple lines (3) selected (multi-line selection) and selection not at start of first line', () => {
-    
+
         const given = 'qwer asdf yxcv dfgh cvbn\nwert sdfg fghj ertz\nwert dfgh tzui hjkl dfgh sdfg';
         const expected = 'qwer ASDF_YXCV_DFGH_CVBN\nWERT_SDFG_FGHJ_ERTZ\nWERT_DFGH_TZUI hjkl dfgh sdfg';
 
@@ -1358,7 +1358,7 @@ suite('Extension Test Suite', () => {
     });
 
     suite('with multiple lines selected (multi-line selection) and selection not at start of first line and end of selection at start of last line', () => {
-    
+
         const given = 'qwer asdf yxcv dfgh cvbn\nqwer asdf yxcv dfgh cvbn rtzu\nsdfg dfgh fghj';
         const expected = 'qwer ASDF_YXCV_DFGH_CVBN\nQWER_ASDF_YXCV_DFGH_CVBN_RTZU\nsdfg dfgh fghj';
 
