@@ -27,7 +27,7 @@ Supported cases:
 
 By default all commands are activated. Each of them can be deactivated in the settings. Editing the settings.json directly would be, e.g.,
 
-    "yet-another-case-converter.activate.upper-snake-case": false
+    "yet-another-case-converter.activate.cobol-case": false
 
 ## Known Issues
 

@@ -44,6 +44,11 @@ suite('Extension Test Suite', () => {
             expected: 'Qwer_Asdf_Yxcv',
         },
         {
+            commandName: 'camel-snake-case',
+            given: 'qwer asdf yxcv',
+            expected: 'qwer_Asdf_Yxcv',
+        },
+        {
             commandName: 'inverse-pascal-snake-case',
             given: 'qwer asdf yxcv',
             expected: 'qWER_aSDF_yXCV',
@@ -62,6 +67,11 @@ suite('Extension Test Suite', () => {
             commandName: 'long-pascal-snake-case',
             given: 'qwer asdf yxcv',
             expected: 'Qwer__Asdf__Yxcv',
+        },
+        {
+            commandName: 'long-camel-snake-case',
+            given: 'qwer asdf yxcv',
+            expected: 'qwer__Asdf__Yxcv',
         },
         {
             commandName: 'inverse-long-pascal-snake-case',
@@ -84,6 +94,11 @@ suite('Extension Test Suite', () => {
             expected: 'Qwer-Asdf-Yxcv',
         },
         {
+            commandName: 'camel-kebab-case',
+            given: 'qwer asdf yxcv',
+            expected: 'qwer-Asdf-Yxcv',
+        },
+        {
             commandName: 'inverse-train-case',
             given: 'qwer asdf yxcv',
             expected: 'qWER-aSDF-yXCV',
@@ -102,6 +117,11 @@ suite('Extension Test Suite', () => {
             commandName: 'long-train-case',
             given: 'qwer asdf yxcv',
             expected: 'Qwer--Asdf--Yxcv',
+        },
+        {
+            commandName: 'long-camel-kebab-case',
+            given: 'qwer asdf yxcv',
+            expected: 'qwer--Asdf--Yxcv',
         },
         {
             commandName: 'inverse-long-train-case',
@@ -124,6 +144,11 @@ suite('Extension Test Suite', () => {
             expected: 'Qwer Asdf Yxcv',
         },
         {
+            commandName: 'camel-space-case',
+            given: 'qwer asdf yxcv',
+            expected: 'qwer Asdf Yxcv',
+        },
+        {
             commandName: 'inverse-title-case',
             given: 'qwer asdf yxcv',
             expected: 'qWER aSDF yXCV',
@@ -142,6 +167,11 @@ suite('Extension Test Suite', () => {
             commandName: 'pascal-dot-case',
             given: 'qwer asdf yxcv',
             expected: 'Qwer.Asdf.Yxcv',
+        },
+        {
+            commandName: 'camel-dot-case',
+            given: 'qwer asdf yxcv',
+            expected: 'qwer.Asdf.Yxcv',
         },
         {
             commandName: 'inverse-pascal-dot-case',
@@ -174,6 +204,16 @@ suite('Extension Test Suite', () => {
             expected: 'qwer asdf yxcv',
         },
         {
+            commandName: 'upper-flat-case',
+            given: 'qwer asdf yxcv',
+            expected: 'QWERASDFYXCV',
+        },
+        {
+            commandName: 'flat-case',
+            given: 'Qwer Asdf Yxcv',
+            expected: 'qwerasdfyxcv',
+        },
+        {
             commandName: 'screaming-custom1-case',
             given: 'qwer asdf yxcv',
             expected: 'QWER+ASDF+YXCV',
@@ -187,6 +227,11 @@ suite('Extension Test Suite', () => {
             commandName: 'pascal-custom1-case',
             given: 'qwer asdf yxcv',
             expected: 'Qwer+Asdf+Yxcv',
+        },
+        {
+            commandName: 'camel-custom1-case',
+            given: 'qwer asdf yxcv',
+            expected: 'qwer+Asdf+Yxcv',
         },
         {
             commandName: 'inverse-pascal-custom1-case',

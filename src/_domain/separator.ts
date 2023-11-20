@@ -5,5 +5,5 @@ export enum Separator {
     doubleKebab = '--',
     space = ' ',
     dot = '.',
-    camel = '',
+    none = '',
 }

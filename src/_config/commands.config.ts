@@ -30,6 +30,12 @@ export function getCommandsConfig(customSeparator: string): CommandConfig[] {
             veryFirstCaseConversion: VeryFirstCaseConversion.none,
         },
         {
+            commandName: 'camel-snake-case',
+            separator: Separator.snake,
+            segmentCaseConversion: firstUpper,
+            veryFirstCaseConversion: VeryFirstCaseConversion.lower,
+        },
+        {
             commandName: 'inverse-pascal-snake-case',
             separator: Separator.snake,
             segmentCaseConversion: firstLower,
@@ -53,6 +59,12 @@ export function getCommandsConfig(customSeparator: string): CommandConfig[] {
             separator: Separator.doubleSnake,
             segmentCaseConversion: firstUpper,
             veryFirstCaseConversion: VeryFirstCaseConversion.none,
+        },
+        {
+            commandName: 'long-camel-snake-case',
+            separator: Separator.doubleSnake,
+            segmentCaseConversion: firstUpper,
+            veryFirstCaseConversion: VeryFirstCaseConversion.lower,
         },
         {
             commandName: 'inverse-long-pascal-snake-case',
@@ -80,6 +92,12 @@ export function getCommandsConfig(customSeparator: string): CommandConfig[] {
             veryFirstCaseConversion: VeryFirstCaseConversion.none,
         },
         {
+            commandName: 'camel-kebab-case',
+            separator: Separator.kebab,
+            segmentCaseConversion: firstUpper,
+            veryFirstCaseConversion: VeryFirstCaseConversion.lower,
+        },
+        {
             commandName: 'inverse-train-case',
             separator: Separator.kebab,
             segmentCaseConversion: firstLower,
@@ -103,6 +121,12 @@ export function getCommandsConfig(customSeparator: string): CommandConfig[] {
             separator: Separator.doubleKebab,
             segmentCaseConversion: firstUpper,
             veryFirstCaseConversion: VeryFirstCaseConversion.none,
+        },
+        {
+            commandName: 'long-camel-kebab-case',
+            separator: Separator.doubleKebab,
+            segmentCaseConversion: firstUpper,
+            veryFirstCaseConversion: VeryFirstCaseConversion.lower,
         },
         {
             commandName: 'inverse-long-train-case',
@@ -130,6 +154,12 @@ export function getCommandsConfig(customSeparator: string): CommandConfig[] {
             veryFirstCaseConversion: VeryFirstCaseConversion.none,
         },
         {
+            commandName: 'camel-space-case',
+            separator: Separator.space,
+            segmentCaseConversion: firstUpper,
+            veryFirstCaseConversion: VeryFirstCaseConversion.lower,
+        },
+        {
             commandName: 'inverse-title-case',
             separator: Separator.space,
             segmentCaseConversion: firstLower,
@@ -155,6 +185,12 @@ export function getCommandsConfig(customSeparator: string): CommandConfig[] {
             veryFirstCaseConversion: VeryFirstCaseConversion.none,
         },
         {
+            commandName: 'camel-dot-case',
+            separator: Separator.dot,
+            segmentCaseConversion: firstUpper,
+            veryFirstCaseConversion: VeryFirstCaseConversion.lower,
+        },
+        {
             commandName: 'inverse-pascal-dot-case',
             separator: Separator.dot,
             segmentCaseConversion: firstLower,
@@ -163,20 +199,35 @@ export function getCommandsConfig(customSeparator: string): CommandConfig[] {
 
         {
             commandName: 'pascal-case',
-            separator: Separator.camel,
+            separator: Separator.none,
             segmentCaseConversion: firstUpper,
             veryFirstCaseConversion: VeryFirstCaseConversion.none,
         },
         {
             commandName: 'camel-case',
-            separator: Separator.camel,
+            separator: Separator.none,
             segmentCaseConversion: firstUpper,
             veryFirstCaseConversion: VeryFirstCaseConversion.lower,
         },
         {
             commandName: 'inverse-pascal-case',
-            separator: Separator.camel,
+            separator: Separator.none,
             segmentCaseConversion: firstLower,
+            veryFirstCaseConversion: VeryFirstCaseConversion.none,
+        },
+
+        // NOTE upper-case and lower-case are handled separately
+
+        {
+            commandName: 'upper-flat-case',
+            separator: Separator.none,
+            segmentCaseConversion: upper,
+            veryFirstCaseConversion: VeryFirstCaseConversion.none,
+        },
+        {
+            commandName: 'flat-case',
+            separator: Separator.none,
+            segmentCaseConversion: lower,
             veryFirstCaseConversion: VeryFirstCaseConversion.none,
         },
 
@@ -197,6 +248,12 @@ export function getCommandsConfig(customSeparator: string): CommandConfig[] {
             separator: customSeparator,
             segmentCaseConversion: firstUpper,
             veryFirstCaseConversion: VeryFirstCaseConversion.none,
+        },
+        {
+            commandName: 'camel-custom1-case',
+            separator: customSeparator,
+            segmentCaseConversion: firstUpper,
+            veryFirstCaseConversion: VeryFirstCaseConversion.lower,
         },
         {
             commandName: 'inverse-pascal-custom1-case',

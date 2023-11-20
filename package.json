@@ -41,6 +41,11 @@
                 "enablement": "config.yet-another-case-converter.activate.pascal-snake-case == true && editorHasSelection"
             },
             {
+                "command": "yet-another-case-converter.camel-snake-case",
+                "title": "Yet Another Case Converter: camel_Snake_Case (Camel Snake Case)",
+                "enablement": "config.yet-another-case-converter.activate.camel-snake-case == true && editorHasSelection"
+            },
+            {
                 "command": "yet-another-case-converter.inverse-pascal-snake-case",
                 "title": "Yet Another Case Converter: iNVERSE_pASCAL_sNAKE_cASE (inverse Pascal Snake Case)",
                 "enablement": "config.yet-another-case-converter.activate.inverse-pascal-snake-case == true && editorHasSelection"
@@ -59,6 +64,11 @@
                 "command": "yet-another-case-converter.long-pascal-snake-case",
                 "title": "Yet Another Case Converter: Long__Pascal__Snake__Case (long Pascal Snake Case)",
                 "enablement": "config.yet-another-case-converter.activate.long-pascal-snake-case == true && editorHasSelection"
+            },
+            {
+                "command": "yet-another-case-converter.long-camel-snake-case",
+                "title": "Yet Another Case Converter: long__Camel__Snake__Case (long Camel Snake Case)",
+                "enablement": "config.yet-another-case-converter.activate.long-camel-snake-case == true && editorHasSelection"
             },
             {
                 "command": "yet-another-case-converter.inverse-long-pascal-snake-case",
@@ -81,6 +91,11 @@
                 "enablement": "config.yet-another-case-converter.activate.train-case == true && editorHasSelection"
             },
             {
+                "command": "yet-another-case-converter.camel-kebab-case",
+                "title": "Yet Another Case Converter: camel-Kebab-Case (Camel Kebab Case)",
+                "enablement": "config.yet-another-case-converter.activate.camel-kebab-case == true && editorHasSelection"
+            },
+            {
                 "command": "yet-another-case-converter.inverse-train-case",
                 "title": "Yet Another Case Converter: tRAIN-cASE (inverse Train Case)",
                 "enablement": "config.yet-another-case-converter.activate.inverse-train-case == true && editorHasSelection"
@@ -99,6 +114,11 @@
                 "command": "yet-another-case-converter.long-train-case",
                 "title": "Yet Another Case Converter: Long--Train--Case (long Train Case)",
                 "enablement": "config.yet-another-case-converter.activate.long-train-case == true && editorHasSelection"
+            },
+            {
+                "command": "yet-another-case-converter.long-camel-kebab-case",
+                "title": "Yet Another Case Converter: long--Camel--Kebab--Case (long Camel Kebab Case)",
+                "enablement": "config.yet-another-case-converter.activate.long-camel-kebab-case == true && editorHasSelection"
             },
             {
                 "command": "yet-another-case-converter.inverse-long-train-case",
@@ -121,6 +141,11 @@
                 "enablement": "config.yet-another-case-converter.activate.title-case == true && editorHasSelection"
             },
             {
+                "command": "yet-another-case-converter.camel-space-case",
+                "title": "Yet Another Case Converter: camel Space Case (Camel Space Case)",
+                "enablement": "config.yet-another-case-converter.activate.camel-space-case == true && editorHasSelection"
+            },
+            {
                 "command": "yet-another-case-converter.inverse-title-case",
                 "title": "Yet Another Case Converter: iNVERSE tITLE cASE (Inverse Title Case)",
                 "enablement": "config.yet-another-case-converter.activate.inverse-title-case == true && editorHasSelection"
@@ -139,6 +164,11 @@
                 "command": "yet-another-case-converter.pascal-dot-case",
                 "title": "Yet Another Case Converter: Pascal.Dot.Case (Pascal Dot Case)",
                 "enablement": "config.yet-another-case-converter.activate.pascal-dot-case == true && editorHasSelection"
+            },
+            {
+                "command": "yet-another-case-converter.camel-dot-case",
+                "title": "Yet Another Case Converter: camel.Dot.Case (Camel Dot Case)",
+                "enablement": "config.yet-another-case-converter.activate.camel-dot-case == true && editorHasSelection"
             },
             {
                 "command": "yet-another-case-converter.inverse-pascal-dot-case",
@@ -171,6 +201,16 @@
                 "enablement": "config.yet-another-case-converter.activate.lower-case == true && editorHasSelection"
             },
             {
+                "command": "yet-another-case-converter.upper-flat-case",
+                "title": "Yet Another Case Converter: UPPERFLATCASE (Upper Flat Case)",
+                "enablement": "config.yet-another-case-converter.activate.upper-flat-case == true && editorHasSelection"
+            },
+            {
+                "command": "yet-another-case-converter.flat-case",
+                "title": "Yet Another Case Converter: flatcase (Flat Case, Lower Flat Case)",
+                "enablement": "config.yet-another-case-converter.activate.flat-case == true && editorHasSelection"
+            },
+            {
                 "command": "yet-another-case-converter.screaming-custom1-case",
                 "title": "Yet Another Case Converter: SCREAMING CUSTOM1 CASE (as configured)",
                 "enablement": "config.yet-another-case-converter.custom1-separator && config.yet-another-case-converter.activate.screaming-custom1-case == true && editorHasSelection"
@@ -184,6 +224,11 @@
                 "command": "yet-another-case-converter.pascal-custom1-case",
                 "title": "Yet Another Case Converter: Pascal Custom1 Case (as configured)",
                 "enablement": "config.yet-another-case-converter.custom1-separator && config.yet-another-case-converter.activate.pascal-custom1-case == true && editorHasSelection"
+            },
+            {
+                "command": "yet-another-case-converter.camel-custom1-case",
+                "title": "Yet Another Case Converter: camel Custom1 Case (as configured)",
+                "enablement": "config.yet-another-case-converter.custom1-separator && config.yet-another-case-converter.activate.camel-custom1-case == true && editorHasSelection"
             },
             {
                 "command": "yet-another-case-converter.inverse-pascal-custom1-case",

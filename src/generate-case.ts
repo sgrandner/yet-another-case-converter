@@ -7,8 +7,6 @@ import {
 import { Separator } from './_domain/separator';
 import {
     firstLower,
-    lower,
-    upper,
     veryFirstLower,
     veryFirstUpper,
 } from './convert-case';
@@ -24,18 +22,13 @@ export function generateCase(
         return text;
     }
 
-    if (separator === Separator.camel) {
-
-        if (caseConversionFunction === upper || caseConversionFunction === lower) {
-
-            vscode.window.showWarningMessage(`Tried to generate upper or lower camel case which does not exist. Use with firstUpper or firstLower instead.`);
-            return text;
-
-        } else if (caseConversionFunction === firstLower && veryFirst === VeryFirstCaseConversion.upper) {
-
-            vscode.window.showWarningMessage(`Tried to generate upper inverse camel case which is really strange and not matched properly. Use without VeryFirstCaseConversion instead.`);
-            return text;
-        }
+    if (
+        separator === Separator.none &&
+        caseConversionFunction === firstLower &&
+        veryFirst === VeryFirstCaseConversion.upper
+    ) {
+        vscode.window.showWarningMessage(`Tried to generate upper inverse camel case which is really strange and not matched properly. Use without VeryFirstCaseConversion instead.`);
+        return text;
     }
 
     // NOTE the following regex matches segments of a string (selection) by case
@@ -45,7 +38,7 @@ export function generateCase(
     // 4. matching group: match inverse camel case but only "normal" invserse camel case (no upper very first letter or group of lower letters)
     // 5. matching group: single lower letters or numbers
     // 6. matching group: leading separators
-    
+
     const customSeparator1 = (String)(vscode.workspace.getConfiguration('yet-another-case-converter').get('custom1-separator'));
     const separatorRegexString = ` ${customSeparator1}._-`;
 
@@ -72,10 +65,10 @@ export function generateCase(
         replacedString = veryFirstLower(replacedString);
     }
 
-    // NOTE Segments are captured without separators by regex and combined using the new separator (except camel case)
+    // NOTE Segments are captured without separators by regex and combined using the new separator (except camel cases and flat cases)
     //      at the end of each segment. Thus, the last segment also ends with a separator which must be deleted.
     //      Exception: The selection does end with a separator. In this special case the last separator must not be deleted !
-    if (separator !== Separator.camel && !text.match(`[${separatorRegexString}]+$`)) {
+    if (separator !== Separator.none && !text.match(`[${separatorRegexString}]+$`)) {
         replacedString = replacedString.slice(0, replacedString.length - separator.length);
     }
 
