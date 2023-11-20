@@ -29,87 +29,87 @@ suite('Extension Test Suite', () => {
 
     [
         {
-            commandName: 'upper-snake-case',
+            commandName: 'constant-case',
             given: 'qwer asdf yxcv',
             expected: 'QWER_ASDF_YXCV',
         },
         {
-            commandName: 'lower-snake-case',
+            commandName: 'snake-case',
             given: 'qwer asdf yxcv',
             expected: 'qwer_asdf_yxcv',
         },
         {
-            commandName: 'each-first-upper-snake-case',
+            commandName: 'pascal-snake-case',
             given: 'qwer asdf yxcv',
             expected: 'Qwer_Asdf_Yxcv',
         },
         {
-            commandName: 'each-first-lower-snake-case',
+            commandName: 'inverse-pascal-snake-case',
             given: 'qwer asdf yxcv',
             expected: 'qWER_aSDF_yXCV',
         },
         {
-            commandName: 'upper-double-snake-case',
+            commandName: 'long-screaming-snake-case',
             given: 'qwer asdf yxcv',
             expected: 'QWER__ASDF__YXCV',
         },
         {
-            commandName: 'lower-double-snake-case',
+            commandName: 'long-snake-case',
             given: 'qwer asdf yxcv',
             expected: 'qwer__asdf__yxcv',
         },
         {
-            commandName: 'each-first-upper-double-snake-case',
+            commandName: 'long-pascal-snake-case',
             given: 'qwer asdf yxcv',
             expected: 'Qwer__Asdf__Yxcv',
         },
         {
-            commandName: 'each-first-lower-double-snake-case',
+            commandName: 'inverse-long-pascal-snake-case',
             given: 'qwer asdf yxcv',
             expected: 'qWER__aSDF__yXCV',
         },
         {
-            commandName: 'upper-kebab-case',
+            commandName: 'cobol-case',
             given: 'qwer asdf yxcv',
             expected: 'QWER-ASDF-YXCV',
         },
         {
-            commandName: 'lower-kebab-case',
+            commandName: 'kebab-case',
             given: 'qwer asdf yxcv',
             expected: 'qwer-asdf-yxcv',
         },
         {
-            commandName: 'each-first-upper-kebab-case',
+            commandName: 'train-case',
             given: 'qwer asdf yxcv',
             expected: 'Qwer-Asdf-Yxcv',
         },
         {
-            commandName: 'each-first-lower-kebab-case',
+            commandName: 'inverse-train-case',
             given: 'qwer asdf yxcv',
             expected: 'qWER-aSDF-yXCV',
         },
         {
-            commandName: 'upper-double-kebab-case',
+            commandName: 'long-screaming-kebab-case',
             given: 'qwer asdf yxcv',
             expected: 'QWER--ASDF--YXCV',
         },
         {
-            commandName: 'lower-double-kebab-case',
+            commandName: 'long-kebab-case',
             given: 'qwer asdf yxcv',
             expected: 'qwer--asdf--yxcv',
         },
         {
-            commandName: 'each-first-upper-double-kebab-case',
+            commandName: 'long-train-case',
             given: 'qwer asdf yxcv',
             expected: 'Qwer--Asdf--Yxcv',
         },
         {
-            commandName: 'each-first-lower-double-kebab-case',
+            commandName: 'inverse-long-train-case',
             given: 'qwer asdf yxcv',
             expected: 'qWER--aSDF--yXCV',
         },
         {
-            commandName: 'upper-space-case',
+            commandName: 'screaming-space-case',
             given: 'qwer asdf yxcv',
             expected: 'QWER ASDF YXCV',
         },
@@ -119,17 +119,17 @@ suite('Extension Test Suite', () => {
             expected: 'qwer asdf yxcv',
         },
         {
-            commandName: 'each-first-upper-space-case',
+            commandName: 'title-case',
             given: 'qwer asdf yxcv',
             expected: 'Qwer Asdf Yxcv',
         },
         {
-            commandName: 'each-first-lower-space-case',
+            commandName: 'inverse-title-case',
             given: 'qwer asdf yxcv',
             expected: 'qWER aSDF yXCV',
         },
         {
-            commandName: 'upper-dot-case',
+            commandName: 'screaming-dot-case',
             given: 'qwer asdf yxcv',
             expected: 'QWER.ASDF.YXCV',
         },
@@ -139,27 +139,27 @@ suite('Extension Test Suite', () => {
             expected: 'qwer.asdf.yxcv',
         },
         {
-            commandName: 'each-first-upper-dot-case',
+            commandName: 'pascal-dot-case',
             given: 'qwer asdf yxcv',
             expected: 'Qwer.Asdf.Yxcv',
         },
         {
-            commandName: 'each-first-lower-dot-case',
+            commandName: 'inverse-pascal-dot-case',
             given: 'qwer asdf yxcv',
             expected: 'qWER.aSDF.yXCV',
         },
         {
-            commandName: 'upper-camel-case',
+            commandName: 'pascal-case',
             given: 'qwer asdf yxcv',
             expected: 'QwerAsdfYxcv',
         },
         {
-            commandName: 'lower-camel-case',
+            commandName: 'camel-case',
             given: 'qwer asdf yxcv',
             expected: 'qwerAsdfYxcv',
         },
         {
-            commandName: 'lower-inverse-camel-case',
+            commandName: 'inverse-pascal-case',
             given: 'qwer asdf yxcv',
             expected: 'qWERaSDFyXCV',
         },
@@ -174,7 +174,7 @@ suite('Extension Test Suite', () => {
             expected: 'qwer asdf yxcv',
         },
         {
-            commandName: 'upper-custom1-case',
+            commandName: 'screaming-custom1-case',
             given: 'qwer asdf yxcv',
             expected: 'QWER+ASDF+YXCV',
         },
@@ -184,12 +184,12 @@ suite('Extension Test Suite', () => {
             expected: 'qwer+asdf+yxcv',
         },
         {
-            commandName: 'each-first-upper-custom1-case',
+            commandName: 'pascal-custom1-case',
             given: 'qwer asdf yxcv',
             expected: 'Qwer+Asdf+Yxcv',
         },
         {
-            commandName: 'each-first-lower-custom1-case',
+            commandName: 'inverse-pascal-custom1-case',
             given: 'qwer asdf yxcv',
             expected: 'qWER+aSDF+yXCV',
         },
@@ -311,7 +311,7 @@ suite('Extension Test Suite', () => {
         },
         {
             given: 'qwer asdf yxcv',
-            commandName: 'each-first-upper-space-case',
+            commandName: 'title-case',
             expected: 'Qwer Asdf Yxcv',
         },
         {
@@ -366,7 +366,7 @@ suite('Extension Test Suite', () => {
         },
         {
             given: 'qwer asdf yxcv',
-            commandName: 'each-first-upper-space-case',
+            commandName: 'title-case',
             expected: 'Qwer Asdf Yxcv',
         },
         {
@@ -484,12 +484,12 @@ suite('Extension Test Suite', () => {
 
             test('it should convert selection', async () => {
 
-                await vscode.commands.executeCommand('yet-another-case-converter.upper-snake-case');
+                await vscode.commands.executeCommand('yet-another-case-converter.constant-case');
                 await sleep(waitForCommand);
 
                 const range = getRangeOfLines(active);
                 const result = active?.document.getText(range);
-                assert(result === testArgs.expected, failedMsg(testArgs.given, 'upper-snake-case', testArgs.expected, result));
+                assert(result === testArgs.expected, failedMsg(testArgs.given, 'constant-case', testArgs.expected, result));
             });
         });
     });
@@ -515,12 +515,12 @@ suite('Extension Test Suite', () => {
 
         test('it should not change text', async () => {
 
-            await vscode.commands.executeCommand('yet-another-case-converter.upper-snake-case');
+            await vscode.commands.executeCommand('yet-another-case-converter.constant-case');
             await sleep(waitForCommand);
 
             const range = getRangeOfLines(active);
             const result = active?.document.getText(range);
-            assert(result === expected, failedMsg(given, 'upper-snake-case', expected, result));
+            assert(result === expected, failedMsg(given, 'constant-case', expected, result));
         });
     });
 
@@ -545,12 +545,12 @@ suite('Extension Test Suite', () => {
 
         test('it should convert selection at same position', async () => {
 
-            await vscode.commands.executeCommand('yet-another-case-converter.upper-snake-case');
+            await vscode.commands.executeCommand('yet-another-case-converter.constant-case');
             await sleep(waitForCommand);
 
             const range = getRangeOfLines(active);
             const result = active?.document.getText(range);
-            assert(result === expected, failedMsg(given, 'upper-snake-case', expected, result));
+            assert(result === expected, failedMsg(given, 'constant-case', expected, result));
         });
     });
 
@@ -575,12 +575,12 @@ suite('Extension Test Suite', () => {
 
         test('it should convert selection at same position', async () => {
 
-            await vscode.commands.executeCommand('yet-another-case-converter.lower-snake-case');
+            await vscode.commands.executeCommand('yet-another-case-converter.snake-case');
             await sleep(waitForCommand);
 
             const range = getRangeOfLines(active);
             const result = active?.document.getText(range);
-            assert(result === expected, failedMsg(given, 'lower-snake-case', expected, result));
+            assert(result === expected, failedMsg(given, 'snake-case', expected, result));
         });
     });
 
@@ -605,12 +605,12 @@ suite('Extension Test Suite', () => {
 
         test('it should convert selection at same position', async () => {
 
-            await vscode.commands.executeCommand('yet-another-case-converter.upper-snake-case');
+            await vscode.commands.executeCommand('yet-another-case-converter.constant-case');
             await sleep(waitForCommand);
 
             const range = getRangeOfLines(active);
             const result = active?.document.getText(range);
-            assert(result === expected, failedMsg(given, 'upper-snake-case', expected, result));
+            assert(result === expected, failedMsg(given, 'constant-case', expected, result));
         });
     });
 
@@ -635,12 +635,12 @@ suite('Extension Test Suite', () => {
 
         test('it should convert selection at same position', async () => {
 
-            await vscode.commands.executeCommand('yet-another-case-converter.upper-snake-case');
+            await vscode.commands.executeCommand('yet-another-case-converter.constant-case');
             await sleep(waitForCommand);
 
             const range = getRangeOfLines(active);
             const result = active?.document.getText(range);
-            assert(result === expected, failedMsg(given, 'upper-snake-case', expected, result));
+            assert(result === expected, failedMsg(given, 'constant-case', expected, result));
         });
     });
 
@@ -665,12 +665,12 @@ suite('Extension Test Suite', () => {
 
         test('it should convert selection at same position', async () => {
 
-            await vscode.commands.executeCommand('yet-another-case-converter.upper-snake-case');
+            await vscode.commands.executeCommand('yet-another-case-converter.constant-case');
             await sleep(waitForCommand);
 
             const range = getRangeOfLines(active);
             const result = active?.document.getText(range);
-            assert(result === expected, failedMsg(given, 'upper-snake-case', expected, result));
+            assert(result === expected, failedMsg(given, 'constant-case', expected, result));
         });
     });
 
@@ -695,12 +695,12 @@ suite('Extension Test Suite', () => {
 
         test('it should convert selection at same position', async () => {
 
-            await vscode.commands.executeCommand('yet-another-case-converter.upper-snake-case');
+            await vscode.commands.executeCommand('yet-another-case-converter.constant-case');
             await sleep(waitForCommand);
 
             const range = getRangeOfLines(active);
             const result = active?.document.getText(range);
-            assert(result === expected, failedMsg(given, 'upper-snake-case', expected, result));
+            assert(result === expected, failedMsg(given, 'constant-case', expected, result));
         });
     });
 
@@ -725,12 +725,12 @@ suite('Extension Test Suite', () => {
 
         test('it should convert selection at same position', async () => {
 
-            await vscode.commands.executeCommand('yet-another-case-converter.upper-snake-case');
+            await vscode.commands.executeCommand('yet-another-case-converter.constant-case');
             await sleep(waitForCommand);
 
             const range = getRangeOfLines(active);
             const result = active?.document.getText(range);
-            assert(result === expected, failedMsg(given, 'upper-snake-case', expected, result));
+            assert(result === expected, failedMsg(given, 'constant-case', expected, result));
         });
     });
 
@@ -755,12 +755,12 @@ suite('Extension Test Suite', () => {
 
         test('it should convert selection at same position', async () => {
 
-            await vscode.commands.executeCommand('yet-another-case-converter.upper-snake-case');
+            await vscode.commands.executeCommand('yet-another-case-converter.constant-case');
             await sleep(waitForCommand);
 
             const range = getRangeOfLines(active);
             const result = active?.document.getText(range);
-            assert(result === expected, failedMsg(given, 'upper-snake-case', expected, result));
+            assert(result === expected, failedMsg(given, 'constant-case', expected, result));
         });
     });
 
@@ -814,12 +814,12 @@ suite('Extension Test Suite', () => {
 
                 test('it should not convert separator', async () => {
 
-                    await vscode.commands.executeCommand('yet-another-case-converter.upper-snake-case');
+                    await vscode.commands.executeCommand('yet-another-case-converter.constant-case');
                     await sleep(waitForCommand);
 
                     const range = getRangeOfLines(active);
                     const result = active?.document.getText(range);
-                    assert(result === expected, failedMsg(given, 'upper-snake-case', expected, result));
+                    assert(result === expected, failedMsg(given, 'constant-case', expected, result));
                 });
             });
 
@@ -844,12 +844,12 @@ suite('Extension Test Suite', () => {
 
                 test('it should not convert separator', async () => {
 
-                    await vscode.commands.executeCommand('yet-another-case-converter.upper-snake-case');
+                    await vscode.commands.executeCommand('yet-another-case-converter.constant-case');
                     await sleep(waitForCommand);
 
                     const range = getRangeOfLines(active);
                     const result = active?.document.getText(range);
-                    assert(result === expected, failedMsg(given, 'upper-snake-case', expected, result));
+                    assert(result === expected, failedMsg(given, 'constant-case', expected, result));
                 });
             });
 
@@ -874,12 +874,12 @@ suite('Extension Test Suite', () => {
 
                 test('it should not convert separator', async () => {
 
-                    await vscode.commands.executeCommand('yet-another-case-converter.upper-snake-case');
+                    await vscode.commands.executeCommand('yet-another-case-converter.constant-case');
                     await sleep(waitForCommand);
 
                     const range = getRangeOfLines(active);
                     const result = active?.document.getText(range);
-                    assert(result === expected, failedMsg(given, 'upper-snake-case', expected, result));
+                    assert(result === expected, failedMsg(given, 'constant-case', expected, result));
                 });
             });
 
@@ -904,12 +904,12 @@ suite('Extension Test Suite', () => {
 
                 test('it should not convert separator', async () => {
 
-                    await vscode.commands.executeCommand('yet-another-case-converter.upper-snake-case');
+                    await vscode.commands.executeCommand('yet-another-case-converter.constant-case');
                     await sleep(waitForCommand);
 
                     const range = getRangeOfLines(active);
                     const result = active?.document.getText(range);
-                    assert(result === expected, failedMsg(given, 'upper-snake-case', expected, result));
+                    assert(result === expected, failedMsg(given, 'constant-case', expected, result));
                 });
             });
 
@@ -934,12 +934,12 @@ suite('Extension Test Suite', () => {
 
                 test('it should not convert separator', async () => {
 
-                    await vscode.commands.executeCommand('yet-another-case-converter.upper-snake-case');
+                    await vscode.commands.executeCommand('yet-another-case-converter.constant-case');
                     await sleep(waitForCommand);
 
                     const range = getRangeOfLines(active);
                     const result = active?.document.getText(range);
-                    assert(result === expected, failedMsg(given, 'upper-snake-case', expected, result));
+                    assert(result === expected, failedMsg(given, 'constant-case', expected, result));
                 });
             });
 
@@ -964,12 +964,12 @@ suite('Extension Test Suite', () => {
 
                 test('it should convert selection', async () => {
 
-                    await vscode.commands.executeCommand('yet-another-case-converter.upper-snake-case');
+                    await vscode.commands.executeCommand('yet-another-case-converter.constant-case');
                     await sleep(waitForCommand);
 
                     const range = getRangeOfLines(active);
                     const result = active?.document.getText(range);
-                    assert(result === expected, failedMsg(given, 'upper-snake-case', expected, result));
+                    assert(result === expected, failedMsg(given, 'constant-case', expected, result));
                 });
             });
 
@@ -994,12 +994,12 @@ suite('Extension Test Suite', () => {
 
                 test('it should convert selection', async () => {
 
-                    await vscode.commands.executeCommand('yet-another-case-converter.upper-snake-case');
+                    await vscode.commands.executeCommand('yet-another-case-converter.constant-case');
                     await sleep(waitForCommand);
 
                     const range = getRangeOfLines(active);
                     const result = active?.document.getText(range);
-                    assert(result === expected, failedMsg(given, 'upper-snake-case', expected, result));
+                    assert(result === expected, failedMsg(given, 'constant-case', expected, result));
                 });
             });
 
@@ -1024,12 +1024,12 @@ suite('Extension Test Suite', () => {
 
                 test('it should convert selection', async () => {
 
-                    await vscode.commands.executeCommand('yet-another-case-converter.upper-snake-case');
+                    await vscode.commands.executeCommand('yet-another-case-converter.constant-case');
                     await sleep(waitForCommand);
 
                     const range = getRangeOfLines(active);
                     const result = active?.document.getText(range);
-                    assert(result === expected, failedMsg(given, 'upper-snake-case', expected, result));
+                    assert(result === expected, failedMsg(given, 'constant-case', expected, result));
                 });
             });
 
@@ -1054,12 +1054,12 @@ suite('Extension Test Suite', () => {
 
                 test('it should convert selection', async () => {
 
-                    await vscode.commands.executeCommand('yet-another-case-converter.upper-snake-case');
+                    await vscode.commands.executeCommand('yet-another-case-converter.constant-case');
                     await sleep(waitForCommand);
 
                     const range = getRangeOfLines(active);
                     const result = active?.document.getText(range);
-                    assert(result === expected, failedMsg(given, 'upper-snake-case', expected, result));
+                    assert(result === expected, failedMsg(given, 'constant-case', expected, result));
                 });
             });
         });
@@ -1086,12 +1086,12 @@ suite('Extension Test Suite', () => {
 
         test('it should convert selection', async () => {
 
-            await vscode.commands.executeCommand('yet-another-case-converter.upper-snake-case');
+            await vscode.commands.executeCommand('yet-another-case-converter.constant-case');
             await sleep(waitForCommand);
 
             const range = getRangeOfLines(active);
             const result = active?.document.getText(range);
-            assert(result === expected, failedMsg(given, 'upper-snake-case', expected, result));
+            assert(result === expected, failedMsg(given, 'constant-case', expected, result));
         });
     });
 
@@ -1129,12 +1129,12 @@ suite('Extension Test Suite', () => {
 
             test(`it should convert multiple selections`, async () => {
 
-                await vscode.commands.executeCommand('yet-another-case-converter.upper-snake-case');
+                await vscode.commands.executeCommand('yet-another-case-converter.constant-case');
                 await sleep(waitForCommand);
 
                 const range = getRangeOfLines(active, 0, 1);
                 const result = active?.document.getText(range);
-                assert(result === expected, failedMsg(given, 'upper-snake-case', expected, result));
+                assert(result === expected, failedMsg(given, 'constant-case', expected, result));
             });
         });
 
@@ -1159,12 +1159,12 @@ suite('Extension Test Suite', () => {
 
             test(`it should convert multiple selections line by line`, async () => {
 
-                await vscode.commands.executeCommand('yet-another-case-converter.upper-snake-case');
+                await vscode.commands.executeCommand('yet-another-case-converter.constant-case');
                 await sleep(waitForCommand);
 
                 const range = getRangeOfLines(active, 0, 1);
                 const result = active?.document.getText(range);
-                assert(result === expected, failedMsg(given, 'upper-snake-case', expected, result));
+                assert(result === expected, failedMsg(given, 'constant-case', expected, result));
             });
         });
 
@@ -1193,12 +1193,12 @@ suite('Extension Test Suite', () => {
 
             test(`it should convert multiple multiline selections`, async () => {
 
-                await vscode.commands.executeCommand('yet-another-case-converter.upper-snake-case');
+                await vscode.commands.executeCommand('yet-another-case-converter.constant-case');
                 await sleep(waitForCommand);
 
                 const range = getRangeOfLines(active, 0, 3);
                 const result = active?.document.getText(range);
-                assert(result === expected, failedMsg(given, 'upper-snake-case', expected, result));
+                assert(result === expected, failedMsg(given, 'constant-case', expected, result));
             });
         });
     });
@@ -1224,12 +1224,12 @@ suite('Extension Test Suite', () => {
 
         test('it should convert selection at same position', async () => {
 
-            await vscode.commands.executeCommand('yet-another-case-converter.upper-snake-case');
+            await vscode.commands.executeCommand('yet-another-case-converter.constant-case');
             await sleep(waitForCommand);
 
             const range = getRangeOfLines(active);
             const result = active?.document.getText(range);
-            assert(result === expected, failedMsg(given, 'upper-snake-case', expected, result));
+            assert(result === expected, failedMsg(given, 'constant-case', expected, result));
         });
     });
 
@@ -1254,12 +1254,12 @@ suite('Extension Test Suite', () => {
 
         test('it should convert selection at same position', async () => {
 
-            await vscode.commands.executeCommand('yet-another-case-converter.upper-snake-case');
+            await vscode.commands.executeCommand('yet-another-case-converter.constant-case');
             await sleep(waitForCommand);
 
             const range = getRangeOfLines(active);
             const result = active?.document.getText(range);
-            assert(result === expected, failedMsg(given, 'upper-snake-case', expected, result));
+            assert(result === expected, failedMsg(given, 'constant-case', expected, result));
         });
     });
 
@@ -1288,12 +1288,12 @@ suite('Extension Test Suite', () => {
 
         test(`it should convert multiple selections`, async () => {
 
-            await vscode.commands.executeCommand('yet-another-case-converter.upper-snake-case');
+            await vscode.commands.executeCommand('yet-another-case-converter.constant-case');
             await sleep(waitForCommand);
 
             const range = getRangeOfLines(active, 0, 1);
             const result = active?.document.getText(range);
-            assert(result === expected, failedMsg(given, 'upper-snake-case', expected, result));
+            assert(result === expected, failedMsg(given, 'constant-case', expected, result));
         });
     });
 
@@ -1318,12 +1318,12 @@ suite('Extension Test Suite', () => {
 
         test(`it should convert multiple selections`, async () => {
 
-            await vscode.commands.executeCommand('yet-another-case-converter.upper-snake-case');
+            await vscode.commands.executeCommand('yet-another-case-converter.constant-case');
             await sleep(waitForCommand);
 
             const range = getRangeOfLines(active, 0, 1);
             const result = active?.document.getText(range);
-            assert(result === expected, failedMsg(given, 'upper-snake-case', expected, result));
+            assert(result === expected, failedMsg(given, 'constant-case', expected, result));
         });
     });
 
@@ -1348,12 +1348,12 @@ suite('Extension Test Suite', () => {
 
         test(`it should convert multiple selections`, async () => {
 
-            await vscode.commands.executeCommand('yet-another-case-converter.upper-snake-case');
+            await vscode.commands.executeCommand('yet-another-case-converter.constant-case');
             await sleep(waitForCommand);
 
             const range = getRangeOfLines(active, 0, 2);
             const result = active?.document.getText(range);
-            assert(result === expected, failedMsg(given, 'upper-snake-case', expected, result));
+            assert(result === expected, failedMsg(given, 'constant-case', expected, result));
         });
     });
 
@@ -1378,12 +1378,12 @@ suite('Extension Test Suite', () => {
 
         test(`it should convert multiple selections`, async () => {
 
-            await vscode.commands.executeCommand('yet-another-case-converter.upper-snake-case');
+            await vscode.commands.executeCommand('yet-another-case-converter.constant-case');
             await sleep(waitForCommand);
 
             const range = getRangeOfLines(active, 0, 2);
             const result = active?.document.getText(range);
-            assert(result === expected, failedMsg(given, 'upper-snake-case', expected, result));
+            assert(result === expected, failedMsg(given, 'constant-case', expected, result));
         });
     });
 });
