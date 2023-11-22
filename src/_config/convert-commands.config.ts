@@ -8,7 +8,7 @@ import {
     upper,
 } from "../convert-case";
 
-export function getCommandsConfig(customSeparator: string): CommandConfig[] {
+export function getConvertCommandsConfig(customSeparator: string): CommandConfig[] {
 
     return [
         {
