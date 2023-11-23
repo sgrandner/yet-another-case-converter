@@ -254,6 +254,11 @@
                     "default": true,
                     "description": "Activate pascal-snake-case command"
                 },
+                "yet-another-case-converter.activate.camel-snake-case": {
+                    "type": "boolean",
+                    "default": true,
+                    "description": "Activate camel-snake-case command"
+                },
                 "yet-another-case-converter.activate.inverse-pascal-snake-case": {
                     "type": "boolean",
                     "default": true,
@@ -273,6 +278,11 @@
                     "type": "boolean",
                     "default": true,
                     "description": "Activate long-pascal-snake-case command"
+                },
+                "yet-another-case-converter.activate.long-camel-snake-case": {
+                    "type": "boolean",
+                    "default": true,
+                    "description": "Activate long-camel-snake-case command"
                 },
                 "yet-another-case-converter.activate.inverse-long-pascal-snake-case": {
                     "type": "boolean",
@@ -294,10 +304,40 @@
                     "default": true,
                     "description": "Activate train-case command"
                 },
+                "yet-another-case-converter.activate.camel-kebab-case": {
+                    "type": "boolean",
+                    "default": true,
+                    "description": "Activate camel-kebab-case command"
+                },
                 "yet-another-case-converter.activate.inverse-train-case": {
                     "type": "boolean",
                     "default": true,
                     "description": "Activate inverse-train-case command"
+                },
+                "yet-another-case-converter.activate.long-screaming-kebab-case": {
+                    "type": "boolean",
+                    "default": true,
+                    "description": "Activate long-screaming-kebab-case command"
+                },
+                "yet-another-case-converter.activate.long-kebab-case": {
+                    "type": "boolean",
+                    "default": true,
+                    "description": "Activate long-kebab-case command"
+                },
+                "yet-another-case-converter.activate.long-train-case": {
+                    "type": "boolean",
+                    "default": true,
+                    "description": "Activate long-train-case command"
+                },
+                "yet-another-case-converter.activate.long-camel-kebab-case": {
+                    "type": "boolean",
+                    "default": true,
+                    "description": "Activate long-camel-kebab-case command"
+                },
+                "yet-another-case-converter.activate.inverse-long-train-case": {
+                    "type": "boolean",
+                    "default": true,
+                    "description": "Activate inverse-long-train-case command"
                 },
                 "yet-another-case-converter.activate.screaming-space-case": {
                     "type": "boolean",
@@ -313,6 +353,11 @@
                     "type": "boolean",
                     "default": true,
                     "description": "Activate title-case command"
+                },
+                "yet-another-case-converter.activate.camel-space-case": {
+                    "type": "boolean",
+                    "default": true,
+                    "description": "Activate camel-space-case command"
                 },
                 "yet-another-case-converter.activate.inverse-title-case": {
                     "type": "boolean",
@@ -333,6 +378,11 @@
                     "type": "boolean",
                     "default": true,
                     "description": "Activate pascal-dot-case command"
+                },
+                "yet-another-case-converter.activate.camel-dot-case": {
+                    "type": "boolean",
+                    "default": true,
+                    "description": "Activate camel-dot-case command"
                 },
                 "yet-another-case-converter.activate.inverse-pascal-dot-case": {
                     "type": "boolean",
@@ -364,10 +414,15 @@
                     "default": true,
                     "description": "Activate lower-case command"
                 },
-                "yet-another-case-converter.custom1-separator": {
-                    "type": "string",
-                    "default": "",
-                    "description": "Define custom1-separator"
+                "yet-another-case-converter.activate.upper-flat-case": {
+                    "type": "boolean",
+                    "default": true,
+                    "description": "Activate upper-flat-case command"
+                },
+                "yet-another-case-converter.activate.flat-case": {
+                    "type": "boolean",
+                    "default": true,
+                    "description": "Activate flat-case command"
                 },
                 "yet-another-case-converter.activate.screaming-custom1-case": {
                     "type": "boolean",
@@ -384,10 +439,20 @@
                     "default": true,
                     "description": "Activate pascal-custom1-case command"
                 },
+                "yet-another-case-converter.activate.camel-custom1-case": {
+                    "type": "boolean",
+                    "default": true,
+                    "description": "Activate camel-custom1-case command"
+                },
                 "yet-another-case-converter.activate.inverse-pascal-custom1-case": {
                     "type": "boolean",
                     "default": true,
                     "description": "Activate inverse-pascal-custom1-case command"
+                },
+                "yet-another-case-converter.custom1-separator": {
+                    "type": "string",
+                    "default": "",
+                    "description": "Define custom1-separator"
                 }
             }
         }
