@@ -1,5 +1,10 @@
 # Yet Another Case Converter - Change Log
 
+## [0.2.1] - 2023-11-23
+
+- BUGFIX: add missing configuration properties for new commands in package.json, otherwise they are deactivated
+
+
 ## [0.2.0] - 2023-11-23
 
 - config settings for enabling/disabling commands
