@@ -216,7 +216,18 @@ export function getConvertCommandsConfig(customSeparator: string): CommandConfig
             veryFirstCaseConversion: VeryFirstCaseConversion.none,
         },
 
-        // NOTE upper-case and lower-case are handled separately
+        {
+            commandName: 'upper-case',
+            separator: SEPARATOR.wholeWord,
+            segmentCaseConversion: upper,
+            veryFirstCaseConversion: VeryFirstCaseConversion.none,
+        },
+        {
+            commandName: 'lower-case',
+            separator: SEPARATOR.wholeWord,
+            segmentCaseConversion: lower,
+            veryFirstCaseConversion: VeryFirstCaseConversion.none,
+        },
 
         {
             commandName: 'upper-flat-case',

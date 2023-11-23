@@ -23,6 +23,10 @@ export function generateCase(
         return text;
     }
 
+    if (separator.name === SEPARATOR.wholeWord.name) {
+        return caseConversionFunction(text);
+    }
+
     if (
         separator.name === SEPARATOR.none.name &&
         caseConversionFunction === firstLower &&
@@ -71,6 +75,7 @@ export function generateCase(
     //      Exception: The selection does end with a separator. In this special case the last separator must not be deleted !
     if (
         separator.name !== SEPARATOR.none.name &&
+        separator.name !== SEPARATOR.wholeWord.name &&
         separator.value !== undefined &&
         !text.match(`[${separatorRegexString}]+$`)
     ) {

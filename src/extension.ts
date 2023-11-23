@@ -32,24 +32,6 @@ export function activate(context: vscode.ExtensionContext) {
         });
         context.subscriptions.push(disposable);
     });
-
-    disposable = vscode.commands.registerCommand('yet-another-case-converter.upper-case', () => {
-
-        iterateSelections((editBuilder: vscode.TextEditorEdit, textSelection: TextSelection) => {
-
-            editBuilder.replace(textSelection.selection, textSelection.text.toUpperCase());
-        });
-    });
-    context.subscriptions.push(disposable);
-
-    disposable = vscode.commands.registerCommand('yet-another-case-converter.lower-case', () => {
-
-        iterateSelections((editBuilder: vscode.TextEditorEdit, textSelection: TextSelection) => {
-
-            editBuilder.replace(textSelection.selection, textSelection.text.toLowerCase());
-        });
-    });
-    context.subscriptions.push(disposable);
 }
 
 export function deactivate() {

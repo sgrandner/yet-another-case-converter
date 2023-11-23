@@ -32,4 +32,8 @@ export const SEPARATOR: { [ key in SeparatorType ]: Separator } = {
         name: 'none',
         value: '',
     },
+    wholeWord: {
+        name: 'wholeWord',
+        value: '',
+    },
 };

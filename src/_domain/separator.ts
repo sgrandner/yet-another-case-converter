@@ -5,7 +5,8 @@ export type SeparatorType =
     'doubleKebab' |
     'space' |
     'dot' |
-    'none';
+    'none' |
+    'wholeWord';
 
 export interface Separator {
     name: SeparatorType | undefined;
