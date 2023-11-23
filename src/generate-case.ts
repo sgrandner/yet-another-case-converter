@@ -1,5 +1,6 @@
 import * as vscode from 'vscode';
 
+import { SEPARATOR } from './_config/separator.config';
 import {
     CaseConversion,
     VeryFirstCaseConversion,
@@ -13,7 +14,7 @@ import {
 
 export function generateCase(
     text: string,
-    separator: Separator | string,
+    separator: Separator,
     caseConversionFunction: CaseConversion,
     veryFirst?: VeryFirstCaseConversion
 ): string {
@@ -23,7 +24,7 @@ export function generateCase(
     }
 
     if (
-        separator === Separator.none &&
+        separator.name === SEPARATOR.none.name &&
         caseConversionFunction === firstLower &&
         veryFirst === VeryFirstCaseConversion.upper
     ) {
@@ -51,7 +52,7 @@ export function generateCase(
 
     let replacedString = text.replace(regex, (matched: string, captured1: string, captured2: string, captured3: string, captured4: string, captured5: string): string => {
 
-        const replacedSegment = `${captured1 ?? ''}${captured2 ?? ''}${captured3 ?? ''}${captured4 ?? ''}${captured5 ?? ''}${separator}`;
+        const replacedSegment = `${captured1 ?? ''}${captured2 ?? ''}${captured3 ?? ''}${captured4 ?? ''}${captured5 ?? ''}${separator.value}`;
 
         return caseConversionFunction(replacedSegment);
     });
@@ -68,8 +69,12 @@ export function generateCase(
     // NOTE Segments are captured without separators by regex and combined using the new separator (except camel cases and flat cases)
     //      at the end of each segment. Thus, the last segment also ends with a separator which must be deleted.
     //      Exception: The selection does end with a separator. In this special case the last separator must not be deleted !
-    if (separator !== Separator.none && !text.match(`[${separatorRegexString}]+$`)) {
-        replacedString = replacedString.slice(0, replacedString.length - separator.length);
+    if (
+        separator.name !== SEPARATOR.none.name &&
+        separator.value !== undefined &&
+        !text.match(`[${separatorRegexString}]+$`)
+    ) {
+        replacedString = replacedString.slice(0, replacedString.length - separator.value.length);
     }
 
     return replacedString;

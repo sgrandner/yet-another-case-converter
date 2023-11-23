@@ -3,7 +3,7 @@ import { Separator } from "./separator";
 
 export interface CommandConfig {
     commandName: string;
-    separator: Separator | string;
+    separator: Separator;
     segmentCaseConversion: (matchedSegment: string) => string;
     veryFirstCaseConversion: VeryFirstCaseConversion;
 }
