@@ -21,7 +21,8 @@
         "pretest": "npm run compile-tests && npm run compile && npm run lint",
         "lint": "eslint src --ext ts",
         "lint:fix": "npm run lint -- --fix",
-        "test": "node ./out/test/runTest.js"
+        "test": "node ./out/test/runTest.js",
+        "vsce:package": "vsce package"
     },
     "contributes": {
         "commands": [
