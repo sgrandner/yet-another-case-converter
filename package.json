@@ -27,6 +27,22 @@
     "contributes": {
         "commands": [
             {
+                "command": "yet-another-case-converter.activate-all-commands",
+                "title": "Yet Another Case Converter: Activate all commands"
+            },
+            {
+                "command": "yet-another-case-converter.activate-most-commands",
+                "title": "Yet Another Case Converter: Activate most commands"
+            },
+            {
+                "command": "yet-another-case-converter.activate-important-commands",
+                "title": "Yet Another Case Converter: Activate important commands"
+            },
+            {
+                "command": "yet-another-case-converter.deactivate-all-commands",
+                "title": "Yet Another Case Converter: Deactivate all commands (for manual configuration)"
+            },
+            {
                 "command": "yet-another-case-converter.constant-case",
                 "title": "Yet Another Case Converter: CONSTANT_CASE / SCREAMING_SNAKE_CASE (Constant Case, Screaming Snake Case)",
                 "enablement": "config.yet-another-case-converter.activate.constant-case == true && editorHasSelection"
@@ -262,7 +278,7 @@
                 },
                 "yet-another-case-converter.activate.inverse-pascal-snake-case": {
                     "type": "boolean",
-                    "default": true,
+                    "default": false,
                     "description": "Activate inverse-pascal-snake-case command"
                 },
                 "yet-another-case-converter.activate.long-screaming-snake-case": {
@@ -277,17 +293,17 @@
                 },
                 "yet-another-case-converter.activate.long-pascal-snake-case": {
                     "type": "boolean",
-                    "default": true,
+                    "default": false,
                     "description": "Activate long-pascal-snake-case command"
                 },
                 "yet-another-case-converter.activate.long-camel-snake-case": {
                     "type": "boolean",
-                    "default": true,
+                    "default": false,
                     "description": "Activate long-camel-snake-case command"
                 },
                 "yet-another-case-converter.activate.inverse-long-pascal-snake-case": {
                     "type": "boolean",
-                    "default": true,
+                    "default": false,
                     "description": "Activate inverse-long-pascal-snake-case command"
                 },
                 "yet-another-case-converter.activate.cobol-case": {
@@ -312,12 +328,12 @@
                 },
                 "yet-another-case-converter.activate.inverse-train-case": {
                     "type": "boolean",
-                    "default": true,
+                    "default": false,
                     "description": "Activate inverse-train-case command"
                 },
                 "yet-another-case-converter.activate.long-screaming-kebab-case": {
                     "type": "boolean",
-                    "default": true,
+                    "default": false,
                     "description": "Activate long-screaming-kebab-case command"
                 },
                 "yet-another-case-converter.activate.long-kebab-case": {
@@ -327,17 +343,17 @@
                 },
                 "yet-another-case-converter.activate.long-train-case": {
                     "type": "boolean",
-                    "default": true,
+                    "default": false,
                     "description": "Activate long-train-case command"
                 },
                 "yet-another-case-converter.activate.long-camel-kebab-case": {
                     "type": "boolean",
-                    "default": true,
+                    "default": false,
                     "description": "Activate long-camel-kebab-case command"
                 },
                 "yet-another-case-converter.activate.inverse-long-train-case": {
                     "type": "boolean",
-                    "default": true,
+                    "default": false,
                     "description": "Activate inverse-long-train-case command"
                 },
                 "yet-another-case-converter.activate.screaming-space-case": {
@@ -357,12 +373,12 @@
                 },
                 "yet-another-case-converter.activate.camel-space-case": {
                     "type": "boolean",
-                    "default": true,
+                    "default": false,
                     "description": "Activate camel-space-case command"
                 },
                 "yet-another-case-converter.activate.inverse-title-case": {
                     "type": "boolean",
-                    "default": true,
+                    "default": false,
                     "description": "Activate inverse-title-case command"
                 },
                 "yet-another-case-converter.activate.screaming-dot-case": {
@@ -377,17 +393,17 @@
                 },
                 "yet-another-case-converter.activate.pascal-dot-case": {
                     "type": "boolean",
-                    "default": true,
+                    "default": false,
                     "description": "Activate pascal-dot-case command"
                 },
                 "yet-another-case-converter.activate.camel-dot-case": {
                     "type": "boolean",
-                    "default": true,
+                    "default": false,
                     "description": "Activate camel-dot-case command"
                 },
                 "yet-another-case-converter.activate.inverse-pascal-dot-case": {
                     "type": "boolean",
-                    "default": true,
+                    "default": false,
                     "description": "Activate inverse-pascal-dot-case command"
                 },
                 "yet-another-case-converter.activate.pascal-case": {
@@ -402,7 +418,7 @@
                 },
                 "yet-another-case-converter.activate.inverse-pascal-case": {
                     "type": "boolean",
-                    "default": true,
+                    "default": false,
                     "description": "Activate inverse-pascal-case command"
                 },
                 "yet-another-case-converter.activate.upper-case": {
@@ -447,7 +463,7 @@
                 },
                 "yet-another-case-converter.activate.inverse-pascal-custom1-case": {
                     "type": "boolean",
-                    "default": true,
+                    "default": false,
                     "description": "Activate inverse-pascal-custom1-case command"
                 },
                 "yet-another-case-converter.custom1-separator": {

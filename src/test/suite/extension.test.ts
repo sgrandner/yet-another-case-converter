@@ -9,6 +9,10 @@ suite('Extension Test Suite', () => {
     let active: vscode.TextEditor | undefined;
     let configStub: sinon.SinonStub;
 
+
+    // TODO tests for new settings commands !?
+
+
     // NOTE It is necessary to wait for commands to be executed in these tests.
     //      Otherwise tests will fail. However, certain tests may fail sometimes.
     //      Maybe there is a way to get rid of it.
@@ -538,6 +542,8 @@ suite('Extension Test Suite', () => {
             });
         });
     });
+
+    // TODO add apostrophe to segment characters !?
 
     suite('with empty selection', () => {
 
