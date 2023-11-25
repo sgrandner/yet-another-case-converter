@@ -14,8 +14,6 @@ export function activate(context: vscode.ExtensionContext) {
     activateSettingsCommands(context);
 
     activateConvertCommands(context);
-
-    // TODO show dummy command if nothing selected: "select text to choose a case conversion"
 }
 
 export function deactivate() {
@@ -23,29 +21,56 @@ export function deactivate() {
 
 function activateSettingsCommands(context: vscode.ExtensionContext) {
 
-    // TODO config commands for activating or deactivating convert commands (in groups)
-
     let disposable;
 
     disposable = vscode.commands.registerCommand('yet-another-case-converter.activate-all-commands', () => {
-        updateConfigurationsByLevel(CommandLevel.AreYouKidding);
+        confirmAction(() => {
+            updateConfigurationsByLevel(CommandLevel.AreYouKidding);
+        });
     });
     context.subscriptions.push(disposable);
 
     disposable = vscode.commands.registerCommand('yet-another-case-converter.activate-most-commands', () => {
-        updateConfigurationsByLevel(CommandLevel.WhyNot);
+        confirmAction(() => {
+            updateConfigurationsByLevel(CommandLevel.WhyNot);
+        });
     });
     context.subscriptions.push(disposable);
 
     disposable = vscode.commands.registerCommand('yet-another-case-converter.activate-important-commands', () => {
-        updateConfigurationsByLevel(CommandLevel.Important);
+        confirmAction(() => {
+            updateConfigurationsByLevel(CommandLevel.Important);
+        });
     });
     context.subscriptions.push(disposable);
 
     disposable = vscode.commands.registerCommand('yet-another-case-converter.deactivate-all-commands', () => {
-        updateConfigurationsByLevel(CommandLevel.None);
+        confirmAction(() => {
+            updateConfigurationsByLevel(CommandLevel.None);
+        });
     });
     context.subscriptions.push(disposable);
+}
+
+// TODO move to utils ?!
+function confirmAction(doAction: () => void) {
+
+    vscode.window.showInformationMessage(
+        'Do you want to continue to edit the global settings?',
+        'Yes',
+        'No',
+    ).then(
+        (value: string | undefined) => {
+            if (value === 'Yes') {
+                doAction();
+            }
+        },
+        (value: string | undefined) => {
+            if (value === 'Yes') {
+                vscode.window.showErrorMessage('Failed to execute command !');
+            }
+        },
+    );
 }
 
 /**
@@ -104,6 +129,8 @@ function updateConfiguration(
     configuration: vscode.WorkspaceConfiguration,
     config: CommandConfig,
 ) {
+
+    // TODO only update if value changes
 
     configuration.update(`activate.${config.commandName}`, updateValue, true).then(
         () => { console.log(`updated ${config.commandName} with ${updateValue}`); },
