@@ -206,7 +206,7 @@ export function getConvertCommandsConfig(customSeparator: string | undefined): C
             separator: SEPARATOR.dot,
             segmentCaseConversion: lower,
             veryFirstCaseConversion: VeryFirstCaseConversion.none,
-            commandLevel: CommandLevel.WhyNot,
+            commandLevel: CommandLevel.Important,
         },
         {
             commandName: 'pascal-dot-case',
