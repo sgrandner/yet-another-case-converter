@@ -1,5 +1,11 @@
 # Yet Another Case Converter - Change Log
 
+## [0.3.0] - 2023-11-25
+
+- add settings commands for activation/deactivation of convert commands (grouped by command levels "important", "most" and "all")
+- set defaults for commands to "most"
+
+
 ## [0.2.1] - 2023-11-23
 
 - BUGFIX: add missing configuration properties for new commands in package.json, otherwise they are deactivated
