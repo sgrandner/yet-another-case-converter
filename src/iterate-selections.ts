@@ -15,6 +15,8 @@ export function iterateSelections(selectionEditor: SelectionEditor) {
 
             editSelections(activeTextEditor, validTextSelections, selectionEditor);
 
+        } else {
+            vscode.window.showInformationMessage('Nothing selected for case conversion !');
         }
     }
 }
@@ -37,7 +39,7 @@ function gatherValidSelections(activeTextEditor: vscode.TextEditor): TextSelecti
             selectedTextLines.forEach((lineText: string, lineIndex: number) => {
 
                 if (lineText.length > 0) {
-    
+
                     const currentLineIndex = range.start.line + lineIndex;
                     const startCharacterIndex = lineIndex === 0 ? range.start.character : 0;
 
@@ -78,7 +80,7 @@ function editSelections(
             const selectionsString = validTextSelections
                 .map((textSelection: TextSelection): string => `"${textSelection.text}"`)
                 .join(', ');
-            
+
             vscode.window.showWarningMessage(`failed to change case for ${selectionsString}`);
         }
     });
