@@ -140,27 +140,29 @@ function updateConfiguration(
 
 function activateConvertCommands(context: vscode.ExtensionContext) {
 
-    const customSeparator1 = (String)(
-        vscode.workspace.getConfiguration('yet-another-case-converter')
-            .get('custom1-separator')
-    );
+    const customSeparator1: string | undefined = vscode.workspace
+        .getConfiguration('yet-another-case-converter')
+        .get('custom1-separator');
+    const separatorRegexString = ` ${customSeparator1 ?? ''}._-`;
+
     const commands = getConvertCommandsConfig(customSeparator1);
 
     commands.forEach((config: CommandConfig) => {
 
         const disposable = vscode.commands.registerCommand(`yet-another-case-converter.${config.commandName}`, () => {
-            applyConvertCommand(config);
+            applyConvertCommand(config, separatorRegexString);
         });
         context.subscriptions.push(disposable);
     });
 }
 
-function applyConvertCommand(config: CommandConfig) {
+function applyConvertCommand(config: CommandConfig, separatorRegexString: string) {
 
     iterateSelections((editBuilder: vscode.TextEditorEdit, textSelection: TextSelection) => {
 
         editBuilder.replace(textSelection.selection, generateCase(
             textSelection.text,
+            separatorRegexString,
             config.separator,
             config.segmentCaseConversion,
             config.veryFirstCaseConversion,

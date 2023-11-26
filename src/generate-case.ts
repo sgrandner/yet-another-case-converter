@@ -7,13 +7,36 @@ import {
 } from './_domain/case-conversion';
 import { Separator } from './_domain/separator';
 import {
-    firstLower,
     veryFirstLower,
     veryFirstUpper,
 } from './convert-case';
 
+/**
+ * Matches segments of the given "text" which may contain separators as defined by "separatorRegexString"
+ * and replaced them according to the target case defined by "separator", "caseConversionFunction" and "veryFirst".
+ *
+ * OR
+ *
+ * Converts the given "text" as a whole word (one segment).
+ *
+ * The segments are matches by case using a regular expression with the following matching groups:
+ * 1. matching group: segments separated by one or more separation characters but also match camel case within separated segments
+ * 2. matching group: camel case and lower case
+ * 3. matching group: upper case without following first letter of camel case
+ * 4. matching group: match inverse camel case but only "normal" invserse camel case (no upper very first letter or group of lower letters)
+ * 5. matching group: single lower letters or numbers
+ * 6. matching group: leading separators
+ *
+ * @param text Given string whose case will be converted
+ * @param separatorRegexString Regex of all allowed separators
+ * @param separator Separator string for the target case
+ * @param caseConversionFunction Function which converts each segment
+ * @param veryFirst Optional conversion of the first letter of "text" (not each segment)
+ * @returns Text converted to the target case
+ */
 export function generateCase(
     text: string,
+    separatorRegexString: string,
     separator: Separator,
     caseConversionFunction: CaseConversion,
     veryFirst?: VeryFirstCaseConversion
@@ -23,29 +46,27 @@ export function generateCase(
         return text;
     }
 
+    let replacedString: string;
+
     if (separator.name === SEPARATOR.wholeWord.name) {
-        return caseConversionFunction(text);
+
+        replacedString = caseConversionFunction(text);
+
+    } else {
+
+        replacedString = matchAndReplaceSegments(text, separatorRegexString, separator, caseConversionFunction, veryFirst);
     }
 
-    if (
-        separator.name === SEPARATOR.none.name &&
-        caseConversionFunction === firstLower &&
-        veryFirst === VeryFirstCaseConversion.upper
-    ) {
-        vscode.window.showWarningMessage(`Tried to generate upper inverse camel case which is really strange and not matched properly. Use without VeryFirstCaseConversion instead.`);
-        return text;
-    }
+    return replacedString;
+}
 
-    // NOTE the following regex matches segments of a string (selection) by case
-    // 1. matching group: segments separated by one or more separation characters but also match camel case within separated segments
-    // 2. matching group: camel case and lower case
-    // 3. matching group: upper case without following first letter of camel case
-    // 4. matching group: match inverse camel case but only "normal" invserse camel case (no upper very first letter or group of lower letters)
-    // 5. matching group: single lower letters or numbers
-    // 6. matching group: leading separators
-
-    const customSeparator1 = (String)(vscode.workspace.getConfiguration('yet-another-case-converter').get('custom1-separator'));
-    const separatorRegexString = ` ${customSeparator1}._-`;
+function matchAndReplaceSegments(
+    text: string,
+    separatorRegexString: string,
+    separator: Separator,
+    caseConversionFunction: CaseConversion,
+    veryFirst: VeryFirstCaseConversion | undefined,
+): string {
 
     if (text.match(`^[${separatorRegexString}]+$`)) {
         vscode.window.showWarningMessage(`Selections only containing separators are not converted !`);
@@ -74,9 +95,8 @@ export function generateCase(
     //      at the end of each segment. Thus, the last segment also ends with a separator which must be deleted.
     //      Exception: The selection does end with a separator. In this special case the last separator must not be deleted !
     if (
-        separator.name !== SEPARATOR.none.name &&
-        separator.name !== SEPARATOR.wholeWord.name &&
         separator.value !== undefined &&
+        separator.value.length > 0 &&
         !text.match(`[${separatorRegexString}]+$`)
     ) {
         replacedString = replacedString.slice(0, replacedString.length - separator.value.length);
