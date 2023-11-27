@@ -10,6 +10,7 @@ import {
     veryFirstLower,
     veryFirstUpper,
 } from './convert-case';
+import { regExpMatchArrayWithIsLast } from './utils/reg-exp-match-array-with-is-last';
 
 /**
  * Matches segments of the given "text" which may contain separators as defined by "separatorRegexString"
@@ -49,11 +50,8 @@ export function generateCase(
     let replacedString: string;
 
     if (separator.name === SEPARATOR.wholeWord.name) {
-
         replacedString = caseConversionFunction(text);
-
     } else {
-
         replacedString = matchAndReplaceSegments(text, separatorRegexString, separator, caseConversionFunction, veryFirst);
     }
 
@@ -73,33 +71,31 @@ function matchAndReplaceSegments(
         return text;
     }
 
+    let replacedString = '';
+
     const regex = new RegExp(`([A-Z]{0,1}(?:[a-z0-9]+|[A-Z0-9]+))[${separatorRegexString}]+|([A-Za-z][a-z0-9]+)|([A-Z0-9]+(?![a-z]))|([A-Za-z][A-Z0-9]+)[${separatorRegexString}]*|([a-z0-9])|[ ._-]+`, 'g');
+    const matchedSegments = text.matchAll(regex);
 
-    let replacedString = text.replace(regex, (matched: string, captured1: string, captured2: string, captured3: string, captured4: string, captured5: string): string => {
+    // TODO show message if nothing is matched and return !!!
 
-        const replacedSegment = `${captured1 ?? ''}${captured2 ?? ''}${captured3 ?? ''}${captured4 ?? ''}${captured5 ?? ''}${separator.value}`;
+    for (const match of regExpMatchArrayWithIsLast(matchedSegments)) {
 
-        return caseConversionFunction(replacedSegment);
-    });
+        // NOTE the segment is one of the captering groups of the regexp
+        const replacedSegment = match.value.find((capture: string, index: number) => {
+            return index > 0 && capture?.length > 0;
+        }) ?? '';
+        const convertedSegment = caseConversionFunction(replacedSegment);
 
-    if (veryFirst === VeryFirstCaseConversion.upper) {
+        // NOTE the separator is concatinated if it's not the last segment or the last segment ends with a separator
+        const concatSeparator = !match.isLast || !!text.match(`[${separatorRegexString}]+$`);
 
-        replacedString = veryFirstUpper(replacedString);
-
-    } else if (veryFirst === VeryFirstCaseConversion.lower) {
-
-        replacedString = veryFirstLower(replacedString);
+        replacedString = replacedString.concat(convertedSegment, concatSeparator ? separator.value ?? '' : '');
     }
 
-    // NOTE Segments are captured without separators by regex and combined using the new separator (except camel cases and flat cases)
-    //      at the end of each segment. Thus, the last segment also ends with a separator which must be deleted.
-    //      Exception: The selection does end with a separator. In this special case the last separator must not be deleted !
-    if (
-        separator.value !== undefined &&
-        separator.value.length > 0 &&
-        !text.match(`[${separatorRegexString}]+$`)
-    ) {
-        replacedString = replacedString.slice(0, replacedString.length - separator.value.length);
+    if (veryFirst === VeryFirstCaseConversion.upper) {
+        replacedString = veryFirstUpper(replacedString);
+    } else if (veryFirst === VeryFirstCaseConversion.lower) {
+        replacedString = veryFirstLower(replacedString);
     }
 
     return replacedString;
