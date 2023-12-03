@@ -1,9 +1,16 @@
 import * as vscode from 'vscode';
 
+import { ApostropheHandling } from './_domain/apostrophe-handling';
 import { SelectionEditor } from './_domain/selection-editor';
 import { TextSelection } from './_domain/text-selection';
 
-export function iterateSelections(selectionEditor: SelectionEditor) {
+export function iterateSelections(
+    selectionEditor: SelectionEditor,
+    apostropheHandler: (
+        validTextSelections: TextSelection[],
+        editSelectionsCallback: (apostropheHandling: ApostropheHandling | undefined) => void,
+    ) => void,
+) {
 
     const activeTextEditor = vscode.window.activeTextEditor;
 
@@ -13,7 +20,9 @@ export function iterateSelections(selectionEditor: SelectionEditor) {
 
         if (validTextSelections?.length > 0) {
 
-            editSelections(activeTextEditor, validTextSelections, selectionEditor);
+            apostropheHandler(validTextSelections, (apostropheHandling: ApostropheHandling | undefined) => {
+                editSelections(activeTextEditor, validTextSelections, selectionEditor, apostropheHandling);
+            });
 
         } else {
             vscode.window.showInformationMessage('Nothing selected for case conversion !');
@@ -68,11 +77,14 @@ function editSelections(
     activeTextEditor: vscode.TextEditor,
     validTextSelections: TextSelection[],
     selectionEditor: SelectionEditor,
+    apostropheHandling: ApostropheHandling | undefined,
 ): void {
 
     activeTextEditor.edit((editBuilder: vscode.TextEditorEdit) => {
 
-        validTextSelections.forEach((textSelection: TextSelection) => selectionEditor(editBuilder, textSelection));
+        validTextSelections.forEach((textSelection: TextSelection) => {
+            selectionEditor(editBuilder, textSelection, apostropheHandling);
+        });
 
     }).then((editDone: boolean) => {
 

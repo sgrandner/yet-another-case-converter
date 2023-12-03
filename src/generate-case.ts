@@ -1,6 +1,7 @@
 import * as vscode from 'vscode';
 
 import { SEPARATOR } from './_config/separator.config';
+import { ApostropheHandling } from './_domain/apostrophe-handling';
 import {
     CaseConversion,
     VeryFirstCaseConversion,
@@ -40,19 +41,34 @@ export function generateCase(
     separatorRegexString: string,
     separator: Separator,
     caseConversionFunction: CaseConversion,
-    veryFirst?: VeryFirstCaseConversion
-): string {
+    veryFirst: VeryFirstCaseConversion,
+    apostropheHandling: ApostropheHandling | undefined,
+): string | null {
 
     if (text.length === 0) {
-        return text;
+        return null;
     }
 
     let replacedString: string;
 
     if (separator.name === SEPARATOR.wholeWord.name) {
+
         replacedString = caseConversionFunction(text);
+
     } else {
-        replacedString = matchAndReplaceSegments(text, separatorRegexString, separator, caseConversionFunction, veryFirst);
+
+        replacedString = matchAndReplaceSegments(
+            text,
+            separatorRegexString,
+            separator,
+            caseConversionFunction,
+            veryFirst,
+            apostropheHandling,
+        );
+    }
+
+    if (apostropheHandling === 'remove' || apostropheHandling === 'handleAsSeparatorWithinWord') {
+        replacedString = replacedString.replace(/\'/g, '');
     }
 
     return replacedString;
@@ -64,6 +80,7 @@ function matchAndReplaceSegments(
     separator: Separator,
     caseConversionFunction: CaseConversion,
     veryFirst: VeryFirstCaseConversion | undefined,
+    apostropheHandling: ApostropheHandling | undefined,
 ): string {
 
     if (text.match(`^[${separatorRegexString}]+$`)) {
@@ -73,7 +90,18 @@ function matchAndReplaceSegments(
 
     let replacedString = '';
 
-    const regex = new RegExp(`([A-Z]{0,1}(?:[a-z0-9]+|[A-Z0-9]+))[${separatorRegexString}]+|([A-Za-z][a-z0-9]+)|([A-Z0-9]+(?![a-z]))|([A-Za-z][A-Z0-9]+)[${separatorRegexString}]*|([a-z0-9])|[ ._-]+`, 'g');
+    const apo = apostropheHandling === 'keep' || apostropheHandling === 'remove' ? '\'' : '';
+    const apoSeparator = apostropheHandling === 'handleAsSeparatorWithinWord' ? '\'' : '';
+
+    const regexArray = [];
+    regexArray.push(`([A-Z${apo}]{0,1}(?:[a-z0-9${apo}]+|[A-Z0-9${apo}]+))[${separatorRegexString}${apoSeparator}]+`);
+    regexArray.push(`([A-Za-z${apo}][a-z0-9${apo}]+)`);
+    regexArray.push(`([A-Z0-9${apo}]+(?![a-z${apo}]))`);
+    regexArray.push(`([A-Za-z${apo}][A-Z0-9${apo}]+)[${separatorRegexString}${apoSeparator}]*`);
+    regexArray.push(`([a-z0-9${apo}])`);
+    regexArray.push(`[ ._-]+`);
+
+    const regex = new RegExp(regexArray.join('|'), 'g');
     const matchedSegments = text.matchAll(regex);
 
     // TODO show message if nothing is matched and return !!!

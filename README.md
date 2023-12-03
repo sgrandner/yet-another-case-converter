@@ -11,6 +11,7 @@ Define your own case with a special character.
 
 * add apostrophe to segment characters !
 * add command to set and update custom separator
+* convert or keep special characters (Sonderzeichen)
 * icon
 
 

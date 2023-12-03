@@ -1,25 +1,27 @@
 import * as vscode from 'vscode';
 
 import { getConvertCommandsConfig } from './_config/convert-commands.config';
+import { ApostropheHandling } from './_domain/apostrophe-handling';
 import {
     CommandConfig,
     CommandLevel,
 } from './_domain/command-config';
 import { TextSelection } from './_domain/text-selection';
+import { apostropheHandler } from './apostrophe-handler';
 import { generateCase } from './generate-case';
 import { iterateSelections } from './iterate-selections';
 
-export function activate(context: vscode.ExtensionContext) {
+export function activate(context: vscode.ExtensionContext): void {
 
     activateSettingsCommands(context);
 
     activateConvertCommands(context);
 }
 
-export function deactivate() {
+export function deactivate(): void {
 }
 
-function activateSettingsCommands(context: vscode.ExtensionContext) {
+function activateSettingsCommands(context: vscode.ExtensionContext): void {
 
     let disposable;
 
@@ -91,7 +93,7 @@ function confirmAction(doAction: () => void) {
  *
  * @param chosenLevel Level defining which commands shell be activated in the global VS Code settings. 1 is the highest level.
  */
-function updateConfigurationsByLevel(chosenLevel: CommandLevel) {
+function updateConfigurationsByLevel(chosenLevel: CommandLevel): void {
 
     const configuration = vscode.workspace.getConfiguration('yet-another-case-converter');
     const commands = getConvertCommandsConfig(undefined);
@@ -128,7 +130,7 @@ function updateConfiguration(
     updateValue: boolean | undefined,
     configuration: vscode.WorkspaceConfiguration,
     config: CommandConfig,
-) {
+): void {
 
     // TODO only update if value changes
 
@@ -138,12 +140,12 @@ function updateConfiguration(
     );
 }
 
-function activateConvertCommands(context: vscode.ExtensionContext) {
+function activateConvertCommands(context: vscode.ExtensionContext): void {
 
     const customSeparator1: string | undefined = vscode.workspace
         .getConfiguration('yet-another-case-converter')
         .get('custom1-separator');
-    const separatorRegexString = ` ${customSeparator1 ?? ''}._-`;
+    const separatorRegexString = ` ${customSeparator1 ?? ''}._\\-`;
 
     const commands = getConvertCommandsConfig(customSeparator1);
 
@@ -156,16 +158,30 @@ function activateConvertCommands(context: vscode.ExtensionContext) {
     });
 }
 
-function applyConvertCommand(config: CommandConfig, separatorRegexString: string) {
+function applyConvertCommand(config: CommandConfig, separatorRegexString: string): void {
 
-    iterateSelections((editBuilder: vscode.TextEditorEdit, textSelection: TextSelection) => {
+    const selectionEditor = (
+        editBuilder: vscode.TextEditorEdit,
+        textSelection: TextSelection,
+        apostropheHandling: ApostropheHandling | undefined,
+    ) => {
 
-        editBuilder.replace(textSelection.selection, generateCase(
+        const generatedString = generateCase(
             textSelection.text,
             separatorRegexString,
             config.separator,
             config.segmentCaseConversion,
             config.veryFirstCaseConversion,
-        ));
-    });
+            apostropheHandling,
+        );
+
+        if (generatedString !== null) {
+            editBuilder.replace(textSelection.selection, generatedString);
+        }
+    };
+
+    iterateSelections(
+        selectionEditor,
+        apostropheHandler(config.separator),
+    );
 }
