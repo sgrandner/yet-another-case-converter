@@ -34,6 +34,7 @@ import { regExpMatchArrayWithIsLast } from './utils/reg-exp-match-array-with-is-
  * @param separator Separator string for the target case
  * @param caseConversionFunction Function which converts each segment
  * @param veryFirst Optional conversion of the first letter of "text" (not each segment)
+ * @param apostropheHandling Defines how to handle apostrophes in "text"
  * @returns Text converted to the target case
  */
 export function generateCase(
@@ -90,15 +91,12 @@ function matchAndReplaceSegments(
 
     let replacedString = '';
 
-    const apo = apostropheHandling === 'keep' || apostropheHandling === 'remove' ? '\'' : '';
-    const apoSeparator = apostropheHandling === 'handleAsSeparatorWithinWord' ? '\'' : '';
-
     const regexArray = [];
-    regexArray.push(`([A-Z${apo}]{0,1}(?:[a-z0-9${apo}]+|[A-Z0-9${apo}]+))[${separatorRegexString}${apoSeparator}]+`);
-    regexArray.push(`([A-Za-z${apo}][a-z0-9${apo}]+)`);
-    regexArray.push(`([A-Z0-9${apo}]+(?![a-z${apo}]))`);
-    regexArray.push(`([A-Za-z${apo}][A-Z0-9${apo}]+)[${separatorRegexString}${apoSeparator}]*`);
-    regexArray.push(`([a-z0-9${apo}])`);
+    regexArray.push(`([A-Z']{0,1}(?:[a-z0-9']+|[A-Z0-9']+))[${separatorRegexString}]+`);
+    regexArray.push(`([A-Za-z'][a-z0-9']+)`);
+    regexArray.push(`([A-Z0-9']+(?![a-z']))`);
+    regexArray.push(`([A-Za-z'][A-Z0-9']+)[${separatorRegexString}]*`);
+    regexArray.push(`([a-z0-9'])`);
     regexArray.push(`[ ._-]+`);
 
     const regex = new RegExp(regexArray.join('|'), 'g');
@@ -112,7 +110,12 @@ function matchAndReplaceSegments(
         const replacedSegment = match.value.find((capture: string, index: number) => {
             return index > 0 && capture?.length > 0;
         }) ?? '';
-        const convertedSegment = caseConversionFunction(replacedSegment);
+
+        let convertedSegment = caseConversionFunction(replacedSegment);
+
+        if (!!apostropheHandling) {
+            convertedSegment = replaceInnerApostrophes(apostropheHandling, convertedSegment, separator);
+        }
 
         // NOTE the separator is concatinated if it's not the last segment or the last segment ends with a separator
         const concatSeparator = !match.isLast || !!text.match(`[${separatorRegexString}]+$`);
@@ -127,4 +130,27 @@ function matchAndReplaceSegments(
     }
 
     return replacedString;
+}
+
+function replaceInnerApostrophes(
+    apostropheHandling: ApostropheHandling | undefined,
+    text: string,
+    separator: Separator
+): string {
+
+    let result = text;
+
+    if (apostropheHandling === 'handleAsSeparatorWithinWord' && text.length >= 3) {
+
+        const innerPartOfSegment = text.substring(1, text.length - 1);
+        const firstLetter = text[ 0 ];
+        const lastLetter = text[ text.length - 1 ];
+
+        if (innerPartOfSegment.length > 0) {
+            const replaced = innerPartOfSegment.replace(/'/g, separator.value ?? '');
+            result = firstLetter.concat(replaced).concat(lastLetter);
+        }
+    }
+
+    return result;
 }
