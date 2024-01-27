@@ -9,11 +9,7 @@ suite('Extension Test Suite', () => {
     vscode.window.showInformationMessage('Start all tests.');
     let doc: vscode.TextDocument;
     let active: vscode.TextEditor | undefined;
-    let configStub: sinon.SinonStub;
-
-
-    // TODO tests for new settings commands !?
-
+    let getConfigStub: sinon.SinonStub;
 
     // NOTE It is necessary to wait for commands to be executed in these tests.
     //      Otherwise tests will fail. However, certain tests may fail sometimes.
@@ -21,15 +17,15 @@ suite('Extension Test Suite', () => {
     const waitForCommand = 200;
 
     setup(() => {
-        const getStub = {
+        const configStub = {
             get: () => '+',
         };
-        configStub = sinon.stub(vscode.workspace, 'getConfiguration');
-        configStub.returns(getStub as unknown as vscode.WorkspaceConfiguration);
+        getConfigStub = sinon.stub(vscode.workspace, 'getConfiguration');
+        getConfigStub.returns(configStub as unknown as vscode.WorkspaceConfiguration);
     });
 
     teardown(async () => {
-        configStub.restore();
+        getConfigStub.restore();
         await vscode.commands.executeCommand('workbench.action.closeAllEditors');
     });
 

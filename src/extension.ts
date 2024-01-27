@@ -135,8 +135,10 @@ function updateConfiguration(
     // TODO only update if value changes
 
     configuration.update(`activate.${config.commandName}`, updateValue, true).then(
-        () => { console.log(`updated ${config.commandName} with ${updateValue}`); },
-        () => { console.log(`rejected update of ${config.commandName} with ${updateValue}`); },
+        () => {},
+        () => {
+            vscode.window.showErrorMessage('Failed to update convert commands entries in settings !');
+        },
     );
 }
 

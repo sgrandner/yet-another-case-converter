@@ -9,10 +9,13 @@ Define your own case with a special character.
 
 ## TODOs
 
-* add apostrophe to segment characters !
+* each rejected update shows an error message at the moment
+    * show error message only once by throwing an error in updateConfiguration() and catch it in updateConfigurationsByLevel() !?
+* convert or keep special characters (Sonderzeichen) !!!
+* remind answer for apostrophe handling  ->  no checkbox possible in showInformationMessage !?
 * add command to set and update custom separator
-* convert or keep special characters (Sonderzeichen)
 * icon
+* 42 easter egg
 
 
 ## Features
