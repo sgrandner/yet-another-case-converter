@@ -2,19 +2,28 @@ import * as assert from 'assert';
 import * as sinon from 'sinon';
 import * as vscode from 'vscode';
 
+import { sleep } from '../utils/sleep';
+import { WAIT_FOR_COMMAND } from './config';
+
 suite('settings commands', () => {
 
-    let activateCommandsMessageStub: sinon.SinonStub;
+    let informationMessageStub: sinon.SinonStub<any[], any>;
     let errorMessageStub: sinon.SinonStub;
     let getConfigStub: sinon.SinonStub;
     let inspectStub: sinon.SinonStub;
     let updateStub: sinon.SinonStub;
+    let inputBoxStub: sinon.SinonStub;
+    let executeCommandStub: sinon.SinonStub;
 
     setup(() => {
-        activateCommandsMessageStub = sinon.stub(vscode.window, 'showInformationMessage');
-        activateCommandsMessageStub.resolves();
+        informationMessageStub = sinon.stub(vscode.window, 'showInformationMessage');
 
         errorMessageStub = sinon.stub(vscode.window, 'showErrorMessage');
+
+        // NOTE only fake reload of vs code window for tests !
+        executeCommandStub = sinon.stub(vscode.commands, 'executeCommand');
+        executeCommandStub.withArgs('workbench.action.reloadWindow').callsFake(() => console.log('reload window ...'));
+        executeCommandStub.callThrough();
 
         inspectStub = sinon.stub();
         updateStub = sinon.stub();
@@ -27,12 +36,16 @@ suite('settings commands', () => {
 
         getConfigStub = sinon.stub(vscode.workspace, 'getConfiguration');
         getConfigStub.returns(configStub);
+
+        inputBoxStub = sinon.stub(vscode.window, 'showInputBox');
     });
 
     teardown(async () => {
-        activateCommandsMessageStub.restore();
+        informationMessageStub.restore();
         errorMessageStub.restore();
         getConfigStub.restore();
+        inputBoxStub.restore();
+        executeCommandStub.restore();
     });
 
     // NOTE This tests the "update" call for the settings. It is mocked in order not to change the real settings !
@@ -47,7 +60,7 @@ suite('settings commands', () => {
         suite('with message will resolve to "Yes"', () => {
 
             setup(() => {
-                activateCommandsMessageStub.resolves('Yes');
+                informationMessageStub.withArgs('Do you want to continue to edit the global settings?', 'Yes', 'No').resolves('Yes');
             });
 
             suite('with update resolves', () => {
@@ -68,12 +81,12 @@ suite('settings commands', () => {
 
                         setup(async () => {
                             await vscode.commands.executeCommand('yet-another-case-converter.activate-all-commands');
-                            await sleep(200);
+                            await sleep(WAIT_FOR_COMMAND);
                         });
 
                         test('it should call "showInformationMessage"', () => {
 
-                            assert.ok(activateCommandsMessageStub.calledOnceWith(
+                            assert.ok(informationMessageStub.calledOnceWith(
                                 'Do you want to continue to edit the global settings?',
                                 'Yes',
                                 'No',
@@ -100,12 +113,12 @@ suite('settings commands', () => {
 
                         setup(async () => {
                             await vscode.commands.executeCommand('yet-another-case-converter.activate-most-commands');
-                            await sleep(200);
+                            await sleep(WAIT_FOR_COMMAND);
                         });
 
                         test('it should call "showInformationMessage"', () => {
 
-                            assert.ok(activateCommandsMessageStub.calledOnceWith(
+                            assert.ok(informationMessageStub.calledOnceWith(
                                 'Do you want to continue to edit the global settings?',
                                 'Yes',
                                 'No',
@@ -132,12 +145,12 @@ suite('settings commands', () => {
 
                         setup(async () => {
                             await vscode.commands.executeCommand('yet-another-case-converter.activate-important-commands');
-                            await sleep(200);
+                            await sleep(WAIT_FOR_COMMAND);
                         });
 
                         test('it should call "showInformationMessage"', () => {
 
-                            assert.ok(activateCommandsMessageStub.calledOnceWith(
+                            assert.ok(informationMessageStub.calledOnceWith(
                                 'Do you want to continue to edit the global settings?',
                                 'Yes',
                                 'No',
@@ -164,12 +177,12 @@ suite('settings commands', () => {
 
                         setup(async () => {
                             await vscode.commands.executeCommand('yet-another-case-converter.deactivate-all-commands');
-                            await sleep(200);
+                            await sleep(WAIT_FOR_COMMAND);
                         });
 
                         test('it should call "showInformationMessage"', () => {
 
-                            assert.ok(activateCommandsMessageStub.calledOnceWith(
+                            assert.ok(informationMessageStub.calledOnceWith(
                                 'Do you want to continue to edit the global settings?',
                                 'Yes',
                                 'No',
@@ -205,12 +218,12 @@ suite('settings commands', () => {
 
                         setup(async () => {
                             await vscode.commands.executeCommand('yet-another-case-converter.activate-all-commands');
-                            await sleep(200);
+                            await sleep(WAIT_FOR_COMMAND);
                         });
 
                         test('it should call "showInformationMessage"', () => {
 
-                            assert.ok(activateCommandsMessageStub.calledOnceWith(
+                            assert.ok(informationMessageStub.calledOnceWith(
                                 'Do you want to continue to edit the global settings?',
                                 'Yes',
                                 'No',
@@ -237,12 +250,12 @@ suite('settings commands', () => {
 
                         setup(async () => {
                             await vscode.commands.executeCommand('yet-another-case-converter.activate-most-commands');
-                            await sleep(200);
+                            await sleep(WAIT_FOR_COMMAND);
                         });
 
                         test('it should call "showInformationMessage"', () => {
 
-                            assert.ok(activateCommandsMessageStub.calledOnceWith(
+                            assert.ok(informationMessageStub.calledOnceWith(
                                 'Do you want to continue to edit the global settings?',
                                 'Yes',
                                 'No',
@@ -269,12 +282,12 @@ suite('settings commands', () => {
 
                         setup(async () => {
                             await vscode.commands.executeCommand('yet-another-case-converter.activate-important-commands');
-                            await sleep(200);
+                            await sleep(WAIT_FOR_COMMAND);
                         });
 
                         test('it should call "showInformationMessage"', () => {
 
-                            assert.ok(activateCommandsMessageStub.calledOnceWith(
+                            assert.ok(informationMessageStub.calledOnceWith(
                                 'Do you want to continue to edit the global settings?',
                                 'Yes',
                                 'No',
@@ -301,12 +314,12 @@ suite('settings commands', () => {
 
                         setup(async () => {
                             await vscode.commands.executeCommand('yet-another-case-converter.deactivate-all-commands');
-                            await sleep(200);
+                            await sleep(WAIT_FOR_COMMAND);
                         });
 
                         test('it should call "showInformationMessage"', () => {
 
-                            assert.ok(activateCommandsMessageStub.calledOnceWith(
+                            assert.ok(informationMessageStub.calledOnceWith(
                                 'Do you want to continue to edit the global settings?',
                                 'Yes',
                                 'No',
@@ -340,7 +353,7 @@ suite('settings commands', () => {
                 test('it should show an error message', async () => {
 
                     await vscode.commands.executeCommand('yet-another-case-converter.activate-all-commands');
-                    await sleep(200);
+                    await sleep(WAIT_FOR_COMMAND);
 
                     assert.ok(errorMessageStub.calledWith(
                         'Failed to update convert commands entries in settings !',
@@ -352,19 +365,19 @@ suite('settings commands', () => {
         suite('with message will resolve to "No"', () => {
 
             setup(() => {
-                activateCommandsMessageStub.resolves('No');
+                informationMessageStub.withArgs('Do you want to continue to edit the global settings?', 'Yes', 'No').resolves('No');
             });
 
             suite('with calling command "activate-all-commands"', () => {
 
                 setup(async () => {
                     await vscode.commands.executeCommand('yet-another-case-converter.activate-all-commands');
-                    await sleep(200);
+                    await sleep(WAIT_FOR_COMMAND);
                 });
 
                 test('it should call "showInformationMessage"', () => {
 
-                    assert.ok(activateCommandsMessageStub.calledOnceWith(
+                    assert.ok(informationMessageStub.calledOnceWith(
                         'Do you want to continue to edit the global settings?',
                         'Yes',
                         'No',
@@ -381,12 +394,12 @@ suite('settings commands', () => {
 
                 setup(async () => {
                     await vscode.commands.executeCommand('yet-another-case-converter.activate-most-commands');
-                    await sleep(200);
+                    await sleep(WAIT_FOR_COMMAND);
                 });
 
                 test('it should call "showInformationMessage"', () => {
 
-                    assert.ok(activateCommandsMessageStub.calledOnceWith(
+                    assert.ok(informationMessageStub.calledOnceWith(
                         'Do you want to continue to edit the global settings?',
                         'Yes',
                         'No',
@@ -403,12 +416,12 @@ suite('settings commands', () => {
 
                 setup(async () => {
                     await vscode.commands.executeCommand('yet-another-case-converter.activate-important-commands');
-                    await sleep(200);
+                    await sleep(WAIT_FOR_COMMAND);
                 });
 
                 test('it should call "showInformationMessage"', () => {
 
-                    assert.ok(activateCommandsMessageStub.calledOnceWith(
+                    assert.ok(informationMessageStub.calledOnceWith(
                         'Do you want to continue to edit the global settings?',
                         'Yes',
                         'No',
@@ -425,12 +438,12 @@ suite('settings commands', () => {
 
                 setup(async () => {
                     await vscode.commands.executeCommand('yet-another-case-converter.deactivate-all-commands');
-                    await sleep(200);
+                    await sleep(WAIT_FOR_COMMAND);
                 });
 
                 test('it should call "showInformationMessage"', () => {
 
-                    assert.ok(activateCommandsMessageStub.calledOnceWith(
+                    assert.ok(informationMessageStub.calledOnceWith(
                         'Do you want to continue to edit the global settings?',
                         'Yes',
                         'No',
@@ -444,11 +457,145 @@ suite('settings commands', () => {
             });
         });
     });
-});
 
-function sleep(time: number): Promise<void> {
+    suite('with execute command set-custom-separator', () => {
 
-    return new Promise((resolve) => {
-        setTimeout(resolve, time);
+        suite('with input box resolves with input string and update resolves', () => {
+
+            setup(() => {
+                inputBoxStub.resolves('+-');
+                updateStub.resolves();
+                informationMessageStub.withArgs('Reload VS Code to apply changes in settings ?', 'Yes', 'No').resolves();
+            });
+
+            test('it should show input box', async () => {
+
+                await vscode.commands.executeCommand('yet-another-case-converter.set-custom-separator');
+                await sleep(WAIT_FOR_COMMAND);
+
+                assert.ok(inputBoxStub.calledOnceWith({
+                    placeHolder: 'custom separator string',
+                    value: '',
+                }));
+            });
+
+            test('it should set custom separator in command settings', async () => {
+
+                await vscode.commands.executeCommand('yet-another-case-converter.set-custom-separator');
+                await sleep(WAIT_FOR_COMMAND);
+
+                assert.ok(updateStub.calledWith('custom1-separator', '+-', true));
+            });
+
+            test('it should ask for reload', async () => {
+
+                await vscode.commands.executeCommand('yet-another-case-converter.set-custom-separator');
+                await sleep(WAIT_FOR_COMMAND);
+
+                assert.ok(informationMessageStub.calledOnceWith('Reload VS Code to apply changes in settings ?', 'Yes', 'No'));
+            });
+
+            suite('with request for reload resolves to "Yes"', () => {
+
+                setup(() => {
+                    informationMessageStub.withArgs('Reload VS Code to apply changes in settings ?', 'Yes', 'No').resolves('Yes');
+                });
+
+                test('it should call reload command', async () => {
+
+                    await vscode.commands.executeCommand('yet-another-case-converter.set-custom-separator');
+                    await sleep(WAIT_FOR_COMMAND);
+
+                    assert.ok(executeCommandStub.withArgs('workbench.action.reloadWindow').calledOnce);
+                });
+            });
+
+            suite('with request for reload resolves to "No"', () => {
+
+                setup(() => {
+                    informationMessageStub.withArgs('Reload VS Code to apply changes in settings ?', 'Yes', 'No').resolves('No');
+                });
+
+                test('it should not call reload command', async () => {
+
+                    await vscode.commands.executeCommand('yet-another-case-converter.set-custom-separator');
+                    await sleep(WAIT_FOR_COMMAND);
+
+                    assert.ok(executeCommandStub.withArgs('workbench.action.reloadWindow').notCalled);
+                });
+            });
+
+            suite('with request for reload resolves to undefined', () => {
+
+                setup(() => {
+                    informationMessageStub.withArgs('Reload VS Code to apply changes in settings ?', 'Yes', 'No').resolves(undefined);
+                });
+
+                test('it should not call reload command', async () => {
+
+                    await vscode.commands.executeCommand('yet-another-case-converter.set-custom-separator');
+                    await sleep(WAIT_FOR_COMMAND);
+
+                    assert.ok(executeCommandStub.withArgs('workbench.action.reloadWindow').notCalled);
+                });
+            });
+        });
+
+        suite('with input box resolves with input string and update rejects', () => {
+
+            setup(() => {
+                inputBoxStub.resolves('+-');
+                updateStub.rejects();
+                informationMessageStub.withArgs('Reload VS Code to apply changes in settings ?', 'Yes', 'No').resolves();
+            });
+
+            test('it should set custom separator in command settings', async () => {
+
+                await vscode.commands.executeCommand('yet-another-case-converter.set-custom-separator');
+                await sleep(WAIT_FOR_COMMAND);
+
+                assert.ok(updateStub.calledWith('custom1-separator', '+-', true));
+            });
+
+            test('it should show error message', async () => {
+
+                await vscode.commands.executeCommand('yet-another-case-converter.set-custom-separator');
+                await sleep(WAIT_FOR_COMMAND);
+
+                assert.ok(errorMessageStub.calledOnceWith('Failed to set custom separator !'));
+            });
+        });
+
+        suite('with input box resolves with empty input string', () => {
+
+            setup(() => {
+                inputBoxStub.resolves('');
+                informationMessageStub.withArgs('Reload VS Code to apply changes in settings ?', 'Yes', 'No').resolves();
+            });
+
+            test('it should not set custom separator in command settings', async () => {
+
+                await vscode.commands.executeCommand('yet-another-case-converter.set-custom-separator');
+                await sleep(WAIT_FOR_COMMAND);
+
+                assert.ok(updateStub.notCalled);
+            });
+        });
+
+        suite('with input box resolves with undefined (cancel input)', () => {
+
+            setup(() => {
+                inputBoxStub.resolves(undefined);
+                informationMessageStub.withArgs('Reload VS Code to apply changes in settings ?', 'Yes', 'No').resolves();
+            });
+
+            test('it should not set custom separator in command settings', async () => {
+
+                await vscode.commands.executeCommand('yet-another-case-converter.set-custom-separator');
+                await sleep(WAIT_FOR_COMMAND);
+
+                assert.ok(updateStub.notCalled);
+            });
+        });
     });
-}
+});

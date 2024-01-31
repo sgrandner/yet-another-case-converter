@@ -42,6 +42,10 @@
                 "command": "yet-another-case-converter.deactivate-all-commands",
                 "title": "Yet Another Case Converter: Deactivate all commands (for manual configuration)"
             },
+            {
+                "command": "yet-another-case-converter.set-custom-separator",
+                "title": "Yet Another Case Converter: Set custom separator"
+            },
 
             {
                 "command": "yet-another-case-converter.constant-case",

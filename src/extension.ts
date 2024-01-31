@@ -52,6 +52,11 @@ function activateSettingsCommands(context: vscode.ExtensionContext): void {
         });
     });
     context.subscriptions.push(disposable);
+
+    disposable = vscode.commands.registerCommand('yet-another-case-converter.set-custom-separator', () => {
+        inputCustomSeparator();
+    });
+    context.subscriptions.push(disposable);
 }
 
 // TODO move to utils ?!
@@ -138,6 +143,44 @@ function updateConfiguration(
         () => {},
         () => {
             vscode.window.showErrorMessage('Failed to update convert commands entries in settings !');
+        },
+    );
+}
+
+function inputCustomSeparator(): void {
+
+    // TODO get current value from settings
+
+    vscode.window.showInputBox({
+        placeHolder: 'custom separator string',
+        value: '',
+    }).then(
+        (value: string | undefined) => setCustomSeparator(value),
+        () => {},
+    );
+}
+
+function setCustomSeparator(separator: string | undefined): void {
+
+    if (separator === undefined || separator.length === 0) {
+        return;
+    }
+
+    const configuration = vscode.workspace.getConfiguration('yet-another-case-converter');
+
+    configuration.update('custom1-separator', separator, true).then(
+        () => {
+            vscode.window.showInformationMessage('Reload VS Code to apply changes in settings ?', 'Yes', 'No').then(
+                (option: string | undefined) => {
+                    if (option === 'Yes') {
+                        vscode.commands.executeCommand('workbench.action.reloadWindow');
+                    }
+                },
+                () => {},
+            );
+        },
+        () => {
+            vscode.window.showErrorMessage('Failed to set custom separator !');
         },
     );
 }
