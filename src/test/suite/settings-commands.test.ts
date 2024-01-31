@@ -2,6 +2,10 @@ import * as assert from 'assert';
 import * as sinon from 'sinon';
 import * as vscode from 'vscode';
 
+import {
+    MESSAGE_OPTIONS,
+    MESSAGES,
+} from '../../_wording/messages';
 import { sleep } from '../utils/sleep';
 import { WAIT_FOR_COMMAND } from './config';
 
@@ -60,7 +64,7 @@ suite('settings commands', () => {
         suite('with message will resolve to "Yes"', () => {
 
             setup(() => {
-                informationMessageStub.withArgs('Do you want to continue to edit the global settings?', 'Yes', 'No').resolves('Yes');
+                informationMessageStub.withArgs(MESSAGES.EDIT_GLOBAL_SETTINGS, MESSAGE_OPTIONS.YES, MESSAGE_OPTIONS.NO).resolves(MESSAGE_OPTIONS.YES);
             });
 
             suite('with update resolves', () => {
@@ -87,9 +91,9 @@ suite('settings commands', () => {
                         test('it should call "showInformationMessage"', () => {
 
                             assert.ok(informationMessageStub.calledOnceWith(
-                                'Do you want to continue to edit the global settings?',
-                                'Yes',
-                                'No',
+                                MESSAGES.EDIT_GLOBAL_SETTINGS,
+                                MESSAGE_OPTIONS.YES,
+                                MESSAGE_OPTIONS.NO,
                             ));
                         });
 
@@ -119,9 +123,9 @@ suite('settings commands', () => {
                         test('it should call "showInformationMessage"', () => {
 
                             assert.ok(informationMessageStub.calledOnceWith(
-                                'Do you want to continue to edit the global settings?',
-                                'Yes',
-                                'No',
+                                MESSAGES.EDIT_GLOBAL_SETTINGS,
+                                MESSAGE_OPTIONS.YES,
+                                MESSAGE_OPTIONS.NO,
                             ));
                         });
 
@@ -151,9 +155,9 @@ suite('settings commands', () => {
                         test('it should call "showInformationMessage"', () => {
 
                             assert.ok(informationMessageStub.calledOnceWith(
-                                'Do you want to continue to edit the global settings?',
-                                'Yes',
-                                'No',
+                                MESSAGES.EDIT_GLOBAL_SETTINGS,
+                                MESSAGE_OPTIONS.YES,
+                                MESSAGE_OPTIONS.NO,
                             ));
                         });
 
@@ -183,9 +187,9 @@ suite('settings commands', () => {
                         test('it should call "showInformationMessage"', () => {
 
                             assert.ok(informationMessageStub.calledOnceWith(
-                                'Do you want to continue to edit the global settings?',
-                                'Yes',
-                                'No',
+                                MESSAGES.EDIT_GLOBAL_SETTINGS,
+                                MESSAGE_OPTIONS.YES,
+                                MESSAGE_OPTIONS.NO,
                             ));
                         });
 
@@ -224,9 +228,9 @@ suite('settings commands', () => {
                         test('it should call "showInformationMessage"', () => {
 
                             assert.ok(informationMessageStub.calledOnceWith(
-                                'Do you want to continue to edit the global settings?',
-                                'Yes',
-                                'No',
+                                MESSAGES.EDIT_GLOBAL_SETTINGS,
+                                MESSAGE_OPTIONS.YES,
+                                MESSAGE_OPTIONS.NO,
                             ));
                         });
 
@@ -256,9 +260,9 @@ suite('settings commands', () => {
                         test('it should call "showInformationMessage"', () => {
 
                             assert.ok(informationMessageStub.calledOnceWith(
-                                'Do you want to continue to edit the global settings?',
-                                'Yes',
-                                'No',
+                                MESSAGES.EDIT_GLOBAL_SETTINGS,
+                                MESSAGE_OPTIONS.YES,
+                                MESSAGE_OPTIONS.NO,
                             ));
                         });
 
@@ -288,9 +292,9 @@ suite('settings commands', () => {
                         test('it should call "showInformationMessage"', () => {
 
                             assert.ok(informationMessageStub.calledOnceWith(
-                                'Do you want to continue to edit the global settings?',
-                                'Yes',
-                                'No',
+                                MESSAGES.EDIT_GLOBAL_SETTINGS,
+                                MESSAGE_OPTIONS.YES,
+                                MESSAGE_OPTIONS.NO,
                             ));
                         });
 
@@ -320,9 +324,9 @@ suite('settings commands', () => {
                         test('it should call "showInformationMessage"', () => {
 
                             assert.ok(informationMessageStub.calledOnceWith(
-                                'Do you want to continue to edit the global settings?',
-                                'Yes',
-                                'No',
+                                MESSAGES.EDIT_GLOBAL_SETTINGS,
+                                MESSAGE_OPTIONS.YES,
+                                MESSAGE_OPTIONS.NO,
                             ));
                         });
 
@@ -365,7 +369,7 @@ suite('settings commands', () => {
         suite('with message will resolve to "No"', () => {
 
             setup(() => {
-                informationMessageStub.withArgs('Do you want to continue to edit the global settings?', 'Yes', 'No').resolves('No');
+                informationMessageStub.withArgs(MESSAGES.EDIT_GLOBAL_SETTINGS, MESSAGE_OPTIONS.YES, MESSAGE_OPTIONS.NO).resolves(MESSAGE_OPTIONS.NO);
             });
 
             suite('with calling command "activate-all-commands"', () => {
@@ -378,9 +382,9 @@ suite('settings commands', () => {
                 test('it should call "showInformationMessage"', () => {
 
                     assert.ok(informationMessageStub.calledOnceWith(
-                        'Do you want to continue to edit the global settings?',
-                        'Yes',
-                        'No',
+                        MESSAGES.EDIT_GLOBAL_SETTINGS,
+                        MESSAGE_OPTIONS.YES,
+                        MESSAGE_OPTIONS.NO,
                     ));
                 });
 
@@ -400,9 +404,9 @@ suite('settings commands', () => {
                 test('it should call "showInformationMessage"', () => {
 
                     assert.ok(informationMessageStub.calledOnceWith(
-                        'Do you want to continue to edit the global settings?',
-                        'Yes',
-                        'No',
+                        MESSAGES.EDIT_GLOBAL_SETTINGS,
+                        MESSAGE_OPTIONS.YES,
+                        MESSAGE_OPTIONS.NO,
                     ));
                 });
 
@@ -422,9 +426,9 @@ suite('settings commands', () => {
                 test('it should call "showInformationMessage"', () => {
 
                     assert.ok(informationMessageStub.calledOnceWith(
-                        'Do you want to continue to edit the global settings?',
-                        'Yes',
-                        'No',
+                        MESSAGES.EDIT_GLOBAL_SETTINGS,
+                        MESSAGE_OPTIONS.YES,
+                        MESSAGE_OPTIONS.NO,
                     ));
                 });
 
@@ -444,9 +448,9 @@ suite('settings commands', () => {
                 test('it should call "showInformationMessage"', () => {
 
                     assert.ok(informationMessageStub.calledOnceWith(
-                        'Do you want to continue to edit the global settings?',
-                        'Yes',
-                        'No',
+                        MESSAGES.EDIT_GLOBAL_SETTINGS,
+                        MESSAGE_OPTIONS.YES,
+                        MESSAGE_OPTIONS.NO,
                     ));
                 });
 
@@ -465,7 +469,7 @@ suite('settings commands', () => {
             setup(() => {
                 inputBoxStub.resolves('+-');
                 updateStub.resolves();
-                informationMessageStub.withArgs('Reload VS Code to apply changes in settings ?', 'Yes', 'No').resolves();
+                informationMessageStub.withArgs(MESSAGES.RELOAD_FOR_SETTINGS, MESSAGE_OPTIONS.YES, MESSAGE_OPTIONS.NO).resolves();
             });
 
             test('it should show input box', async () => {
@@ -492,13 +496,13 @@ suite('settings commands', () => {
                 await vscode.commands.executeCommand('yet-another-case-converter.set-custom-separator');
                 await sleep(WAIT_FOR_COMMAND);
 
-                assert.ok(informationMessageStub.calledOnceWith('Reload VS Code to apply changes in settings ?', 'Yes', 'No'));
+                assert.ok(informationMessageStub.calledOnceWith(MESSAGES.RELOAD_FOR_SETTINGS, MESSAGE_OPTIONS.YES, MESSAGE_OPTIONS.NO));
             });
 
             suite('with request for reload resolves to "Yes"', () => {
 
                 setup(() => {
-                    informationMessageStub.withArgs('Reload VS Code to apply changes in settings ?', 'Yes', 'No').resolves('Yes');
+                    informationMessageStub.withArgs(MESSAGES.RELOAD_FOR_SETTINGS, MESSAGE_OPTIONS.YES, MESSAGE_OPTIONS.NO).resolves(MESSAGE_OPTIONS.YES);
                 });
 
                 test('it should call reload command', async () => {
@@ -513,7 +517,7 @@ suite('settings commands', () => {
             suite('with request for reload resolves to "No"', () => {
 
                 setup(() => {
-                    informationMessageStub.withArgs('Reload VS Code to apply changes in settings ?', 'Yes', 'No').resolves('No');
+                    informationMessageStub.withArgs(MESSAGES.RELOAD_FOR_SETTINGS, MESSAGE_OPTIONS.YES, MESSAGE_OPTIONS.NO).resolves(MESSAGE_OPTIONS.NO);
                 });
 
                 test('it should not call reload command', async () => {
@@ -528,7 +532,7 @@ suite('settings commands', () => {
             suite('with request for reload resolves to undefined', () => {
 
                 setup(() => {
-                    informationMessageStub.withArgs('Reload VS Code to apply changes in settings ?', 'Yes', 'No').resolves(undefined);
+                    informationMessageStub.withArgs(MESSAGES.RELOAD_FOR_SETTINGS, MESSAGE_OPTIONS.YES, MESSAGE_OPTIONS.NO).resolves(undefined);
                 });
 
                 test('it should not call reload command', async () => {
@@ -546,7 +550,7 @@ suite('settings commands', () => {
             setup(() => {
                 inputBoxStub.resolves('+-');
                 updateStub.rejects();
-                informationMessageStub.withArgs('Reload VS Code to apply changes in settings ?', 'Yes', 'No').resolves();
+                informationMessageStub.withArgs(MESSAGES.RELOAD_FOR_SETTINGS, MESSAGE_OPTIONS.YES, MESSAGE_OPTIONS.NO).resolves();
             });
 
             test('it should set custom separator in command settings', async () => {
@@ -570,7 +574,7 @@ suite('settings commands', () => {
 
             setup(() => {
                 inputBoxStub.resolves('');
-                informationMessageStub.withArgs('Reload VS Code to apply changes in settings ?', 'Yes', 'No').resolves();
+                informationMessageStub.withArgs(MESSAGES.RELOAD_FOR_SETTINGS, MESSAGE_OPTIONS.YES, MESSAGE_OPTIONS.NO).resolves();
             });
 
             test('it should not set custom separator in command settings', async () => {
@@ -586,7 +590,7 @@ suite('settings commands', () => {
 
             setup(() => {
                 inputBoxStub.resolves(undefined);
-                informationMessageStub.withArgs('Reload VS Code to apply changes in settings ?', 'Yes', 'No').resolves();
+                informationMessageStub.withArgs(MESSAGES.RELOAD_FOR_SETTINGS, MESSAGE_OPTIONS.YES, MESSAGE_OPTIONS.NO).resolves();
             });
 
             test('it should not set custom separator in command settings', async () => {

@@ -7,6 +7,10 @@ import {
     CommandLevel,
 } from './_domain/command-config';
 import { TextSelection } from './_domain/text-selection';
+import {
+    MESSAGE_OPTIONS,
+    MESSAGES,
+} from './_wording/messages';
 import { apostropheHandler } from './apostrophe-handler';
 import { generateCase } from './generate-case';
 import { iterateSelections } from './iterate-selections';
@@ -63,17 +67,17 @@ function activateSettingsCommands(context: vscode.ExtensionContext): void {
 function confirmAction(doAction: () => void) {
 
     vscode.window.showInformationMessage(
-        'Do you want to continue to edit the global settings?',
-        'Yes',
-        'No',
+        MESSAGES.EDIT_GLOBAL_SETTINGS,
+        MESSAGE_OPTIONS.YES,
+        MESSAGE_OPTIONS.NO,
     ).then(
         (value: string | undefined) => {
-            if (value === 'Yes') {
+            if (value === MESSAGE_OPTIONS.YES) {
                 doAction();
             }
         },
         (value: string | undefined) => {
-            if (value === 'Yes') {
+            if (value === MESSAGE_OPTIONS.YES) {
                 vscode.window.showErrorMessage('Failed to execute command !');
             }
         },
@@ -170,9 +174,13 @@ function setCustomSeparator(separator: string | undefined): void {
 
     configuration.update('custom1-separator', separator, true).then(
         () => {
-            vscode.window.showInformationMessage('Reload VS Code to apply changes in settings ?', 'Yes', 'No').then(
+            vscode.window.showInformationMessage(
+                MESSAGES.RELOAD_FOR_SETTINGS,
+                MESSAGE_OPTIONS.YES,
+                MESSAGE_OPTIONS.NO,
+            ).then(
                 (option: string | undefined) => {
-                    if (option === 'Yes') {
+                    if (option === MESSAGE_OPTIONS.YES) {
                         vscode.commands.executeCommand('workbench.action.reloadWindow');
                     }
                 },
