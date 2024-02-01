@@ -9,9 +9,12 @@ Define your own case with a special character.
 
 ## TODOs
 
+* each rejected update shows an error message at the moment
+    * show error message only once by throwing an error in updateConfiguration() and catch it in updateConfigurationsByLevel() !?
+* convert or keep special characters (Sonderzeichen) !!!
+* remind answer for apostrophe handling  ->  no checkbox possible in showInformationMessage !?
 * icon
-* add command to set and update custom separator
-* add command as hint when nothing is selected
+* 42 easter egg
 
 
 ## Features
@@ -90,3 +93,10 @@ e.g.
     * push the returned disposable to the subscriptions of the `vscode.ExtensionContext`
 * convert-commands.config.ts
     * add convert commands to the CommandConfig array returned by getConvertCommandsConfig()
+
+
+## when clause context
+
+Useful, e.g., to enable or disable commands... and much more.
+
+* e.g. `editorHasSelection`

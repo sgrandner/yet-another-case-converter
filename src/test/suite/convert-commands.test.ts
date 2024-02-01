@@ -2,32 +2,26 @@ import * as assert from 'assert';
 import * as sinon from 'sinon';
 import * as vscode from 'vscode';
 
-suite('Extension Test Suite', () => {
+import { APOSTROPHE_HANDLING_WORDING } from '../../_domain/apostrophe-handling';
+import { sleep } from '../utils/sleep';
+import { WAIT_FOR_COMMAND } from './config';
 
-    vscode.window.showInformationMessage('Start all tests.');
+suite('convert commands', () => {
+
     let doc: vscode.TextDocument;
     let active: vscode.TextEditor | undefined;
-    let configStub: sinon.SinonStub;
-
-
-    // TODO tests for new settings commands !?
-
-
-    // NOTE It is necessary to wait for commands to be executed in these tests.
-    //      Otherwise tests will fail. However, certain tests may fail sometimes.
-    //      Maybe there is a way to get rid of it.
-    const waitForCommand = 200;
+    let getConfigStub: sinon.SinonStub;
 
     setup(() => {
-        const getStub = {
+        const configStub = {
             get: () => '+',
         };
-        configStub = sinon.stub(vscode.workspace, 'getConfiguration');
-        configStub.returns(getStub as unknown as vscode.WorkspaceConfiguration);
+        getConfigStub = sinon.stub(vscode.workspace, 'getConfiguration');
+        getConfigStub.returns(configStub as unknown as vscode.WorkspaceConfiguration);
     });
 
     teardown(async () => {
-        configStub.restore();
+        getConfigStub.restore();
         await vscode.commands.executeCommand('workbench.action.closeAllEditors');
     });
 
@@ -263,7 +257,7 @@ suite('Extension Test Suite', () => {
             test(`it should convert selection to case`, async () => {
 
                 await vscode.commands.executeCommand(`yet-another-case-converter.${testArgs.commandName}`);
-                await sleep(waitForCommand);
+                await sleep(WAIT_FOR_COMMAND);
 
                 const range = getRangeOfLines(active);
                 const result = active?.document.getText(range);
@@ -459,7 +453,7 @@ suite('Extension Test Suite', () => {
             test(`it should convert selection from given case to another`, async () => {
 
                 await vscode.commands.executeCommand(`yet-another-case-converter.${testArgs.commandName}`);
-                await sleep(waitForCommand);
+                await sleep(WAIT_FOR_COMMAND);
 
                 const range = getRangeOfLines(active);
                 const result = active?.document.getText(range);
@@ -526,7 +520,7 @@ suite('Extension Test Suite', () => {
 
                 active = vscode.window.activeTextEditor;
                 if (!!active) {
-                    const range = new vscode.Range(0, 0, 0, testArgs.given.length);
+                    const range = getRangeOfLines(active);
                     active.selection = new vscode.Selection(range.start, range.end);
                 }
             });
@@ -534,7 +528,7 @@ suite('Extension Test Suite', () => {
             test('it should convert selection', async () => {
 
                 await vscode.commands.executeCommand('yet-another-case-converter.constant-case');
-                await sleep(waitForCommand);
+                await sleep(WAIT_FOR_COMMAND);
 
                 const range = getRangeOfLines(active);
                 const result = active?.document.getText(range);
@@ -543,7 +537,261 @@ suite('Extension Test Suite', () => {
         });
     });
 
-    // TODO add apostrophe to segment characters !?
+    suite('with selection containing apostrophe', () => {
+
+        const given = 'qwer \'bout don\'t walkin\' asdf\n\'bout walkin\'';
+
+        let apostropheMessageStub: sinon.SinonStub;
+        setup(async () => {
+            doc = await vscode.workspace.openTextDocument({
+                content: given,
+            });
+
+            await vscode.window.showTextDocument(doc);
+
+            active = vscode.window.activeTextEditor;
+            if (!!active) {
+                const range = getRangeOfLines(active, 0, 1);
+                active.selection = new vscode.Selection(range.start, range.end);
+            }
+
+            apostropheMessageStub = sinon.stub(vscode.window, 'showInformationMessage');
+            apostropheMessageStub.resolves();
+        });
+
+        teardown(async () => {
+            apostropheMessageStub.restore();
+        });
+
+        test('it should call "showInformationMessage"', async () => {
+
+            await vscode.commands.executeCommand('yet-another-case-converter.constant-case');
+            await sleep(WAIT_FOR_COMMAND);
+
+            assert.ok(apostropheMessageStub.calledOnceWith(
+                'The selected text contains apostrophes. How should I handle them?',
+                APOSTROPHE_HANDLING_WORDING.keep,
+                APOSTROPHE_HANDLING_WORDING.remove,
+                APOSTROPHE_HANDLING_WORDING.handleAsSeparatorWithinWord,
+                APOSTROPHE_HANDLING_WORDING.cancel,
+            ));
+        });
+
+        suite(`with apostrophe handling is "${APOSTROPHE_HANDLING_WORDING.keep}"`, () => {
+
+            setup(() => {
+                apostropheMessageStub.resolves(APOSTROPHE_HANDLING_WORDING.keep);
+            });
+
+            test('it should convert selection', async () => {
+
+                await vscode.commands.executeCommand('yet-another-case-converter.constant-case');
+                await sleep(WAIT_FOR_COMMAND);
+
+                const range = getRangeOfLines(active, 0, 1);
+                const result = active?.document.getText(range);
+                const expected = 'QWER_\'BOUT_DON\'T_WALKIN\'_ASDF\n\'BOUT_WALKIN\'';
+                assert(result === expected, failedMsg(given, 'constant-case', expected, result));
+            });
+        });
+
+        suite(`with apostrophe handling is "${APOSTROPHE_HANDLING_WORDING.remove}"`, () => {
+
+            setup(() => {
+                apostropheMessageStub.resolves(APOSTROPHE_HANDLING_WORDING.remove);
+            });
+
+            test('it should convert selection', async () => {
+
+                await vscode.commands.executeCommand('yet-another-case-converter.constant-case');
+                await sleep(WAIT_FOR_COMMAND);
+
+                const range = getRangeOfLines(active, 0, 1);
+                const result = active?.document.getText(range);
+                const expected = 'QWER_BOUT_DONT_WALKIN_ASDF\nBOUT_WALKIN';
+                assert(result === expected, failedMsg(given, 'constant-case', expected, result));
+            });
+        });
+
+        suite(`with apostrophe handling is "${APOSTROPHE_HANDLING_WORDING.handleAsSeparatorWithinWord}"`, () => {
+
+            setup(() => {
+                apostropheMessageStub.resolves(APOSTROPHE_HANDLING_WORDING.handleAsSeparatorWithinWord);
+            });
+
+            test('it should convert selection', async () => {
+
+                await vscode.commands.executeCommand('yet-another-case-converter.constant-case');
+                await sleep(WAIT_FOR_COMMAND);
+
+                const range = getRangeOfLines(active, 0, 1);
+                const result = active?.document.getText(range);
+                const expected = 'QWER_BOUT_DON_T_WALKIN_ASDF\nBOUT_WALKIN';
+                assert(result === expected, failedMsg(given, 'constant-case', expected, result));
+            });
+        });
+
+        suite(`with apostrophe handling is "${APOSTROPHE_HANDLING_WORDING.cancel}"`, () => {
+
+            setup(() => {
+                apostropheMessageStub.resolves(APOSTROPHE_HANDLING_WORDING.cancel);
+            });
+
+            test('it should not convert selection', async () => {
+
+                await vscode.commands.executeCommand('yet-another-case-converter.constant-case');
+                await sleep(WAIT_FOR_COMMAND);
+
+                const range = getRangeOfLines(active, 0, 1);
+                const result = active?.document.getText(range);
+                const expected = given;
+                assert(result === expected, failedMsg(given, 'constant-case', expected, result));
+            });
+        });
+    });
+
+    suite('with selection containing apostrophe (camel case)', () => {
+
+        const given = '\'boutDon\'tWalkin\'Asdf';
+
+        let apostropheMessageStub: sinon.SinonStub;
+        setup(async () => {
+            doc = await vscode.workspace.openTextDocument({
+                content: given,
+            });
+
+            await vscode.window.showTextDocument(doc);
+
+            active = vscode.window.activeTextEditor;
+            if (!!active) {
+                const range = getRangeOfLines(active);
+                active.selection = new vscode.Selection(range.start, range.end);
+            }
+
+            apostropheMessageStub = sinon.stub(vscode.window, 'showInformationMessage');
+            apostropheMessageStub.resolves();
+        });
+
+        teardown(async () => {
+            apostropheMessageStub.restore();
+        });
+
+        test('it should call "showInformationMessage"', async () => {
+
+            await vscode.commands.executeCommand('yet-another-case-converter.constant-case');
+            await sleep(WAIT_FOR_COMMAND);
+
+            assert.ok(apostropheMessageStub.calledOnceWith(
+                'The selected text contains apostrophes. How should I handle them?',
+                APOSTROPHE_HANDLING_WORDING.keep,
+                APOSTROPHE_HANDLING_WORDING.remove,
+                APOSTROPHE_HANDLING_WORDING.handleAsSeparatorWithinWord,
+                APOSTROPHE_HANDLING_WORDING.cancel,
+            ));
+        });
+
+        suite(`with apostrophe handling is "${APOSTROPHE_HANDLING_WORDING.keep}"`, () => {
+
+            setup(() => {
+                apostropheMessageStub.resolves(APOSTROPHE_HANDLING_WORDING.keep);
+            });
+
+            test('it should convert selection', async () => {
+
+                await vscode.commands.executeCommand('yet-another-case-converter.constant-case');
+                await sleep(WAIT_FOR_COMMAND);
+
+                const range = getRangeOfLines(active);
+                const result = active?.document.getText(range);
+                const expected = '\'BOUT_DON\'T_WALKIN\'_ASDF';
+                assert(result === expected, failedMsg(given, 'constant-case', expected, result));
+            });
+        });
+
+        suite(`with apostrophe handling is "${APOSTROPHE_HANDLING_WORDING.remove}"`, () => {
+
+            setup(() => {
+                apostropheMessageStub.resolves(APOSTROPHE_HANDLING_WORDING.remove);
+            });
+
+            test('it should convert selection', async () => {
+
+                await vscode.commands.executeCommand('yet-another-case-converter.constant-case');
+                await sleep(WAIT_FOR_COMMAND);
+
+                const range = getRangeOfLines(active);
+                const result = active?.document.getText(range);
+                const expected = 'BOUT_DONT_WALKIN_ASDF';
+                assert(result === expected, failedMsg(given, 'constant-case', expected, result));
+            });
+        });
+
+        suite(`with apostrophe handling is "${APOSTROPHE_HANDLING_WORDING.handleAsSeparatorWithinWord}"`, () => {
+
+            setup(() => {
+                apostropheMessageStub.resolves(APOSTROPHE_HANDLING_WORDING.handleAsSeparatorWithinWord);
+            });
+
+            test('it should convert selection', async () => {
+
+                await vscode.commands.executeCommand('yet-another-case-converter.constant-case');
+                await sleep(WAIT_FOR_COMMAND);
+
+                const range = getRangeOfLines(active);
+                const result = active?.document.getText(range);
+                const expected = 'BOUT_DON_T_WALKIN_ASDF';
+                assert(result === expected, failedMsg(given, 'constant-case', expected, result));
+            });
+        });
+
+        suite(`with apostrophe handling is "${APOSTROPHE_HANDLING_WORDING.cancel}"`, () => {
+
+            setup(() => {
+                apostropheMessageStub.resolves(APOSTROPHE_HANDLING_WORDING.cancel);
+            });
+
+            test('it should not convert selection', async () => {
+
+                await vscode.commands.executeCommand('yet-another-case-converter.constant-case');
+                await sleep(WAIT_FOR_COMMAND);
+
+                const range = getRangeOfLines(active);
+                const result = active?.document.getText(range);
+                const expected = given;
+                assert(result === expected, failedMsg(given, 'constant-case', expected, result));
+            });
+        });
+    });
+
+    suite('with selection containing apostrophe (wholeWord conversion)', () => {
+
+        const given = 'Convert-To-Upp\'r-CASE';
+
+        setup(async () => {
+            doc = await vscode.workspace.openTextDocument({
+                content: given,
+            });
+
+            await vscode.window.showTextDocument(doc);
+
+            active = vscode.window.activeTextEditor;
+            if (!!active) {
+                const range = getRangeOfLines(active);
+                active.selection = new vscode.Selection(range.start, range.end);
+            }
+        });
+
+        test('it should convert selection', async () => {
+
+            await vscode.commands.executeCommand('yet-another-case-converter.upper-case');
+            await sleep(WAIT_FOR_COMMAND);
+
+            const range = getRangeOfLines(active);
+            const result = active?.document.getText(range);
+            const expected = 'CONVERT-TO-UPP\'R-CASE';
+            assert(result === expected, failedMsg(given, 'upper-case', expected, result));
+        });
+    });
 
     suite('with empty selection', () => {
 
@@ -567,7 +815,7 @@ suite('Extension Test Suite', () => {
         test('it should not change text', async () => {
 
             await vscode.commands.executeCommand('yet-another-case-converter.constant-case');
-            await sleep(waitForCommand);
+            await sleep(WAIT_FOR_COMMAND);
 
             const range = getRangeOfLines(active);
             const result = active?.document.getText(range);
@@ -597,7 +845,7 @@ suite('Extension Test Suite', () => {
         test('it should convert selection at same position', async () => {
 
             await vscode.commands.executeCommand('yet-another-case-converter.constant-case');
-            await sleep(waitForCommand);
+            await sleep(WAIT_FOR_COMMAND);
 
             const range = getRangeOfLines(active);
             const result = active?.document.getText(range);
@@ -627,7 +875,7 @@ suite('Extension Test Suite', () => {
         test('it should convert selection at same position', async () => {
 
             await vscode.commands.executeCommand('yet-another-case-converter.snake-case');
-            await sleep(waitForCommand);
+            await sleep(WAIT_FOR_COMMAND);
 
             const range = getRangeOfLines(active);
             const result = active?.document.getText(range);
@@ -657,7 +905,7 @@ suite('Extension Test Suite', () => {
         test('it should convert selection at same position', async () => {
 
             await vscode.commands.executeCommand('yet-another-case-converter.constant-case');
-            await sleep(waitForCommand);
+            await sleep(WAIT_FOR_COMMAND);
 
             const range = getRangeOfLines(active);
             const result = active?.document.getText(range);
@@ -687,7 +935,7 @@ suite('Extension Test Suite', () => {
         test('it should convert selection at same position', async () => {
 
             await vscode.commands.executeCommand('yet-another-case-converter.constant-case');
-            await sleep(waitForCommand);
+            await sleep(WAIT_FOR_COMMAND);
 
             const range = getRangeOfLines(active);
             const result = active?.document.getText(range);
@@ -717,7 +965,7 @@ suite('Extension Test Suite', () => {
         test('it should convert selection at same position', async () => {
 
             await vscode.commands.executeCommand('yet-another-case-converter.constant-case');
-            await sleep(waitForCommand);
+            await sleep(WAIT_FOR_COMMAND);
 
             const range = getRangeOfLines(active);
             const result = active?.document.getText(range);
@@ -747,7 +995,7 @@ suite('Extension Test Suite', () => {
         test('it should convert selection at same position', async () => {
 
             await vscode.commands.executeCommand('yet-another-case-converter.constant-case');
-            await sleep(waitForCommand);
+            await sleep(WAIT_FOR_COMMAND);
 
             const range = getRangeOfLines(active);
             const result = active?.document.getText(range);
@@ -777,7 +1025,7 @@ suite('Extension Test Suite', () => {
         test('it should convert selection at same position', async () => {
 
             await vscode.commands.executeCommand('yet-another-case-converter.constant-case');
-            await sleep(waitForCommand);
+            await sleep(WAIT_FOR_COMMAND);
 
             const range = getRangeOfLines(active);
             const result = active?.document.getText(range);
@@ -807,7 +1055,7 @@ suite('Extension Test Suite', () => {
         test('it should convert selection at same position', async () => {
 
             await vscode.commands.executeCommand('yet-another-case-converter.constant-case');
-            await sleep(waitForCommand);
+            await sleep(WAIT_FOR_COMMAND);
 
             const range = getRangeOfLines(active);
             const result = active?.document.getText(range);
@@ -866,7 +1114,7 @@ suite('Extension Test Suite', () => {
                 test('it should not convert separator', async () => {
 
                     await vscode.commands.executeCommand('yet-another-case-converter.constant-case');
-                    await sleep(waitForCommand);
+                    await sleep(WAIT_FOR_COMMAND);
 
                     const range = getRangeOfLines(active);
                     const result = active?.document.getText(range);
@@ -896,7 +1144,7 @@ suite('Extension Test Suite', () => {
                 test('it should not convert separator', async () => {
 
                     await vscode.commands.executeCommand('yet-another-case-converter.constant-case');
-                    await sleep(waitForCommand);
+                    await sleep(WAIT_FOR_COMMAND);
 
                     const range = getRangeOfLines(active);
                     const result = active?.document.getText(range);
@@ -926,7 +1174,7 @@ suite('Extension Test Suite', () => {
                 test('it should not convert separator', async () => {
 
                     await vscode.commands.executeCommand('yet-another-case-converter.constant-case');
-                    await sleep(waitForCommand);
+                    await sleep(WAIT_FOR_COMMAND);
 
                     const range = getRangeOfLines(active);
                     const result = active?.document.getText(range);
@@ -956,7 +1204,7 @@ suite('Extension Test Suite', () => {
                 test('it should not convert separator', async () => {
 
                     await vscode.commands.executeCommand('yet-another-case-converter.constant-case');
-                    await sleep(waitForCommand);
+                    await sleep(WAIT_FOR_COMMAND);
 
                     const range = getRangeOfLines(active);
                     const result = active?.document.getText(range);
@@ -986,7 +1234,7 @@ suite('Extension Test Suite', () => {
                 test('it should not convert separator', async () => {
 
                     await vscode.commands.executeCommand('yet-another-case-converter.constant-case');
-                    await sleep(waitForCommand);
+                    await sleep(WAIT_FOR_COMMAND);
 
                     const range = getRangeOfLines(active);
                     const result = active?.document.getText(range);
@@ -1016,7 +1264,7 @@ suite('Extension Test Suite', () => {
                 test('it should convert selection', async () => {
 
                     await vscode.commands.executeCommand('yet-another-case-converter.constant-case');
-                    await sleep(waitForCommand);
+                    await sleep(WAIT_FOR_COMMAND);
 
                     const range = getRangeOfLines(active);
                     const result = active?.document.getText(range);
@@ -1046,7 +1294,7 @@ suite('Extension Test Suite', () => {
                 test('it should convert selection', async () => {
 
                     await vscode.commands.executeCommand('yet-another-case-converter.constant-case');
-                    await sleep(waitForCommand);
+                    await sleep(WAIT_FOR_COMMAND);
 
                     const range = getRangeOfLines(active);
                     const result = active?.document.getText(range);
@@ -1076,7 +1324,7 @@ suite('Extension Test Suite', () => {
                 test('it should convert selection', async () => {
 
                     await vscode.commands.executeCommand('yet-another-case-converter.constant-case');
-                    await sleep(waitForCommand);
+                    await sleep(WAIT_FOR_COMMAND);
 
                     const range = getRangeOfLines(active);
                     const result = active?.document.getText(range);
@@ -1106,7 +1354,7 @@ suite('Extension Test Suite', () => {
                 test('it should convert selection', async () => {
 
                     await vscode.commands.executeCommand('yet-another-case-converter.constant-case');
-                    await sleep(waitForCommand);
+                    await sleep(WAIT_FOR_COMMAND);
 
                     const range = getRangeOfLines(active);
                     const result = active?.document.getText(range);
@@ -1138,7 +1386,7 @@ suite('Extension Test Suite', () => {
         test('it should convert selection', async () => {
 
             await vscode.commands.executeCommand('yet-another-case-converter.constant-case');
-            await sleep(waitForCommand);
+            await sleep(WAIT_FOR_COMMAND);
 
             const range = getRangeOfLines(active);
             const result = active?.document.getText(range);
@@ -1181,7 +1429,7 @@ suite('Extension Test Suite', () => {
             test(`it should convert multiple selections`, async () => {
 
                 await vscode.commands.executeCommand('yet-another-case-converter.constant-case');
-                await sleep(waitForCommand);
+                await sleep(WAIT_FOR_COMMAND);
 
                 const range = getRangeOfLines(active, 0, 1);
                 const result = active?.document.getText(range);
@@ -1211,7 +1459,7 @@ suite('Extension Test Suite', () => {
             test(`it should convert multiple selections line by line`, async () => {
 
                 await vscode.commands.executeCommand('yet-another-case-converter.constant-case');
-                await sleep(waitForCommand);
+                await sleep(WAIT_FOR_COMMAND);
 
                 const range = getRangeOfLines(active, 0, 1);
                 const result = active?.document.getText(range);
@@ -1245,7 +1493,7 @@ suite('Extension Test Suite', () => {
             test(`it should convert multiple multiline selections`, async () => {
 
                 await vscode.commands.executeCommand('yet-another-case-converter.constant-case');
-                await sleep(waitForCommand);
+                await sleep(WAIT_FOR_COMMAND);
 
                 const range = getRangeOfLines(active, 0, 3);
                 const result = active?.document.getText(range);
@@ -1276,7 +1524,7 @@ suite('Extension Test Suite', () => {
         test('it should convert selection at same position', async () => {
 
             await vscode.commands.executeCommand('yet-another-case-converter.constant-case');
-            await sleep(waitForCommand);
+            await sleep(WAIT_FOR_COMMAND);
 
             const range = getRangeOfLines(active);
             const result = active?.document.getText(range);
@@ -1306,7 +1554,7 @@ suite('Extension Test Suite', () => {
         test('it should convert selection at same position', async () => {
 
             await vscode.commands.executeCommand('yet-another-case-converter.constant-case');
-            await sleep(waitForCommand);
+            await sleep(WAIT_FOR_COMMAND);
 
             const range = getRangeOfLines(active);
             const result = active?.document.getText(range);
@@ -1340,7 +1588,7 @@ suite('Extension Test Suite', () => {
         test(`it should convert multiple selections`, async () => {
 
             await vscode.commands.executeCommand('yet-another-case-converter.constant-case');
-            await sleep(waitForCommand);
+            await sleep(WAIT_FOR_COMMAND);
 
             const range = getRangeOfLines(active, 0, 1);
             const result = active?.document.getText(range);
@@ -1370,7 +1618,7 @@ suite('Extension Test Suite', () => {
         test(`it should convert multiple selections`, async () => {
 
             await vscode.commands.executeCommand('yet-another-case-converter.constant-case');
-            await sleep(waitForCommand);
+            await sleep(WAIT_FOR_COMMAND);
 
             const range = getRangeOfLines(active, 0, 1);
             const result = active?.document.getText(range);
@@ -1400,7 +1648,7 @@ suite('Extension Test Suite', () => {
         test(`it should convert multiple selections`, async () => {
 
             await vscode.commands.executeCommand('yet-another-case-converter.constant-case');
-            await sleep(waitForCommand);
+            await sleep(WAIT_FOR_COMMAND);
 
             const range = getRangeOfLines(active, 0, 2);
             const result = active?.document.getText(range);
@@ -1430,7 +1678,7 @@ suite('Extension Test Suite', () => {
         test(`it should convert multiple selections`, async () => {
 
             await vscode.commands.executeCommand('yet-another-case-converter.constant-case');
-            await sleep(waitForCommand);
+            await sleep(WAIT_FOR_COMMAND);
 
             const range = getRangeOfLines(active, 0, 2);
             const result = active?.document.getText(range);
@@ -1444,13 +1692,6 @@ function getRangeOfLines(active: vscode.TextEditor | undefined, startLineIndex: 
     const startLine = active?.document.lineAt(startLineIndex);
     const endLine = active?.document.lineAt(endLineIndex);
     return new vscode.Range(startLineIndex, startLine?.range?.start?.character ?? 0, endLineIndex, endLine?.range?.end?.character ?? 0);
-}
-
-function sleep(time: number): Promise<void> {
-
-    return new Promise((resolve) => {
-        setTimeout(resolve, time);
-    });
 }
 
 function failedMsg(given: string, commandName: string, expected: string, result = ''): string {
