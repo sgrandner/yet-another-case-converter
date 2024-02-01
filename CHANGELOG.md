@@ -1,5 +1,13 @@
 # Yet Another Case Converter - Change Log
 
+## [0.4.0] - 2024-02-01
+
+- confirm settings commands before editing settings.json
+- show convert commands also without selections
+- add apostrophe handling
+- add settings command to set custom separator in settings.json
+
+
 ## [0.3.0] - 2023-11-25
 
 - add settings commands for activation/deactivation of convert commands (grouped by command levels "important", "most" and "all")
