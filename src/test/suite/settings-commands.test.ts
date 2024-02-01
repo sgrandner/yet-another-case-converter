@@ -359,7 +359,7 @@ suite('settings commands', () => {
                     await vscode.commands.executeCommand('yet-another-case-converter.activate-all-commands');
                     await sleep(WAIT_FOR_COMMAND);
 
-                    assert.ok(errorMessageStub.calledWith(
+                    assert.ok(errorMessageStub.calledOnceWith(
                         'Failed to update convert commands entries in settings !',
                     ));
                 });

@@ -107,48 +107,56 @@ function updateConfigurationsByLevel(chosenLevel: CommandLevel): void {
     const configuration = vscode.workspace.getConfiguration('yet-another-case-converter');
     const commands = getConvertCommandsConfig(undefined);
 
+    const updateResults: Thenable<void>[] = [];
+
     commands.forEach((config: CommandConfig) => {
 
         if (config.commandLevel !== undefined) {
 
             const defaultValue = configuration.inspect(`activate.${config.commandName}`)?.defaultValue;
 
+            let result;
+
             if (config.commandLevel <= chosenLevel) {
                 // NOTE activate commands by setting them explicitly to true or unset them if true is the default value
-                updateConfiguration(
+                result = updateConfiguration(
                     defaultValue === true ? undefined : true,
                     configuration,
                     config,
                 );
             } else {
                 // NOTE deactivate commands by setting them explicitly to false or unset them if false is the default value
-                updateConfiguration(
+                result = updateConfiguration(
                     defaultValue === true ? false : undefined,
                     configuration,
                     config,
                 );
             }
 
+            updateResults.push(result);
+
         } else {
             console.error(`no command level set for ${config.commandName} !`);
         }
     });
+
+    Promise.all(updateResults).then(
+        () => {},
+        () => {
+            vscode.window.showErrorMessage('Failed to update convert commands entries in settings !');
+        },
+    );
 }
 
 function updateConfiguration(
     updateValue: boolean | undefined,
     configuration: vscode.WorkspaceConfiguration,
     config: CommandConfig,
-): void {
+): Thenable<void> {
 
     // TODO only update if value changes
 
-    configuration.update(`activate.${config.commandName}`, updateValue, true).then(
-        () => {},
-        () => {
-            vscode.window.showErrorMessage('Failed to update convert commands entries in settings !');
-        },
-    );
+    return configuration.update(`activate.${config.commandName}`, updateValue, true);
 }
 
 function inputCustomSeparator(): void {

@@ -9,8 +9,6 @@ Define your own case with a special character.
 
 ## TODOs
 
-* each rejected update shows an error message at the moment
-    * show error message only once by throwing an error in updateConfiguration() and catch it in updateConfigurationsByLevel() !?
 * convert or keep special characters (Sonderzeichen) !!!
 * remind answer for apostrophe handling  ->  no checkbox possible in showInformationMessage !?
 * icon
