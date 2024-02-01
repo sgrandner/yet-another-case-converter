@@ -3,7 +3,7 @@
     "displayName": "Yet Another Case Converter",
     "description": "Change/toggle the case of the selected word(s)",
     "publisher": "sgrandner",
-    "version": "0.4.0-SNAPSHOT",
+    "version": "0.4.0",
     "engines": {
         "vscode": "^1.75.0"
     },
@@ -15,15 +15,12 @@
         "compile": "webpack",
         "watch": "webpack --watch",
         "package": "webpack --mode production --devtool hidden-source-map",
-
         "test": "node ./out/test/runTest.js",
         "pretest": "npm run compile-tests && npm run compile && npm run lint",
         "compile-tests": "tsc -p . --outDir out",
         "watch-tests": "tsc -p . -w --outDir out",
-
         "lint": "eslint src --ext ts",
         "lint:fix": "npm run lint -- --fix",
-
         "vscode:prepublish": "npm run package",
         "vsce:package": "vsce package"
     },
@@ -49,7 +46,6 @@
                 "command": "yet-another-case-converter.set-custom-separator",
                 "title": "Yet Another Case Converter: Set custom separator"
             },
-
             {
                 "command": "yet-another-case-converter.constant-case",
                 "title": "Yet Another Case Converter: CONSTANT_CASE / SCREAMING_SNAKE_CASE (Constant Case, Screaming Snake Case)",
