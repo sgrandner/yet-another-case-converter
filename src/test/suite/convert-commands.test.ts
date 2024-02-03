@@ -2,7 +2,10 @@ import * as assert from 'assert';
 import * as sinon from 'sinon';
 import * as vscode from 'vscode';
 
-import { APOSTROPHE_HANDLING_WORDING } from '../../_domain/apostrophe-handling';
+import {
+    MESSAGE_OPTIONS,
+    MESSAGES,
+} from '../../_wording/messages';
 import { sleep } from '../utils/sleep';
 import { WAIT_FOR_COMMAND } from './config';
 
@@ -569,18 +572,18 @@ suite('convert commands', () => {
             await sleep(WAIT_FOR_COMMAND);
 
             assert.ok(apostropheMessageStub.calledOnceWith(
-                'The selected text contains apostrophes. How should I handle them?',
-                APOSTROPHE_HANDLING_WORDING.keep,
-                APOSTROPHE_HANDLING_WORDING.remove,
-                APOSTROPHE_HANDLING_WORDING.handleAsSeparatorWithinWord,
-                APOSTROPHE_HANDLING_WORDING.cancel,
+                MESSAGES.APOSTROPHE_HANDLING_TYPE,
+                MESSAGE_OPTIONS.KEEP,
+                MESSAGE_OPTIONS.REMOVE,
+                MESSAGE_OPTIONS.HANDLE_AS_SEPARATOR_WITHIN_WORD,
+                MESSAGE_OPTIONS.CANCEL,
             ));
         });
 
-        suite(`with apostrophe handling is "${APOSTROPHE_HANDLING_WORDING.keep}"`, () => {
+        suite(`with apostrophe handling is "${MESSAGE_OPTIONS.KEEP}"`, () => {
 
             setup(() => {
-                apostropheMessageStub.resolves(APOSTROPHE_HANDLING_WORDING.keep);
+                apostropheMessageStub.resolves(MESSAGE_OPTIONS.KEEP);
             });
 
             test('it should convert selection', async () => {
@@ -595,10 +598,10 @@ suite('convert commands', () => {
             });
         });
 
-        suite(`with apostrophe handling is "${APOSTROPHE_HANDLING_WORDING.remove}"`, () => {
+        suite(`with apostrophe handling is "${MESSAGE_OPTIONS.REMOVE}"`, () => {
 
             setup(() => {
-                apostropheMessageStub.resolves(APOSTROPHE_HANDLING_WORDING.remove);
+                apostropheMessageStub.resolves(MESSAGE_OPTIONS.REMOVE);
             });
 
             test('it should convert selection', async () => {
@@ -613,10 +616,10 @@ suite('convert commands', () => {
             });
         });
 
-        suite(`with apostrophe handling is "${APOSTROPHE_HANDLING_WORDING.handleAsSeparatorWithinWord}"`, () => {
+        suite(`with apostrophe handling is "${MESSAGE_OPTIONS.HANDLE_AS_SEPARATOR_WITHIN_WORD}"`, () => {
 
             setup(() => {
-                apostropheMessageStub.resolves(APOSTROPHE_HANDLING_WORDING.handleAsSeparatorWithinWord);
+                apostropheMessageStub.resolves(MESSAGE_OPTIONS.HANDLE_AS_SEPARATOR_WITHIN_WORD);
             });
 
             test('it should convert selection', async () => {
@@ -631,10 +634,10 @@ suite('convert commands', () => {
             });
         });
 
-        suite(`with apostrophe handling is "${APOSTROPHE_HANDLING_WORDING.cancel}"`, () => {
+        suite(`with apostrophe handling is "${MESSAGE_OPTIONS.CANCEL}"`, () => {
 
             setup(() => {
-                apostropheMessageStub.resolves(APOSTROPHE_HANDLING_WORDING.cancel);
+                apostropheMessageStub.resolves(MESSAGE_OPTIONS.CANCEL);
             });
 
             test('it should not convert selection', async () => {
@@ -682,18 +685,18 @@ suite('convert commands', () => {
             await sleep(WAIT_FOR_COMMAND);
 
             assert.ok(apostropheMessageStub.calledOnceWith(
-                'The selected text contains apostrophes. How should I handle them?',
-                APOSTROPHE_HANDLING_WORDING.keep,
-                APOSTROPHE_HANDLING_WORDING.remove,
-                APOSTROPHE_HANDLING_WORDING.handleAsSeparatorWithinWord,
-                APOSTROPHE_HANDLING_WORDING.cancel,
+                MESSAGES.APOSTROPHE_HANDLING_TYPE,
+                MESSAGE_OPTIONS.KEEP,
+                MESSAGE_OPTIONS.REMOVE,
+                MESSAGE_OPTIONS.HANDLE_AS_SEPARATOR_WITHIN_WORD,
+                MESSAGE_OPTIONS.CANCEL,
             ));
         });
 
-        suite(`with apostrophe handling is "${APOSTROPHE_HANDLING_WORDING.keep}"`, () => {
+        suite(`with apostrophe handling is "${MESSAGE_OPTIONS.KEEP}"`, () => {
 
             setup(() => {
-                apostropheMessageStub.resolves(APOSTROPHE_HANDLING_WORDING.keep);
+                apostropheMessageStub.resolves(MESSAGE_OPTIONS.KEEP);
             });
 
             test('it should convert selection', async () => {
@@ -708,10 +711,10 @@ suite('convert commands', () => {
             });
         });
 
-        suite(`with apostrophe handling is "${APOSTROPHE_HANDLING_WORDING.remove}"`, () => {
+        suite(`with apostrophe handling is "${MESSAGE_OPTIONS.REMOVE}"`, () => {
 
             setup(() => {
-                apostropheMessageStub.resolves(APOSTROPHE_HANDLING_WORDING.remove);
+                apostropheMessageStub.resolves(MESSAGE_OPTIONS.REMOVE);
             });
 
             test('it should convert selection', async () => {
@@ -726,10 +729,10 @@ suite('convert commands', () => {
             });
         });
 
-        suite(`with apostrophe handling is "${APOSTROPHE_HANDLING_WORDING.handleAsSeparatorWithinWord}"`, () => {
+        suite(`with apostrophe handling is "${MESSAGE_OPTIONS.HANDLE_AS_SEPARATOR_WITHIN_WORD}"`, () => {
 
             setup(() => {
-                apostropheMessageStub.resolves(APOSTROPHE_HANDLING_WORDING.handleAsSeparatorWithinWord);
+                apostropheMessageStub.resolves(MESSAGE_OPTIONS.HANDLE_AS_SEPARATOR_WITHIN_WORD);
             });
 
             test('it should convert selection', async () => {
@@ -744,10 +747,10 @@ suite('convert commands', () => {
             });
         });
 
-        suite(`with apostrophe handling is "${APOSTROPHE_HANDLING_WORDING.cancel}"`, () => {
+        suite(`with apostrophe handling is "${MESSAGE_OPTIONS.CANCEL}"`, () => {
 
             setup(() => {
-                apostropheMessageStub.resolves(APOSTROPHE_HANDLING_WORDING.cancel);
+                apostropheMessageStub.resolves(MESSAGE_OPTIONS.CANCEL);
             });
 
             test('it should not convert selection', async () => {

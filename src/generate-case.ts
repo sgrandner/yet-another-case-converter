@@ -68,7 +68,7 @@ export function generateCase(
         );
     }
 
-    if (apostropheHandling === 'remove' || apostropheHandling === 'handleAsSeparatorWithinWord') {
+    if (apostropheHandling === 'REMOVE' || apostropheHandling === 'HANDLE_AS_SEPARATOR_WITHIN_WORD') {
         replacedString = replacedString.replace(/\'/g, '');
     }
 
@@ -140,7 +140,7 @@ function replaceInnerApostrophes(
 
     let result = text;
 
-    if (apostropheHandling === 'handleAsSeparatorWithinWord' && text.length >= 3) {
+    if (apostropheHandling === 'HANDLE_AS_SEPARATOR_WITHIN_WORD' && text.length >= 3) {
 
         const innerPartOfSegment = text.substring(1, text.length - 1);
         const firstLetter = text[ 0 ];

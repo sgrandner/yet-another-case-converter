@@ -1,12 +1,13 @@
 import * as vscode from 'vscode';
 
 import { SEPARATOR } from './_config/separator.config';
-import {
-    APOSTROPHE_HANDLING_WORDING,
-    ApostropheHandling,
-} from "./_domain/apostrophe-handling";
+import { ApostropheHandling } from "./_domain/apostrophe-handling";
 import { Separator } from './_domain/separator';
 import { TextSelection } from "./_domain/text-selection";
+import {
+    MESSAGE_OPTIONS,
+    MESSAGES,
+} from './_wording/messages';
 
 export function apostropheHandler(separator: Separator): (
     validTextSelections: TextSelection[],
@@ -25,21 +26,19 @@ export function apostropheHandler(separator: Separator): (
         if (hasApostrophes && separator.name !== SEPARATOR.wholeWord.name) {
 
             vscode.window.showInformationMessage(
-                'The selected text contains apostrophes. How should I handle them?',
-                APOSTROPHE_HANDLING_WORDING.keep,
-                APOSTROPHE_HANDLING_WORDING.remove,
-                APOSTROPHE_HANDLING_WORDING.handleAsSeparatorWithinWord,
-                APOSTROPHE_HANDLING_WORDING.cancel,
+                MESSAGES.APOSTROPHE_HANDLING_TYPE,
+                MESSAGE_OPTIONS.KEEP,
+                MESSAGE_OPTIONS.REMOVE,
+                MESSAGE_OPTIONS.HANDLE_AS_SEPARATOR_WITHIN_WORD,
+                MESSAGE_OPTIONS.CANCEL,
             ).then(
                 (option: string | undefined) => {
-                    if (option === APOSTROPHE_HANDLING_WORDING.keep) {
-                        editSelectionsCallback('keep');
-                    } else if (option === APOSTROPHE_HANDLING_WORDING.remove) {
-                        editSelectionsCallback('remove');
-                    } else if (option === APOSTROPHE_HANDLING_WORDING.handleAsSeparatorWithinWord) {
-                        editSelectionsCallback('handleAsSeparatorWithinWord');
-                    } else if (option === APOSTROPHE_HANDLING_WORDING.cancel) {
-                        vscode.window.showInformationMessage('Case convertion cancelled.');
+                    if (option === MESSAGE_OPTIONS.KEEP) {
+                        editSelectionsCallback('KEEP');
+                    } else if (option === MESSAGE_OPTIONS.REMOVE) {
+                        editSelectionsCallback('REMOVE');
+                    } else if (option === MESSAGE_OPTIONS.HANDLE_AS_SEPARATOR_WITHIN_WORD) {
+                        editSelectionsCallback('HANDLE_AS_SEPARATOR_WITHIN_WORD');
                     }
                 },
                 (reason: any) => {
