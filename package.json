@@ -474,10 +474,21 @@
                     "default": false,
                     "description": "Activate inverse-pascal-custom1-case command"
                 },
+
                 "yet-another-case-converter.custom1-separator": {
                     "type": "string",
                     "default": "",
-                    "description": "Define custom1-separator"
+                    "description": "Define custom1-separator in settings"
+                },
+                "yet-another-case-converter.apostrophe-handling": {
+                    "type": "string",
+                    "default": "",
+                    "description": "Save apostrophe handling type in settings"
+                },
+                "yet-another-case-converter.ask-for-apostrophe-handling": {
+                    "type": "boolean",
+                    "default": "",
+                    "description": "Do not ask again to save apostrophe handling type if set to false"
                 }
             }
         }

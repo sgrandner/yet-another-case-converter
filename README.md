@@ -9,8 +9,8 @@ Define your own case with a special character.
 
 ## TODOs
 
+* FIXME apostrophe as separator in words does not work for camel case !!!
 * convert or keep special characters (Sonderzeichen) !!!
-* remind answer for apostrophe handling  ->  no checkbox possible in showInformationMessage !?
 * icon
 * 42 easter egg
 
