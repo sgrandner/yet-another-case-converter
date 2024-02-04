@@ -68,9 +68,9 @@ export function generateCase(
         );
     }
 
-    if (apostropheHandling === 'REMOVE' || apostropheHandling === 'HANDLE_AS_SEPARATOR_WITHIN_WORD') {
-        replacedString = replacedString.replace(/\'/g, '');
-    }
+    // if (apostropheHandling === 'REMOVE' || apostropheHandling === 'HANDLE_AS_SEPARATOR_WITHIN_WORD') {
+    //     replacedString = replacedString.replace(/\'/g, '');
+    // }
 
     return replacedString;
 }
@@ -88,6 +88,8 @@ function matchAndReplaceSegments(
         vscode.window.showWarningMessage(`Selections only containing separators are not converted !`);
         return text;
     }
+
+    // TODO try to handle apostrophes here
 
     let replacedString = '';
 
@@ -111,7 +113,15 @@ function matchAndReplaceSegments(
             return index > 0 && capture?.length > 0;
         }) ?? '';
 
-        let convertedSegment = caseConversionFunction(replacedSegment);
+        let convertedSegment = replacedSegment;
+
+        // TODO Try to get rid of this outer and inner apostrophe handling.
+        //      Try to handle apostrophes before deviding string into segments.
+        if (!!apostropheHandling) {
+            convertedSegment = replaceOuterApostrophes(apostropheHandling, convertedSegment, separator);
+        }
+
+        convertedSegment = caseConversionFunction(convertedSegment);
 
         if (!!apostropheHandling) {
             convertedSegment = replaceInnerApostrophes(apostropheHandling, convertedSegment, separator);
@@ -132,6 +142,24 @@ function matchAndReplaceSegments(
     return replacedString;
 }
 
+function replaceOuterApostrophes(
+    apostropheHandling: ApostropheHandling | undefined,
+    text: string,
+    separator: Separator
+): string {
+
+    let result = text;
+
+    if (apostropheHandling === 'REMOVE' || apostropheHandling === 'HANDLE_AS_SEPARATOR_WITHIN_WORD') {
+
+        const startIndex = text.substring(0, 1) === '\'' ? 1 : 0;
+        const endIndex = text.substring(text.length - 1, text.length) === '\'' ? 1 : 0;
+        result = text.substring(startIndex, result.length - endIndex);
+    }
+
+    return result;
+}
+
 function replaceInnerApostrophes(
     apostropheHandling: ApostropheHandling | undefined,
     text: string,
@@ -140,16 +168,26 @@ function replaceInnerApostrophes(
 
     let result = text;
 
-    if (apostropheHandling === 'HANDLE_AS_SEPARATOR_WITHIN_WORD' && text.length >= 3) {
+    if (
+        text.length >= 3 &&
+        (apostropheHandling === 'REMOVE' || apostropheHandling === 'HANDLE_AS_SEPARATOR_WITHIN_WORD')
+    ) {
 
         const innerPartOfSegment = text.substring(1, text.length - 1);
         const firstLetter = text[ 0 ];
         const lastLetter = text[ text.length - 1 ];
 
-        if (innerPartOfSegment.length > 0) {
-            const replaced = innerPartOfSegment.replace(/'/g, separator.value ?? '');
-            result = firstLetter.concat(replaced).concat(lastLetter);
+        const replaceSeparator = apostropheHandling === 'HANDLE_AS_SEPARATOR_WITHIN_WORD' ? separator.value : '';
+
+        let replaced;
+        if (separator.name === SEPARATOR.none.name) {
+            // TODO
+            replaced = innerPartOfSegment.replace(/'(.)/g, '' ?? '');
+        } else {
+            replaced = innerPartOfSegment.replace(/'/g, replaceSeparator ?? '');
         }
+
+        result = firstLetter.concat(replaced).concat(lastLetter);
     }
 
     return result;

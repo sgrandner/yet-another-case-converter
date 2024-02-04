@@ -569,9 +569,9 @@ suite('convert commands', () => {
         });
     });
 
-    suite('with selection containing apostrophe (with info message flow for apostrophe handling)', () => {
+    suite.only('with selection containing apostrophe (with info message flow for apostrophe handling)', () => {
 
-        const given = 'qwer \'bout don\'t walkin\' asdf\n\'bout walkin\'';
+        const given = 'yes \'bout b\'elanna you\'re i\'m don\'t walkin\' no\n\'bout walkin\'';
 
         let apostropheMessageStub: sinon.SinonStub;
         setup(async () => {
@@ -614,17 +614,17 @@ suite('convert commands', () => {
                 {
                     option: MESSAGE_OPTIONS.KEEP,
                     type: 'KEEP' as ApostropheHandling,
-                    expected: 'QWER_\'BOUT_DON\'T_WALKIN\'_ASDF\n\'BOUT_WALKIN\'',
+                    expected: 'YES_\'BOUT_B\'ELANNA_YOU\'RE_I\'M_DON\'T_WALKIN\'_NO\n\'BOUT_WALKIN\'',
                 },
                 {
                     option: MESSAGE_OPTIONS.REMOVE,
                     type: 'REMOVE' as ApostropheHandling,
-                    expected: 'QWER_BOUT_DONT_WALKIN_ASDF\nBOUT_WALKIN',
+                    expected: 'YES_BOUT_BELANNA_YOURE_IM_DONT_WALKIN_NO\nBOUT_WALKIN',
                 },
                 {
                     option: MESSAGE_OPTIONS.HANDLE_AS_SEPARATOR_WITHIN_WORD,
                     type: 'HANDLE_AS_SEPARATOR_WITHIN_WORD' as ApostropheHandling,
-                    expected: 'QWER_BOUT_DON_T_WALKIN_ASDF\nBOUT_WALKIN',
+                    expected: 'YES_BOUT_B_ELANNA_YOU_RE_I_M_DON_T_WALKIN_NO\nBOUT_WALKIN',
                 },
             ].forEach((testArgs: { option: string, type: ApostropheHandling, expected: string }) => {
 
@@ -817,15 +817,15 @@ suite('convert commands', () => {
         [
             {
                 type: 'KEEP' as ApostropheHandling,
-                expected: 'QWER_\'BOUT_DON\'T_WALKIN\'_ASDF\n\'BOUT_WALKIN\'',
+                expected: 'YES_\'BOUT_B\'ELANNA_YOU\'RE_I\'M_DON\'T_WALKIN\'_NO\n\'BOUT_WALKIN\'',
             },
             {
                 type: 'REMOVE' as ApostropheHandling,
-                expected: 'QWER_BOUT_DONT_WALKIN_ASDF\nBOUT_WALKIN',
+                expected: 'YES_BOUT_BELANNA_YOURE_IM_DONT_WALKIN_NO\nBOUT_WALKIN',
             },
             {
                 type: 'HANDLE_AS_SEPARATOR_WITHIN_WORD' as ApostropheHandling,
-                expected: 'QWER_BOUT_DON_T_WALKIN_ASDF\nBOUT_WALKIN',
+                expected: 'YES_BOUT_B_ELANNA_YOU_RE_I_M_DON_T_WALKIN_NO\nBOUT_WALKIN',
             },
         ].forEach((testArgs: { type: ApostropheHandling, expected: string }) => {
 
@@ -870,7 +870,7 @@ suite('convert commands', () => {
     //      is neglected here, i.e., it is assumed that the handling type is saved to the settings.
     suite.only('with selection containing apostrophe (camel case as source)', () => {
 
-        const given = 'qwer\'boutDon\'tWalkin\'Asdf\n\'boutWalkin\'';
+        const given = 'yes\'boutB\'elannaYou\'reI\'mDon\'tWalkin\'No\n\'boutWalkin\'';
 
         setup(async () => {
             doc = await vscode.workspace.openTextDocument({
@@ -889,15 +889,15 @@ suite('convert commands', () => {
         [
             {
                 type: 'KEEP' as ApostropheHandling,
-                expected: 'QWER\'BOUT_DON\'T_WALKIN\'_ASDF\n\'BOUT_WALKIN\'',
+                expected: 'YES\'BOUT_B\'ELANNA_YOU\'RE_I\'M_DON\'T_WALKIN\'_NO\n\'BOUT_WALKIN\'',
             },
             {
                 type: 'REMOVE' as ApostropheHandling,
-                expected: 'QWERBOUT_DONT_WALKIN_ASDF\nBOUT_WALKIN',
+                expected: 'YESBOUT_BELANNA_YOURE_IM_DONT_WALKIN_NO\nBOUT_WALKIN',
             },
             {
                 type: 'HANDLE_AS_SEPARATOR_WITHIN_WORD' as ApostropheHandling,
-                expected: 'QWER_BOUT_DON_T_WALKIN_ASDF\nBOUT_WALKIN',
+                expected: 'YES_BOUT_B_ELANNA_YOU_RE_I_M_DON_T_WALKIN_NO\nBOUT_WALKIN',
             },
         ].forEach((testArgs: { type: ApostropheHandling, expected: string }) => {
 
@@ -926,7 +926,7 @@ suite('convert commands', () => {
     //      is neglected here, i.e., it is assumed that the handling type is saved to the settings.
     suite.only('with selection containing apostrophe (camel case as target)', () => {
 
-        const given = 'QWER_\'BOUT_DON\'T_WALKIN\'_ASDF\n\'BOUT_WALKIN\'';
+        const given = 'YES_\'BOUT_B\'ELANNA_YOU\'RE_I\'M_DON\'T_WALKIN\'_NO\n\'BOUT_WALKIN\'';
 
         setup(async () => {
             doc = await vscode.workspace.openTextDocument({
@@ -946,15 +946,15 @@ suite('convert commands', () => {
         [
             {
                 type: 'KEEP' as ApostropheHandling,
-                expected: 'qwer\'boutDon\'tWalkin\'Asdf\n\'boutWalkin\'',
+                expected: 'yes\'boutB\'elannaYou\'reI\'mDon\'tWalkin\'No\n\'boutWalkin\'',
             },
             {
                 type: 'REMOVE' as ApostropheHandling,
-                expected: 'qwerBoutDontWalkinAsdf\nboutWalkin',
+                expected: 'yesBoutBelannaYoureImDontWalkinNo\nboutWalkin',
             },
             {
                 type: 'HANDLE_AS_SEPARATOR_WITHIN_WORD' as ApostropheHandling,
-                expected: 'qwerBoutDonTWalkinAsdf\nboutWalkin',
+                expected: 'yesBoutBElannaYouReIMDonTWalkinNo\nboutWalkin',
             },
         ].forEach((testArgs: { type: ApostropheHandling, expected: string }) => {
 
