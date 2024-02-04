@@ -13,6 +13,7 @@ Define your own case with a special character.
 * convert or keep special characters (Sonderzeichen) !!!
 * icon
 * 42 easter egg
+* some remarks on tests -> wait 200 ms for commands to be processed (maybe there is a better way from vscode api)
 
 
 ## Features

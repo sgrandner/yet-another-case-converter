@@ -2,6 +2,7 @@ import * as assert from 'assert';
 import * as sinon from 'sinon';
 import * as vscode from 'vscode';
 
+import { ApostropheHandling } from '../../_domain/apostrophe-handling';
 import {
     MESSAGE_OPTIONS,
     MESSAGES,
@@ -609,201 +610,180 @@ suite('convert commands', () => {
                 assert.ok(apostropheMessageStub.withArgs(...INFO_MESSAGE_APOSTROPHE_HANDLING_TYPE).calledOnce);
             });
 
-            suite(`with apostrophe handling is "${MESSAGE_OPTIONS.KEEP}"`, () => {
+            [
+                {
+                    option: MESSAGE_OPTIONS.KEEP,
+                    type: 'KEEP' as ApostropheHandling,
+                    expected: 'QWER_\'BOUT_DON\'T_WALKIN\'_ASDF\n\'BOUT_WALKIN\'',
+                },
+                {
+                    option: MESSAGE_OPTIONS.REMOVE,
+                    type: 'REMOVE' as ApostropheHandling,
+                    expected: 'QWER_BOUT_DONT_WALKIN_ASDF\nBOUT_WALKIN',
+                },
+                {
+                    option: MESSAGE_OPTIONS.HANDLE_AS_SEPARATOR_WITHIN_WORD,
+                    type: 'HANDLE_AS_SEPARATOR_WITHIN_WORD' as ApostropheHandling,
+                    expected: 'QWER_BOUT_DON_T_WALKIN_ASDF\nBOUT_WALKIN',
+                },
+            ].forEach((testArgs: { option: string, type: ApostropheHandling, expected: string }) => {
 
-                setup(() => {
-                    apostropheMessageStub.withArgs(...INFO_MESSAGE_APOSTROPHE_HANDLING_TYPE).resolves(MESSAGE_OPTIONS.KEEP);
-                });
+                suite(`with apostrophe handling is "${testArgs.option}"`, () => {
 
-                [
-                    {
-                        askingAllowed: undefined,
-                    },
-                    {
-                        askingAllowed: true,
-                    },
-                ].forEach((testArgs: { askingAllowed: boolean | undefined }) => {
+                    setup(() => {
+                        apostropheMessageStub.withArgs(...INFO_MESSAGE_APOSTROPHE_HANDLING_TYPE).resolves(testArgs.option);
+                    });
 
-                    suite('with asking to save answer is allowed', () => {
+                    [
+                        {
+                            askingAllowed: undefined,
+                        },
+                        {
+                            askingAllowed: true,
+                        },
+                    ].forEach((testArgs2: { askingAllowed: boolean | undefined }) => {
+
+                        suite('with asking to save answer is allowed', () => {
+
+                            setup(() => {
+                                getStub.withArgs('ask-for-apostrophe-handling').returns(testArgs2.askingAllowed);
+                            });
+
+                            test('it should ask to save answer to settings', async () => {
+
+                                await vscode.commands.executeCommand('yet-another-case-converter.constant-case');
+                                await sleep(WAIT_FOR_COMMAND);
+
+                                assert.ok(apostropheMessageStub.withArgs(...INFO_MESSAGE_APOSTROPHE_HANDLING_SAVE).calledOnce);
+                            });
+
+                            suite(`with answer is ${MESSAGE_OPTIONS.YES}`, () => {
+
+                                setup(() => {
+                                    updateStub.resolves();
+                                    apostropheMessageStub.withArgs(...INFO_MESSAGE_APOSTROPHE_HANDLING_SAVE).resolves(MESSAGE_OPTIONS.YES);
+                                });
+
+                                test('it should save answer to settings', async () => {
+
+                                    await vscode.commands.executeCommand('yet-another-case-converter.constant-case');
+                                    await sleep(WAIT_FOR_COMMAND);
+
+                                    assert.ok(updateStub.calledOnceWith('apostrophe-handling', testArgs.type, true));
+                                });
+
+                                test('it should convert selection', async () => {
+
+                                    await vscode.commands.executeCommand('yet-another-case-converter.constant-case');
+                                    await sleep(WAIT_FOR_COMMAND);
+
+                                    const range = getRangeOfLines(active, 0, 1);
+                                    const result = active?.document.getText(range);
+                                    const expected = testArgs.expected;
+                                    assert(result === expected, failedMsg(given, 'constant-case', expected, result));
+                                });
+                            });
+
+                            suite(`with answer is ${MESSAGE_OPTIONS.NO}`, () => {
+
+                                setup(() => {
+                                    updateStub.resolves();
+                                    apostropheMessageStub.withArgs(...INFO_MESSAGE_APOSTROPHE_HANDLING_SAVE).resolves(MESSAGE_OPTIONS.NO);
+                                });
+
+                                // NOTE in this case the setting should not exist anyway, however this behavior may change in the future
+                                test('it should unset answer in settings', async () => {
+
+                                    await vscode.commands.executeCommand('yet-another-case-converter.constant-case');
+                                    await sleep(WAIT_FOR_COMMAND);
+
+                                    assert.ok(updateStub.calledOnceWith('apostrophe-handling', undefined, true));
+                                });
+
+                                test('it should convert selection', async () => {
+
+                                    await vscode.commands.executeCommand('yet-another-case-converter.constant-case');
+                                    await sleep(WAIT_FOR_COMMAND);
+
+                                    const range = getRangeOfLines(active, 0, 1);
+                                    const result = active?.document.getText(range);
+                                    const expected = testArgs.expected;
+                                    assert(result === expected, failedMsg(given, 'constant-case', expected, result));
+                                });
+                            });
+
+                            suite(`with answer is ${MESSAGE_OPTIONS.DONT_ASK_AGAIN}`, () => {
+
+                                setup(() => {
+                                    updateStub.resolves();
+                                    apostropheMessageStub.withArgs(...INFO_MESSAGE_APOSTROPHE_HANDLING_SAVE).resolves(MESSAGE_OPTIONS.DONT_ASK_AGAIN);
+                                });
+
+                                test('it should not save answer in settings', async () => {
+
+                                    await vscode.commands.executeCommand('yet-another-case-converter.constant-case');
+                                    await sleep(WAIT_FOR_COMMAND);
+
+                                    // TODO has mocha or sinon an any matcher for the second argument (undefined, KEEP etc.) !?
+                                    assert.ok(updateStub.withArgs('apostrophe-handling', undefined, true).notCalled);
+                                });
+
+                                test('it should save no to ask again in settings', async () => {
+
+                                    await vscode.commands.executeCommand('yet-another-case-converter.constant-case');
+                                    await sleep(WAIT_FOR_COMMAND);
+
+                                    assert.ok(updateStub.calledOnceWith('ask-for-apostrophe-handling', false, true));
+                                });
+
+                                test('it should convert selection', async () => {
+
+                                    await vscode.commands.executeCommand('yet-another-case-converter.constant-case');
+                                    await sleep(WAIT_FOR_COMMAND);
+
+                                    const range = getRangeOfLines(active, 0, 1);
+                                    const result = active?.document.getText(range);
+                                    const expected = testArgs.expected;
+                                    assert(result === expected, failedMsg(given, 'constant-case', expected, result));
+                                });
+                            });
+                        });
+                    });
+
+                    suite('with asking to save answer is not allowed', () => {
 
                         setup(() => {
-                            getStub.withArgs('ask-for-apostrophe-handling').returns(testArgs.askingAllowed);
+                            getStub.withArgs('ask-for-apostrophe-handling').returns(false);
                         });
 
-                        test('it should ask to save answer to settings', async () => {
+                        test('it should not ask to save answer to settings', async () => {
 
                             await vscode.commands.executeCommand('yet-another-case-converter.constant-case');
                             await sleep(WAIT_FOR_COMMAND);
 
-                            assert.ok(apostropheMessageStub.withArgs(...INFO_MESSAGE_APOSTROPHE_HANDLING_SAVE).calledOnce);
+                            assert.ok(apostropheMessageStub.withArgs(...INFO_MESSAGE_APOSTROPHE_HANDLING_SAVE).notCalled);
                         });
 
-                        suite(`with answer is ${MESSAGE_OPTIONS.YES}`, () => {
+                        test('it should not save answer in settings', async () => {
 
-                            setup(() => {
-                                updateStub.resolves();
-                                apostropheMessageStub.withArgs(...INFO_MESSAGE_APOSTROPHE_HANDLING_SAVE).resolves(MESSAGE_OPTIONS.YES);
-                            });
+                            await vscode.commands.executeCommand('yet-another-case-converter.constant-case');
+                            await sleep(WAIT_FOR_COMMAND);
 
-                            test('it should save answer to settings', async () => {
-
-                                await vscode.commands.executeCommand('yet-another-case-converter.constant-case');
-                                await sleep(WAIT_FOR_COMMAND);
-
-                                assert.ok(updateStub.calledOnceWith('apostrophe-handling', 'KEEP', true));
-                            });
-
-                            test('it should convert selection', async () => {
-
-                                await vscode.commands.executeCommand('yet-another-case-converter.constant-case');
-                                await sleep(WAIT_FOR_COMMAND);
-
-                                const range = getRangeOfLines(active, 0, 1);
-                                const result = active?.document.getText(range);
-                                const expected = 'QWER_\'BOUT_DON\'T_WALKIN\'_ASDF\n\'BOUT_WALKIN\'';
-                                assert(result === expected, failedMsg(given, 'constant-case', expected, result));
-                            });
+                            // TODO has mocha or sinon an any matcher for the second argument (undefined, KEEP etc.) !?
+                            assert.ok(updateStub.withArgs('apostrophe-handling', undefined, true).notCalled);
                         });
 
-                        suite(`with answer is ${MESSAGE_OPTIONS.NO}`, () => {
+                        test('it should convert selection', async () => {
 
-                            setup(() => {
-                                updateStub.resolves();
-                                apostropheMessageStub.withArgs(...INFO_MESSAGE_APOSTROPHE_HANDLING_SAVE).resolves(MESSAGE_OPTIONS.NO);
-                            });
+                            await vscode.commands.executeCommand('yet-another-case-converter.constant-case');
+                            await sleep(WAIT_FOR_COMMAND);
 
-                            // NOTE in this case the setting should not exist anyway, however this behavior may change in the future
-                            test('it should unset answer in settings', async () => {
-
-                                await vscode.commands.executeCommand('yet-another-case-converter.constant-case');
-                                await sleep(WAIT_FOR_COMMAND);
-
-                                assert.ok(updateStub.calledOnceWith('apostrophe-handling', undefined, true));
-                            });
-
-                            test('it should convert selection', async () => {
-
-                                await vscode.commands.executeCommand('yet-another-case-converter.constant-case');
-                                await sleep(WAIT_FOR_COMMAND);
-
-                                const range = getRangeOfLines(active, 0, 1);
-                                const result = active?.document.getText(range);
-                                const expected = 'QWER_\'BOUT_DON\'T_WALKIN\'_ASDF\n\'BOUT_WALKIN\'';
-                                assert(result === expected, failedMsg(given, 'constant-case', expected, result));
-                            });
-                        });
-
-                        suite(`with answer is ${MESSAGE_OPTIONS.DONT_ASK_AGAIN}`, () => {
-
-                            setup(() => {
-                                updateStub.resolves();
-                                apostropheMessageStub.withArgs(...INFO_MESSAGE_APOSTROPHE_HANDLING_SAVE).resolves(MESSAGE_OPTIONS.DONT_ASK_AGAIN);
-                            });
-
-                            test('it should not save answer in settings', async () => {
-
-                                await vscode.commands.executeCommand('yet-another-case-converter.constant-case');
-                                await sleep(WAIT_FOR_COMMAND);
-
-                                // TODO has mocha or sinon an any matcher for the second argument (undefined, KEEP etc.) !?
-                                assert.ok(updateStub.withArgs('apostrophe-handling', undefined, true).notCalled);
-                            });
-
-                            test('it should save no to ask again in settings', async () => {
-
-                                await vscode.commands.executeCommand('yet-another-case-converter.constant-case');
-                                await sleep(WAIT_FOR_COMMAND);
-
-                                assert.ok(updateStub.calledOnceWith('ask-for-apostrophe-handling', false, true));
-                            });
-
-                            test('it should convert selection', async () => {
-
-                                await vscode.commands.executeCommand('yet-another-case-converter.constant-case');
-                                await sleep(WAIT_FOR_COMMAND);
-
-                                const range = getRangeOfLines(active, 0, 1);
-                                const result = active?.document.getText(range);
-                                const expected = 'QWER_\'BOUT_DON\'T_WALKIN\'_ASDF\n\'BOUT_WALKIN\'';
-                                assert(result === expected, failedMsg(given, 'constant-case', expected, result));
-                            });
+                            const range = getRangeOfLines(active, 0, 1);
+                            const result = active?.document.getText(range);
+                            const expected = testArgs.expected;
+                            assert(result === expected, failedMsg(given, 'constant-case', expected, result));
                         });
                     });
-                });
-
-                suite('with asking to save answer is not allowed', () => {
-
-                    setup(() => {
-                        getStub.withArgs('ask-for-apostrophe-handling').returns(false);
-                    });
-
-                    test('it should not ask to save answer to settings', async () => {
-
-                        await vscode.commands.executeCommand('yet-another-case-converter.constant-case');
-                        await sleep(WAIT_FOR_COMMAND);
-
-                        assert.ok(apostropheMessageStub.withArgs(...INFO_MESSAGE_APOSTROPHE_HANDLING_SAVE).notCalled);
-                    });
-
-                    test('it should not save answer in settings', async () => {
-
-                        await vscode.commands.executeCommand('yet-another-case-converter.constant-case');
-                        await sleep(WAIT_FOR_COMMAND);
-
-                        // TODO has mocha or sinon an any matcher for the second argument (undefined, KEEP etc.) !?
-                        assert.ok(updateStub.withArgs('apostrophe-handling', undefined, true).notCalled);
-                    });
-
-                    test('it should convert selection', async () => {
-
-                        await vscode.commands.executeCommand('yet-another-case-converter.constant-case');
-                        await sleep(WAIT_FOR_COMMAND);
-
-                        const range = getRangeOfLines(active, 0, 1);
-                        const result = active?.document.getText(range);
-                        const expected = 'QWER_\'BOUT_DON\'T_WALKIN\'_ASDF\n\'BOUT_WALKIN\'';
-                        assert(result === expected, failedMsg(given, 'constant-case', expected, result));
-                    });
-                });
-            });
-
-            suite(`with apostrophe handling is "${MESSAGE_OPTIONS.REMOVE}"`, () => {
-
-                // TODO
-
-                setup(() => {
-                    apostropheMessageStub.withArgs(...INFO_MESSAGE_APOSTROPHE_HANDLING_TYPE).resolves(MESSAGE_OPTIONS.REMOVE);
-                });
-
-                test('it should convert selection', async () => {
-
-                    await vscode.commands.executeCommand('yet-another-case-converter.constant-case');
-                    await sleep(WAIT_FOR_COMMAND);
-
-                    const range = getRangeOfLines(active, 0, 1);
-                    const result = active?.document.getText(range);
-                    const expected = 'QWER_BOUT_DONT_WALKIN_ASDF\nBOUT_WALKIN';
-                    assert(result === expected, failedMsg(given, 'constant-case', expected, result));
-                });
-            });
-
-            suite(`with apostrophe handling is "${MESSAGE_OPTIONS.HANDLE_AS_SEPARATOR_WITHIN_WORD}"`, () => {
-
-                // TODO
-
-                setup(() => {
-                    apostropheMessageStub.withArgs(...INFO_MESSAGE_APOSTROPHE_HANDLING_TYPE).resolves(MESSAGE_OPTIONS.HANDLE_AS_SEPARATOR_WITHIN_WORD);
-                });
-
-                test('it should convert selection', async () => {
-
-                    await vscode.commands.executeCommand('yet-another-case-converter.constant-case');
-                    await sleep(WAIT_FOR_COMMAND);
-
-                    const range = getRangeOfLines(active, 0, 1);
-                    const result = active?.document.getText(range);
-                    const expected = 'QWER_BOUT_DON_T_WALKIN_ASDF\nBOUT_WALKIN';
-                    assert(result === expected, failedMsg(given, 'constant-case', expected, result));
                 });
             });
 
@@ -834,41 +814,59 @@ suite('convert commands', () => {
             });
         });
 
-        suite('with saved apostrophe handling type is "KEEP"', () => {
 
-            setup(() => {
-                getStub.withArgs('apostrophe-handling').returns('KEEP');
-            });
+        [
+            {
+                option: MESSAGE_OPTIONS.KEEP,
+                type: 'KEEP' as ApostropheHandling,
+                expected: 'QWER_\'BOUT_DON\'T_WALKIN\'_ASDF\n\'BOUT_WALKIN\'',
+            },
+            {
+                option: MESSAGE_OPTIONS.REMOVE,
+                type: 'REMOVE' as ApostropheHandling,
+                expected: 'QWER_BOUT_DONT_WALKIN_ASDF\nBOUT_WALKIN',
+            },
+            {
+                option: MESSAGE_OPTIONS.HANDLE_AS_SEPARATOR_WITHIN_WORD,
+                type: 'HANDLE_AS_SEPARATOR_WITHIN_WORD' as ApostropheHandling,
+                expected: 'QWER_BOUT_DON_T_WALKIN_ASDF\nBOUT_WALKIN',
+            },
+        ].forEach((testArgs: { type: ApostropheHandling, expected: string }) => {
 
-            test('it should not ask for apostrophe handling', async () => {
+            suite(`with saved apostrophe handling type is ${testArgs.type}`, () => {
 
-                await vscode.commands.executeCommand('yet-another-case-converter.constant-case');
-                await sleep(WAIT_FOR_COMMAND);
+                setup(() => {
+                    getStub.withArgs('apostrophe-handling').returns(testArgs.type);
+                });
 
-                assert.ok(apostropheMessageStub.withArgs(...INFO_MESSAGE_APOSTROPHE_HANDLING_TYPE).notCalled);
-            });
+                test('it should not ask for apostrophe handling', async () => {
 
-            test('it should not ask to save answer to settings', async () => {
+                    await vscode.commands.executeCommand('yet-another-case-converter.constant-case');
+                    await sleep(WAIT_FOR_COMMAND);
 
-                await vscode.commands.executeCommand('yet-another-case-converter.constant-case');
-                await sleep(WAIT_FOR_COMMAND);
+                    assert.ok(apostropheMessageStub.withArgs(...INFO_MESSAGE_APOSTROPHE_HANDLING_TYPE).notCalled);
+                });
 
-                assert.ok(apostropheMessageStub.withArgs(...INFO_MESSAGE_APOSTROPHE_HANDLING_SAVE).notCalled);
-            });
+                test('it should not ask to save answer to settings', async () => {
 
-            test('it should convert selection', async () => {
+                    await vscode.commands.executeCommand('yet-another-case-converter.constant-case');
+                    await sleep(WAIT_FOR_COMMAND);
 
-                await vscode.commands.executeCommand('yet-another-case-converter.constant-case');
-                await sleep(WAIT_FOR_COMMAND);
+                    assert.ok(apostropheMessageStub.withArgs(...INFO_MESSAGE_APOSTROPHE_HANDLING_SAVE).notCalled);
+                });
 
-                const range = getRangeOfLines(active, 0, 1);
-                const result = active?.document.getText(range);
-                const expected = 'QWER_\'BOUT_DON\'T_WALKIN\'_ASDF\n\'BOUT_WALKIN\'';
-                assert(result === expected, failedMsg(given, 'constant-case', expected, result));
+                test('it should convert selection', async () => {
+
+                    await vscode.commands.executeCommand('yet-another-case-converter.constant-case');
+                    await sleep(WAIT_FOR_COMMAND);
+
+                    const range = getRangeOfLines(active, 0, 1);
+                    const result = active?.document.getText(range);
+                    const expected = testArgs.expected;
+                    assert(result === expected, failedMsg(given, 'constant-case', expected, result));
+                });
             });
         });
-
-        // TODO other types
     });
 
     suite('with selection containing apostrophe (camel case)', () => {
