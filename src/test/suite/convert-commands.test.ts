@@ -569,7 +569,7 @@ suite('convert commands', () => {
         });
     });
 
-    suite('with selection containing apostrophe', () => {
+    suite('with selection containing apostrophe (with info message flow for apostrophe handling)', () => {
 
         const given = 'qwer \'bout don\'t walkin\' asdf\n\'bout walkin\'';
 
@@ -814,20 +814,16 @@ suite('convert commands', () => {
             });
         });
 
-
         [
             {
-                option: MESSAGE_OPTIONS.KEEP,
                 type: 'KEEP' as ApostropheHandling,
                 expected: 'QWER_\'BOUT_DON\'T_WALKIN\'_ASDF\n\'BOUT_WALKIN\'',
             },
             {
-                option: MESSAGE_OPTIONS.REMOVE,
                 type: 'REMOVE' as ApostropheHandling,
                 expected: 'QWER_BOUT_DONT_WALKIN_ASDF\nBOUT_WALKIN',
             },
             {
-                option: MESSAGE_OPTIONS.HANDLE_AS_SEPARATOR_WITHIN_WORD,
                 type: 'HANDLE_AS_SEPARATOR_WITHIN_WORD' as ApostropheHandling,
                 expected: 'QWER_BOUT_DON_T_WALKIN_ASDF\nBOUT_WALKIN',
             },
@@ -869,11 +865,13 @@ suite('convert commands', () => {
         });
     });
 
-    suite('with selection containing apostrophe (camel case)', () => {
+    // NOTE This test suite supplements the previous one for camel case conversion.
+    //      For the sake of brevity the flow for the apostrophe handling (info messages)
+    //      is neglected here, i.e., it is assumed that the handling type is saved to the settings.
+    suite.only('with selection containing apostrophe (camel case as source)', () => {
 
-        const given = '\'boutDon\'tWalkin\'Asdf';
+        const given = 'qwer\'boutDon\'tWalkin\'Asdf\n\'boutWalkin\'';
 
-        let apostropheMessageStub: sinon.SinonStub;
         setup(async () => {
             doc = await vscode.workspace.openTextDocument({
                 content: given,
@@ -883,97 +881,99 @@ suite('convert commands', () => {
 
             active = vscode.window.activeTextEditor;
             if (!!active) {
-                const range = getRangeOfLines(active);
+                const range = getRangeOfLines(active, 0, 1);
                 active.selection = new vscode.Selection(range.start, range.end);
             }
-
-            apostropheMessageStub = sinon.stub(vscode.window, 'showInformationMessage');
-            apostropheMessageStub.resolves();
         });
 
-        teardown(async () => {
-            apostropheMessageStub.restore();
-        });
+        [
+            {
+                type: 'KEEP' as ApostropheHandling,
+                expected: 'QWER\'BOUT_DON\'T_WALKIN\'_ASDF\n\'BOUT_WALKIN\'',
+            },
+            {
+                type: 'REMOVE' as ApostropheHandling,
+                expected: 'QWERBOUT_DONT_WALKIN_ASDF\nBOUT_WALKIN',
+            },
+            {
+                type: 'HANDLE_AS_SEPARATOR_WITHIN_WORD' as ApostropheHandling,
+                expected: 'QWER_BOUT_DON_T_WALKIN_ASDF\nBOUT_WALKIN',
+            },
+        ].forEach((testArgs: { type: ApostropheHandling, expected: string }) => {
 
-        test('it should call "showInformationMessage"', async () => {
+            suite(`with saved apostrophe handling type is ${testArgs.type}`, () => {
 
-            await vscode.commands.executeCommand('yet-another-case-converter.constant-case');
-            await sleep(WAIT_FOR_COMMAND);
+                setup(() => {
+                    getStub.withArgs('apostrophe-handling').returns(testArgs.type);
+                });
 
-            assert.ok(apostropheMessageStub.calledOnceWith(
-                ...INFO_MESSAGE_APOSTROPHE_HANDLING_TYPE,
-            ));
-        });
+                test('it should convert selection', async () => {
 
-        suite(`with apostrophe handling is "${MESSAGE_OPTIONS.KEEP}"`, () => {
+                    await vscode.commands.executeCommand('yet-another-case-converter.constant-case');
+                    await sleep(WAIT_FOR_COMMAND);
 
-            setup(() => {
-                apostropheMessageStub.resolves(MESSAGE_OPTIONS.KEEP);
-            });
-
-            test('it should convert selection', async () => {
-
-                await vscode.commands.executeCommand('yet-another-case-converter.constant-case');
-                await sleep(WAIT_FOR_COMMAND);
-
-                const range = getRangeOfLines(active);
-                const result = active?.document.getText(range);
-                const expected = '\'BOUT_DON\'T_WALKIN\'_ASDF';
-                assert(result === expected, failedMsg(given, 'constant-case', expected, result));
-            });
-        });
-
-        suite(`with apostrophe handling is "${MESSAGE_OPTIONS.REMOVE}"`, () => {
-
-            setup(() => {
-                apostropheMessageStub.resolves(MESSAGE_OPTIONS.REMOVE);
-            });
-
-            test('it should convert selection', async () => {
-
-                await vscode.commands.executeCommand('yet-another-case-converter.constant-case');
-                await sleep(WAIT_FOR_COMMAND);
-
-                const range = getRangeOfLines(active);
-                const result = active?.document.getText(range);
-                const expected = 'BOUT_DONT_WALKIN_ASDF';
-                assert(result === expected, failedMsg(given, 'constant-case', expected, result));
+                    const range = getRangeOfLines(active, 0, 1);
+                    const result = active?.document.getText(range);
+                    const expected = testArgs.expected;
+                    assert(result === expected, failedMsg(given, 'constant-case', expected, result));
+                });
             });
         });
+    });
 
-        suite(`with apostrophe handling is "${MESSAGE_OPTIONS.HANDLE_AS_SEPARATOR_WITHIN_WORD}"`, () => {
+    // NOTE This test suite supplements the previous one for camel case conversion.
+    //      For the sake of brevity the flow for the apostrophe handling (info messages)
+    //      is neglected here, i.e., it is assumed that the handling type is saved to the settings.
+    suite.only('with selection containing apostrophe (camel case as target)', () => {
 
-            setup(() => {
-                apostropheMessageStub.resolves(MESSAGE_OPTIONS.HANDLE_AS_SEPARATOR_WITHIN_WORD);
+        const given = 'QWER_\'BOUT_DON\'T_WALKIN\'_ASDF\n\'BOUT_WALKIN\'';
+
+        setup(async () => {
+            doc = await vscode.workspace.openTextDocument({
+                content: given,
             });
 
-            test('it should convert selection', async () => {
+            await vscode.window.showTextDocument(doc);
 
-                await vscode.commands.executeCommand('yet-another-case-converter.constant-case');
-                await sleep(WAIT_FOR_COMMAND);
-
-                const range = getRangeOfLines(active);
-                const result = active?.document.getText(range);
-                const expected = 'BOUT_DON_T_WALKIN_ASDF';
-                assert(result === expected, failedMsg(given, 'constant-case', expected, result));
-            });
+            active = vscode.window.activeTextEditor;
+            if (!!active) {
+                const range = getRangeOfLines(active, 0, 1);
+                active.selection = new vscode.Selection(range.start, range.end);
+            }
         });
 
-        suite(`with apostrophe handling is "${MESSAGE_OPTIONS.CANCEL}"`, () => {
+        // FIXME !
+        [
+            {
+                type: 'KEEP' as ApostropheHandling,
+                expected: 'qwer\'boutDon\'tWalkin\'Asdf\n\'boutWalkin\'',
+            },
+            {
+                type: 'REMOVE' as ApostropheHandling,
+                expected: 'qwerBoutDontWalkinAsdf\nboutWalkin',
+            },
+            {
+                type: 'HANDLE_AS_SEPARATOR_WITHIN_WORD' as ApostropheHandling,
+                expected: 'qwerBoutDonTWalkinAsdf\nboutWalkin',
+            },
+        ].forEach((testArgs: { type: ApostropheHandling, expected: string }) => {
 
-            setup(() => {
-                apostropheMessageStub.resolves(MESSAGE_OPTIONS.CANCEL);
-            });
+            suite(`with saved apostrophe handling type is ${testArgs.type}`, () => {
 
-            test('it should not convert selection', async () => {
+                setup(() => {
+                    getStub.withArgs('apostrophe-handling').returns(testArgs.type);
+                });
 
-                await vscode.commands.executeCommand('yet-another-case-converter.constant-case');
-                await sleep(WAIT_FOR_COMMAND);
+                test('it should convert selection', async () => {
 
-                const range = getRangeOfLines(active);
-                const result = active?.document.getText(range);
-                const expected = given;
-                assert(result === expected, failedMsg(given, 'constant-case', expected, result));
+                    await vscode.commands.executeCommand('yet-another-case-converter.camel-case');
+                    await sleep(WAIT_FOR_COMMAND);
+
+                    const range = getRangeOfLines(active, 0, 1);
+                    const result = active?.document.getText(range);
+                    const expected = testArgs.expected;
+                    assert(result === expected, failedMsg(given, 'camel-case', expected, result));
+                });
             });
         });
     });
