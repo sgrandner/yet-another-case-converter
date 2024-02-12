@@ -569,9 +569,44 @@ suite('convert commands', () => {
         });
     });
 
-    suite.only('with selection containing apostrophe (with info message flow for apostrophe handling)', () => {
+    [
+        {
+            given: 'qwer asdfYxcv QwerQweQw QwerQ weQ wQ',
+            expected: 'QWER_ASDF_YXCV_QWER_QWE_QW_QWER_Q_WE_Q_W_Q',
+        },
+    ].forEach((testArgs: { given: string, expected: string }) => {
 
-        const given = 'yes \'bout b\'elanna you\'re i\'m don\'t walkin\' no\n\'bout walkin\'';
+        suite(`with mixed case containing camel case and separator case ${testArgs.given}`, () => {
+
+            setup(async () => {
+                doc = await vscode.workspace.openTextDocument({
+                    content: testArgs.given,
+                });
+
+                await vscode.window.showTextDocument(doc);
+
+                active = vscode.window.activeTextEditor;
+                if (!!active) {
+                    const range = getRangeOfLines(active);
+                    active.selection = new vscode.Selection(range.start, range.end);
+                }
+            });
+
+            test('it should convert selection', async () => {
+
+                await vscode.commands.executeCommand('yet-another-case-converter.constant-case');
+                await sleep(WAIT_FOR_COMMAND);
+
+                const range = getRangeOfLines(active);
+                const result = active?.document.getText(range);
+                assert(result === testArgs.expected, failedMsg(testArgs.given, 'constant-case', testArgs.expected, result));
+            });
+        });
+    });
+
+    suite('with selection containing apostrophe (with info message flow for apostrophe handling)', () => {
+
+        const given = '\'yes \'bout b\'elanna you\'re i\'m don\'t walkin\' no\n\'bout walkin\'';
 
         let apostropheMessageStub: sinon.SinonStub;
         setup(async () => {
@@ -614,7 +649,7 @@ suite('convert commands', () => {
                 {
                     option: MESSAGE_OPTIONS.KEEP,
                     type: 'KEEP' as ApostropheHandling,
-                    expected: 'YES_\'BOUT_B\'ELANNA_YOU\'RE_I\'M_DON\'T_WALKIN\'_NO\n\'BOUT_WALKIN\'',
+                    expected: '\'YES_\'BOUT_B\'ELANNA_YOU\'RE_I\'M_DON\'T_WALKIN\'_NO\n\'BOUT_WALKIN\'',
                 },
                 {
                     option: MESSAGE_OPTIONS.REMOVE,
@@ -817,7 +852,7 @@ suite('convert commands', () => {
         [
             {
                 type: 'KEEP' as ApostropheHandling,
-                expected: 'YES_\'BOUT_B\'ELANNA_YOU\'RE_I\'M_DON\'T_WALKIN\'_NO\n\'BOUT_WALKIN\'',
+                expected: '\'YES_\'BOUT_B\'ELANNA_YOU\'RE_I\'M_DON\'T_WALKIN\'_NO\n\'BOUT_WALKIN\'',
             },
             {
                 type: 'REMOVE' as ApostropheHandling,
@@ -868,7 +903,7 @@ suite('convert commands', () => {
     // NOTE This test suite supplements the previous one for camel case conversion.
     //      For the sake of brevity the flow for the apostrophe handling (info messages)
     //      is neglected here, i.e., it is assumed that the handling type is saved to the settings.
-    suite.only('with selection containing apostrophe (camel case as source)', () => {
+    suite('with selection containing apostrophe (camel case as source)', () => {
 
         const given = 'yes\'boutB\'elannaYou\'reI\'mDon\'tWalkin\'No\n\'boutWalkin\'';
 
@@ -924,7 +959,7 @@ suite('convert commands', () => {
     // NOTE This test suite supplements the previous one for camel case conversion.
     //      For the sake of brevity the flow for the apostrophe handling (info messages)
     //      is neglected here, i.e., it is assumed that the handling type is saved to the settings.
-    suite.only('with selection containing apostrophe (camel case as target)', () => {
+    suite('with selection containing apostrophe (camel case as target)', () => {
 
         const given = 'YES_\'BOUT_B\'ELANNA_YOU\'RE_I\'M_DON\'T_WALKIN\'_NO\n\'BOUT_WALKIN\'';
 
@@ -942,7 +977,6 @@ suite('convert commands', () => {
             }
         });
 
-        // FIXME !
         [
             {
                 type: 'KEEP' as ApostropheHandling,
@@ -1005,6 +1039,69 @@ suite('convert commands', () => {
             const result = active?.document.getText(range);
             const expected = 'CONVERT-TO-UPP\'R-CASE';
             assert(result === expected, failedMsg(given, 'upper-case', expected, result));
+        });
+    });
+
+    suite('with inverse camel case as source', () => {
+
+        suite('with minimal length 3', () => {
+
+            const given = 'qWEaSDF';
+
+            setup(async () => {
+                doc = await vscode.workspace.openTextDocument({
+                    content: given,
+                });
+
+                await vscode.window.showTextDocument(doc);
+
+                active = vscode.window.activeTextEditor;
+                if (!!active) {
+                    const range = getRangeOfLines(active);
+                    active.selection = new vscode.Selection(range.start, range.end);
+                }
+            });
+
+            test('it should convert selection (handle as inverse camel case)', async () => {
+
+                await vscode.commands.executeCommand('yet-another-case-converter.snake-case');
+                await sleep(WAIT_FOR_COMMAND);
+
+                const range = getRangeOfLines(active);
+                const result = active?.document.getText(range);
+                const expected = 'qwe_asdf';
+                assert(result === expected, failedMsg(given, 'upper-case', expected, result));
+            });
+        });
+
+        suite('with length 2', () => {
+
+            const given = 'qWaSDF';
+
+            setup(async () => {
+                doc = await vscode.workspace.openTextDocument({
+                    content: given,
+                });
+
+                await vscode.window.showTextDocument(doc);
+
+                active = vscode.window.activeTextEditor;
+                if (!!active) {
+                    const range = getRangeOfLines(active);
+                    active.selection = new vscode.Selection(range.start, range.end);
+                }
+            });
+
+            test('it should convert selection (BUT handle as normal camel case !)', async () => {
+
+                await vscode.commands.executeCommand('yet-another-case-converter.snake-case');
+                await sleep(WAIT_FOR_COMMAND);
+
+                const range = getRangeOfLines(active);
+                const result = active?.document.getText(range);
+                const expected = 'q_wa_sdf';
+                assert(result === expected, failedMsg(given, 'upper-case', expected, result));
+            });
         });
     });
 

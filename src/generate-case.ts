@@ -25,7 +25,8 @@ import { regExpMatchArrayWithIsLast } from './utils/reg-exp-match-array-with-is-
  * 1. matching group: segments separated by one or more separation characters but also match camel case within separated segments
  * 2. matching group: camel case and lower case
  * 3. matching group: upper case without following first letter of camel case
- * 4. matching group: match inverse camel case but only "normal" invserse camel case (no upper very first letter or group of lower letters)
+ * 4. matching group: match inverse camel case with at least 3 characters but only "normal" invserse camel case (no upper very first letter or group of lower letters)
+ *                    (aA is matched as two single characters, i.e. lower case and upper case segment)
  * 5. matching group: single lower letters or numbers
  * 6. matching group: leading separators
  *
@@ -68,10 +69,6 @@ export function generateCase(
         );
     }
 
-    // if (apostropheHandling === 'REMOVE' || apostropheHandling === 'HANDLE_AS_SEPARATOR_WITHIN_WORD') {
-    //     replacedString = replacedString.replace(/\'/g, '');
-    // }
-
     return replacedString;
 }
 
@@ -89,23 +86,29 @@ function matchAndReplaceSegments(
         return text;
     }
 
-    // TODO try to handle apostrophes here
+    let replaced = text;
 
-    let replacedString = '';
+    if (apostropheHandling === 'REMOVE') {
+        replaced = replaced.replace(/'/g, '');
+    }
+
+    const apostropheAsSeparator = apostropheHandling === 'HANDLE_AS_SEPARATOR_WITHIN_WORD' ? '\'' : '';
+    const apostropheInSegment = apostropheHandling === 'HANDLE_AS_SEPARATOR_WITHIN_WORD' ? '' : '\'';
 
     const regexArray = [];
-    regexArray.push(`([A-Z']{0,1}(?:[a-z0-9']+|[A-Z0-9']+))[${separatorRegexString}]+`);
-    regexArray.push(`([A-Za-z'][a-z0-9']+)`);
-    regexArray.push(`([A-Z0-9']+(?![a-z']))`);
-    regexArray.push(`([A-Za-z'][A-Z0-9']+)[${separatorRegexString}]*`);
-    regexArray.push(`([a-z0-9'])`);
+    regexArray.push(`([A-Z${apostropheInSegment}]{0,1}(?:[a-z0-9${apostropheInSegment}]+|[A-Z0-9${apostropheInSegment}]+))[${separatorRegexString + apostropheAsSeparator}]+`);
+    regexArray.push(`([A-Za-z${apostropheInSegment}][a-z0-9${apostropheInSegment}]+)`);
+    regexArray.push(`([A-Z0-9${apostropheInSegment}]+(?![a-z${apostropheInSegment}]))`);
+    regexArray.push(`([A-Za-z${apostropheInSegment}][A-Z0-9${apostropheInSegment}]{2,})[${separatorRegexString + apostropheAsSeparator}]*`);
+    regexArray.push(`([a-z0-9${apostropheInSegment}])`);
     regexArray.push(`[ ._-]+`);
 
     const regex = new RegExp(regexArray.join('|'), 'g');
-    const matchedSegments = text.matchAll(regex);
+    const matchedSegments = replaced.matchAll(regex);
 
     // TODO show message if nothing is matched and return !!!
 
+    let replacedString = '';
     for (const match of regExpMatchArrayWithIsLast(matchedSegments)) {
 
         // NOTE the segment is one of the captering groups of the regexp
@@ -113,19 +116,7 @@ function matchAndReplaceSegments(
             return index > 0 && capture?.length > 0;
         }) ?? '';
 
-        let convertedSegment = replacedSegment;
-
-        // TODO Try to get rid of this outer and inner apostrophe handling.
-        //      Try to handle apostrophes before deviding string into segments.
-        if (!!apostropheHandling) {
-            convertedSegment = replaceOuterApostrophes(apostropheHandling, convertedSegment, separator);
-        }
-
-        convertedSegment = caseConversionFunction(convertedSegment);
-
-        if (!!apostropheHandling) {
-            convertedSegment = replaceInnerApostrophes(apostropheHandling, convertedSegment, separator);
-        }
+        let convertedSegment = caseConversionFunction(replacedSegment);
 
         // NOTE the separator is concatinated if it's not the last segment or the last segment ends with a separator
         const concatSeparator = !match.isLast || !!text.match(`[${separatorRegexString}]+$`);
@@ -140,55 +131,4 @@ function matchAndReplaceSegments(
     }
 
     return replacedString;
-}
-
-function replaceOuterApostrophes(
-    apostropheHandling: ApostropheHandling | undefined,
-    text: string,
-    separator: Separator
-): string {
-
-    let result = text;
-
-    if (apostropheHandling === 'REMOVE' || apostropheHandling === 'HANDLE_AS_SEPARATOR_WITHIN_WORD') {
-
-        const startIndex = text.substring(0, 1) === '\'' ? 1 : 0;
-        const endIndex = text.substring(text.length - 1, text.length) === '\'' ? 1 : 0;
-        result = text.substring(startIndex, result.length - endIndex);
-    }
-
-    return result;
-}
-
-function replaceInnerApostrophes(
-    apostropheHandling: ApostropheHandling | undefined,
-    text: string,
-    separator: Separator
-): string {
-
-    let result = text;
-
-    if (
-        text.length >= 3 &&
-        (apostropheHandling === 'REMOVE' || apostropheHandling === 'HANDLE_AS_SEPARATOR_WITHIN_WORD')
-    ) {
-
-        const innerPartOfSegment = text.substring(1, text.length - 1);
-        const firstLetter = text[ 0 ];
-        const lastLetter = text[ text.length - 1 ];
-
-        const replaceSeparator = apostropheHandling === 'HANDLE_AS_SEPARATOR_WITHIN_WORD' ? separator.value : '';
-
-        let replaced;
-        if (separator.name === SEPARATOR.none.name) {
-            // TODO
-            replaced = innerPartOfSegment.replace(/'(.)/g, '' ?? '');
-        } else {
-            replaced = innerPartOfSegment.replace(/'/g, replaceSeparator ?? '');
-        }
-
-        result = firstLetter.concat(replaced).concat(lastLetter);
-    }
-
-    return result;
 }
